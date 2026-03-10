@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan Wong — DevOps Manager & Infrastructure Architect</title>
+  <meta name="description" content="Ivan Wong is a DevOps Manager at Crypto.com specializing in Kubernetes, Terraform, and infrastructure automation.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F172A',
+            surface: '#1E293B',
+            border: '#334155',
+            cyan: '#00FFFF',
+            green: '#22C55E',
+            purple: '#8B5CF6',
+            'text-primary': '#F8FAFC',
+            'text-muted': '#94A3B8',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Devicon for tech logos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* Base */
+    html { scroll-behavior: smooth; }
+    body { background: #0F172A; color: #F8FAFC; font-family: 'DM Sans', sans-serif; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0F172A; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Neon glow */
+    .glow-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.15); }
+    .glow-green { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 40px rgba(34, 197, 94, 0.15); }
+
+    /* Grid background */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Scanline overlay */
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.008) 2px,
+        rgba(0, 255, 255, 0.008) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Typing cursor */
+    .typing-cursor::after {
+      content: '\2588';
+      animation: blink 0.8s step-end infinite;
+      color: #22C55E;
+      font-weight: 400;
+      margin-left: 1px;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Scroll fade-in */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Bounce chevron */
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    .bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+
+    /* Card hover */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      border-color: #00FFFF;
+    }
+
+    /* Skill pill hover */
+    .skill-pill {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .skill-pill:hover {
+      border-color: #00FFFF;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    /* Timeline */
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #00FFFF, #334155);
+      transform: translateX(-50%);
+    }
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #00FFFF;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 24px;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-line { left: 20px; }
+      .timeline-dot { left: 20px; }
+    }
+
+    /* Nav active indicator */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00FFFF;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Terminal window chrome */
+    .terminal-window {
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid #334155;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      margin-left: 8px;
+    }
+    .terminal-body {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Glassmorphic border */
+    .glass-border {
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in-section { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Work</a>
+        <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
+        <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
+        <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
+        <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
+        <a href="#contact" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contact</a>
+      </div>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Work</a>
+        <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
+        <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
+        <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
+        <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
+        <a href="#contact" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center grid-bg scanlines overflow-hidden">
+    <!-- Matrix rain background -->
+    <canvas id="matrix-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-[0.22]"></canvas>
+
+    <div class="relative z-10 w-full max-w-3xl px-6 py-24">
+      <h1 class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-text-primary mb-8 text-center glow-cyan">
+        Ivan Wong
+      </h1>
+
+      <div class="terminal-window w-full mb-8 cursor-pointer" id="hero-terminal-wrap" title="Click to skip animation">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">claude — ivan@devops</span>
+        </div>
+        <div class="terminal-body text-xs sm:text-sm min-h-[300px] max-h-[450px] overflow-y-auto" id="hero-terminal"></div>
+      </div>
+
+      <div class="flex items-center justify-center gap-6 mb-8">
+        <a href="https://github.com/ivanwongtf" target="_blank" rel="noopener" class="text-text-muted hover:text-cyan transition-colors" aria-label="GitHub">
+          <i data-lucide="github" class="w-6 h-6"></i>
+        </a>
+        <a href="https://linkedin.com/in/ivan-wong-tf" target="_blank" rel="noopener" class="text-text-muted hover:text-cyan transition-colors" aria-label="LinkedIn">
+          <i data-lucide="linkedin" class="w-6 h-6"></i>
+        </a>
+        <a href="mailto:jobs@ivan.bz" class="text-text-muted hover:text-cyan transition-colors" aria-label="Email">
+          <i data-lucide="mail" class="w-6 h-6"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8">
+        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
+          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">5+</div>
+          <div class="text-text-muted text-xs font-mono">years_devops</div>
+        </div>
+        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
+          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">8+</div>
+          <div class="text-text-muted text-xs font-mono">prod_systems</div>
+        </div>
+        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
+          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">90%</div>
+          <div class="text-text-muted text-xs font-mono">ops_automated</div>
+        </div>
+        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
+          <div class="font-mono font-bold text-2xl sm:text-3xl text-purple mb-1">AWS</div>
+          <div class="text-text-muted text-xs font-mono">sa_professional</div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#projects" class="inline-block bounce-slow text-text-muted hover:text-cyan transition-colors" aria-label="Scroll down">
+          <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects" class="py-24 px-6 bg-surface/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Work <span class="text-cyan">Projects</span>
+        </h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Highlights from building and scaling infrastructure at Crypto.com</p>
+      </div>
+      <!-- Hot-Wallet Vault: Highlighted full-width card -->
+      <div class="fade-in-section mb-8">
+        <div class="card-hover terminal-window border-cyan/30 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-cyan/5 via-transparent to-purple/5 pointer-events-none"></div>
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">hot-wallet-vault.go</span>
+            <span class="ml-auto text-xs font-mono text-cyan px-2 py-0.5 rounded-full border border-cyan/30 bg-cyan/10">featured</span>
+          </div>
+          <div class="p-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div class="lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-lg bg-cyan/10 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-cyan"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-heading font-bold text-xl text-text-primary">Hot-Wallet Vault</h3>
+                    <p class="text-cyan text-xs font-mono">Distributed Zero-Knowledge Data Sealing</p>
+                  </div>
+                </div>
+                <p class="text-text-muted text-sm mb-4 leading-relaxed">Production distributed vault system for cryptocurrency hot-wallet custody. Implements the uDDS (Universal Distributed Data Sealing) framework — zero-knowledge blind RSA decryption inside Trusted Execution Environments, where the server performs cryptographic operations on blinded data without ever seeing plaintext.</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
+                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>9-node Raft cluster across 5 AWS regions (315ms p99 latency)</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Multi-TEE: AWS Nitro Enclaves + Intel SGX on Azure</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Blind RSA decryption with PKCS#1 v1.5 padding</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>AES-256-GCM encrypted Raft transport, VSOCK enclave comms</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Rust-based Nitro enclave proxy (iproxy/oproxy)</li>
+                </ul>
+              </div>
+              <div class="flex flex-col justify-center">
+                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
+                  <div class="text-cyan mb-2">// cluster topology</div>
+                  <div class="text-green">nodes:    <span class="text-text-primary">9</span></div>
+                  <div class="text-green">regions:  <span class="text-text-primary">5</span></div>
+                  <div class="text-green">quorum:   <span class="text-text-primary">5/9</span></div>
+                  <div class="text-green">latency:  <span class="text-text-primary">315ms p99</span></div>
+                  <div class="text-green">tee:      <span class="text-text-primary">Nitro + SGX</span></div>
+                  <div class="text-green">crypto:   <span class="text-text-primary">blind RSA</span></div>
+                  <div class="text-green">status:   <span class="text-cyan">● production</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Go</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Rust</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Raft</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">AWS Nitro</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Intel SGX</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">K8s / ArgoCD</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Blind Cryptography</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Echo Bot: Highlighted full-width card -->
+      <div class="fade-in-section mb-8">
+        <div class="card-hover terminal-window border-purple/30 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-purple/5 via-transparent to-cyan/5 pointer-events-none"></div>
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">echo-bot ~ python main.py</span>
+            <span class="ml-auto text-xs font-mono text-purple px-2 py-0.5 rounded-full border border-purple/30 bg-purple/10">featured</span>
+          </div>
+          <div class="p-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div class="lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-lg bg-purple/10 flex items-center justify-center">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-purple"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-heading font-bold text-xl text-text-primary">Echo Bot — AI Slack Assistant</h3>
+                    <p class="text-purple text-xs font-mono">Intelligent Knowledge Management & Auto-Reply</p>
+                  </div>
+                </div>
+                <p class="text-text-muted text-sm mb-4 leading-relaxed">AI-powered Slack bot that learns communication styles and responds on your behalf. Features a full RBAC knowledge management system with topic-based organization, semantic vector search, and adaptive response generation — turning institutional knowledge into instant, context-aware replies.</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
+                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RBAC with topic-based knowledge, user traits, and invitation system</li>
+                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RAG pipeline with sentence transformer embeddings & similarity search</li>
+                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>LangChain + Claude API for style-adaptive response generation</li>
+                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Portal UI for knowledge management, training data, and analytics</li>
+                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Multi-channel Slack support with auto-reply and mention detection</li>
+                </ul>
+              </div>
+              <div class="flex flex-col justify-center">
+                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
+                  <div class="text-purple mb-2">// echo-bot pipeline</div>
+                  <div class="text-green">input:     <span class="text-text-primary">Slack msg</span></div>
+                  <div class="text-green">embed:     <span class="text-text-primary">SentenceTransformer</span></div>
+                  <div class="text-green">retrieve:  <span class="text-text-primary">vector similarity</span></div>
+                  <div class="text-green">context:   <span class="text-text-primary">RBAC + traits</span></div>
+                  <div class="text-green">generate:  <span class="text-text-primary">Claude API</span></div>
+                  <div class="text-green">output:    <span class="text-text-primary">adaptive reply</span></div>
+                  <div class="text-green">status:    <span class="text-purple">&bull; production</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Python</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">LangChain</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Claude API</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Flask</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">MongoDB</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Slack SDK</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Sentence Transformers</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">RAG</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">RBAC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teleport: Highlighted full-width card -->
+      <div class="fade-in-section mb-8">
+        <div class="card-hover terminal-window border-green/30 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-green/5 via-transparent to-cyan/5 pointer-events-none"></div>
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">teleport-platform.yaml</span>
+            <span class="ml-auto text-xs font-mono text-green px-2 py-0.5 rounded-full border border-green/30 bg-green/10">featured</span>
+          </div>
+          <div class="p-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div class="lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-lg bg-green/10 flex items-center justify-center">
+                    <i data-lucide="server" class="w-6 h-6 text-green"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-heading font-bold text-xl text-text-primary">Teleport — Geo-Distributed Access Platform</h3>
+                    <p class="text-green text-xs font-mono">High-Availability PAM Infrastructure at Scale</p>
+                  </div>
+                </div>
+                <p class="text-text-muted text-sm mb-4 leading-relaxed">Enterprise-scale Privileged Access Management platform with a unified Teleport cluster geo-distributed across 3 AWS regions backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents spanning AWS, Azure, and GCP — plus automated access request workflows, Slack notifications, and Okta identity integration.</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
+                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Geo-distributed across 3 AWS regions with CockroachDB backend</li>
+                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Teleport agents across AWS, Azure, and GCP</li>
+                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Fully GitOps: FluxCD/ArgoCD + Spacelift for infrastructure</li>
+                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>High availability with autoscaling on EKS</li>
+                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Go-based PAM orchestrator: Slack + Okta + auto-approval workflows</li>
+                </ul>
+              </div>
+              <div class="flex flex-col justify-center">
+                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
+                  <div class="text-green mb-2">// teleport platform</div>
+                  <div class="text-green">cluster:   <span class="text-text-primary">unified HA</span></div>
+                  <div class="text-green">regions:   <span class="text-text-primary">3 (AWS)</span></div>
+                  <div class="text-green">backend:   <span class="text-text-primary">CockroachDB</span></div>
+                  <div class="text-green">agents:    <span class="text-text-primary">AWS + Azure + GCP</span></div>
+                  <div class="text-green">deploy:    <span class="text-text-primary">GitOps (Flux)</span></div>
+                  <div class="text-green">infra:     <span class="text-text-primary">Terraform + Spacelift</span></div>
+                  <div class="text-green">status:    <span class="text-green">&bull; production</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-green/30 text-green">Go</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-green/30 text-green">gRPC</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">EKS</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">CockroachDB</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Teleport</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">FluxCD / ArgoCD</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Spacelift</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Okta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remaining work project cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card: Security Canary Platform -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">canary-deploy.tf</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center mb-4">
+              <i data-lucide="radar" class="w-5 h-5 text-purple"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Security Canary Platform</h3>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">Enterprise security monitoring platform that auto-deploys canary resources across AWS Organization accounts with zero-touch IAM provisioning via CloudFormation StackSets.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Spacelift</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">AWS Orgs</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">StackSets</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card: Observability -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">observability.yaml</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
+              <i data-lucide="activity" class="w-5 h-5 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Observability Platform</h3>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and deployed monitoring dashboards and alert automations for multiple applications with Prometheus, Thanos, Loki and Grafana.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Prometheus</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Thanos</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Grafana</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card: Log Pipeline -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">logging.yaml</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
+              <i data-lucide="scroll-text" class="w-5 h-5 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Log Pipeline Architecture</h3>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and deployed critical logs pipeline with Fluent-bit and Fluentd for reliable log collection and forwarding at scale.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Fluent-bit</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Fluentd</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">EKS</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card: IaC Automation -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">infra.tf</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
+              <i data-lucide="workflow" class="w-5 h-5 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">IaC Automation Suite</h3>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and developed pipelines for applications and network infrastructure with Terraform, Python, and GitHub Actions.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Python</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">GitHub Actions</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card: Operations Automation -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">automate.go</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center mb-4">
+              <i data-lucide="bot" class="w-5 h-5 text-green"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Operations Automation</h3>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">Developed multiple automations with Go, Python, and Terraform that reduced 90% of manual operations overhead.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Go</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Python</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOXLY INVEST ========== -->
+  <section id="foxly" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Personal <span class="text-cyan">Projects</span>
+        </h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Side projects built from the ground up</p>
+      </div>
+
+      <div class="fade-in-section mb-3">
+        <h3 class="font-heading font-semibold text-xl text-text-primary flex items-center gap-2">
+          <i data-lucide="trending-up" class="w-5 h-5 text-cyan"></i>
+          Foxly Invest
+        </h3>
+      </div>
+
+      <div class="fade-in-section terminal-window mb-8">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">foxly-invest ~ kubectl get pods</span>
+        </div>
+        <div class="terminal-body">
+          <p class="text-text-muted mb-4 text-sm"><span class="text-green">$</span> <span class="text-text-primary">cat README.md</span></p>
+          <p class="text-text-muted text-sm leading-relaxed mb-6">
+            A full-stack AI investment portfolio platform that delivers tailored news summaries, insights, and analysis based on your portfolio — crafted to save time and help users make confident investment decisions. Built as a production-grade microservices system from the ground up.
+          </p>
+          <a href="https://www.foxlyinvest.com/" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-cyan font-mono text-sm hover:underline">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            www.foxlyinvest.com
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Architecture -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">architecture.yaml</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-5 h-5 text-cyan"></i>
+              System Architecture
+            </h3>
+            <ul class="text-text-muted text-sm space-y-2 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Microservice backend in Go and Python</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Deployed on Kubernetes (production K8s cluster)</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Web client + Android + iOS apps</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Real-time market data and news pipelines</li>
+            </ul>
+          </div>
+        </div>
+        <!-- AI / ML -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">ai-agents.py</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
+              <i data-lucide="brain" class="w-5 h-5 text-purple"></i>
+              AI & Agent Workflows
+            </h3>
+            <ul class="text-text-muted text-sm space-y-2 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>LangChain + LangGraph for LLM orchestration</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>MCP (Model Context Protocol) for agent tooling</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RAG pipeline with vector DB for knowledge retrieval</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Claude & OpenAI APIs for multi-model inference</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>AI-powered news summaries and portfolio insights</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech tags -->
+      <div class="fade-in-section flex flex-wrap justify-center gap-3">
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Go</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Python</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Kubernetes</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">LangChain</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">LangGraph</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">MCP</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">RAG</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">Claude API</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">OpenAI API</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">React</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">Android</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">iOS</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">Microservices</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">AI Agents</span>
+        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">Vector DB</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section id="skills" class="py-24 px-6 bg-surface/30">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Tech <span class="text-cyan">Stack</span>
+        </h2>
+      </div>
+
+      <!-- Infrastructure & Orchestration -->
+      <div class="fade-in-section mb-10">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="container" class="w-4 h-4 text-cyan"></i>
+          infrastructure && orchestration
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-kubernetes-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Kubernetes</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-docker-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Docker</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-helm-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Helm</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-flux-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">FluxCD</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-terraform-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Terraform</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="layers" class="w-4 h-4 text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Spacelift</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monitoring & Observability -->
+      <div class="fade-in-section mb-10">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="bar-chart-3" class="w-4 h-4 text-cyan"></i>
+          monitoring && observability
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-prometheus-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Prometheus</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-grafana-plain text-lg text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Grafana</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="eye" class="w-4 h-4 text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Thanos</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="file-text" class="w-4 h-4 text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Loki</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="arrow-right-left" class="w-4 h-4 text-cyan"></i>
+            <span class="text-sm font-mono text-text-primary">Fluentd</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Development -->
+      <div class="fade-in-section mb-10">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="code-2" class="w-4 h-4 text-green"></i>
+          development
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-go-plain text-lg text-green"></i>
+            <span class="text-sm font-mono text-text-primary">Go</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-python-plain text-lg text-green"></i>
+            <span class="text-sm font-mono text-text-primary">Python</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-bash-plain text-lg text-green"></i>
+            <span class="text-sm font-mono text-text-primary">Bash</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-react-original text-lg text-green"></i>
+            <span class="text-sm font-mono text-text-primary">React</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-graphql-plain text-lg text-green"></i>
+            <span class="text-sm font-mono text-text-primary">GraphQL</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="arrow-left-right" class="w-4 h-4 text-green"></i>
+            <span class="text-sm font-mono text-text-primary">gRPC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI & Machine Learning -->
+      <div class="fade-in-section mb-10">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="brain" class="w-4 h-4 text-purple"></i>
+          ai && machine_learning
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="link" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">LangChain</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="workflow" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">LangGraph</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="bot" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">Claude API</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="sparkles" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">OpenAI API</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="database" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">RAG</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="scan-search" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">Vector DB</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="users" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">AI Agents</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="message-square" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">Prompt Engineering</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="wrench" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">MCP</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="code" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">Claude Code</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud & Data -->
+      <div class="fade-in-section mb-10">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="cloud" class="w-4 h-4 text-purple"></i>
+          cloud && data
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-amazonwebservices-plain-wordmark text-lg text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">AWS (SA Pro)</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="box" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">EKS</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i data-lucide="database" class="w-4 h-4 text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">RDS</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-mongodb-plain text-lg text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">MongoDB</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <i class="devicon-redis-plain text-lg text-purple"></i>
+            <span class="text-sm font-mono text-text-primary">Redis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practices -->
+      <div class="fade-in-section">
+        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+          <i data-lucide="repeat" class="w-4 h-4 text-green"></i>
+          practices
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <span class="text-sm font-mono text-text-primary">CI/CD</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <span class="text-sm font-mono text-text-primary">GitOps</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <span class="text-sm font-mono text-text-primary">High Availability</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <span class="text-sm font-mono text-text-primary">Cloud-native</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+            <span class="text-sm font-mono text-text-primary">Agile / Scrum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE ========== -->
+  <section id="experience" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-16 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan">Experience</span>
+        </h2>
+      </div>
+
+      <div class="relative">
+        <!-- Timeline line (hidden on mobile, shown on md+) -->
+        <div class="timeline-line hidden md:block"></div>
+
+        <!-- Mobile timeline line -->
+        <div class="timeline-line md:hidden"></div>
+
+        <!-- Entry 1: Manager -->
+        <div class="fade-in-section relative mb-12 md:mb-16">
+          <div class="timeline-dot"></div>
+          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
+            <div class="terminal-window">
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">crypto.com/manager</span>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
+                </div>
+                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Infra DevOps Manager</h3>
+                <p class="text-text-muted text-xs font-mono mb-3">Jan 2023 — Present · Hong Kong</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none">
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Leading the Infra DevOps team, coordinating projects and guiding junior engineers</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Driving DevOps integration with the Network team for daily operations</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed automations that reduced 90% of operational overhead</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entry 2: Senior Engineer -->
+        <div class="fade-in-section relative mb-12 md:mb-16">
+          <div class="timeline-dot"></div>
+          <div class="md:w-[calc(50%-40px)] pl-12 md:pl-0 md:pr-10">
+            <div class="terminal-window">
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">crypto.com/senior</span>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
+                </div>
+                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Senior Engineer, Infra DevOps</h3>
+                <p class="text-text-muted text-xs font-mono mb-3">Jan 2023 — Present · Hong Kong</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none">
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Manage geo-distributed Teleport platform across 3 regions on EKS with CockroachDB</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Deployed monitoring dashboards with Prometheus, Thanos, Loki & Grafana</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed critical logs pipeline with Fluent-bit and Fluentd</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entry 3: Engineer -->
+        <div class="fade-in-section relative mb-12 md:mb-16">
+          <div class="timeline-dot"></div>
+          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
+            <div class="terminal-window">
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">crypto.com/engineer</span>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
+                </div>
+                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Engineer, Infra DevOps</h3>
+                <p class="text-text-muted text-xs font-mono mb-3">Jan 2022 — Jan 2023 · Hong Kong</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none">
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Deployed apps on EKS with Dockerfiles, Helm Charts and Helmfiles</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed CI/CD pipelines with GitHub Action, ECR, OPA and ArgoCD</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Developed Terraform stacks for provisioning AWS resources</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entry 4: Ahsay -->
+        <div class="fade-in-section relative mb-12 md:mb-16">
+          <div class="timeline-dot"></div>
+          <div class="md:w-[calc(50%-40px)] pl-12 md:pl-0 md:pr-10">
+            <div class="terminal-window">
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">ahsay/analyst</span>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-cyan font-mono font-semibold text-sm">Ahsay Systems</span>
+                </div>
+                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Software Analyst</h3>
+                <p class="text-text-muted text-xs font-mono mb-3">Jul 2021 — Nov 2021 · Hong Kong</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none">
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed a disaster recovery system for on-premise Hyper-V on Azure</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Developed a prototype with automatic network setups in Java</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entry 5: Earlier Roles -->
+        <div class="fade-in-section relative">
+          <div class="timeline-dot"></div>
+          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
+            <div class="terminal-window">
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">git log --oneline</span>
+              </div>
+              <div class="p-6">
+                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Earlier Roles</h3>
+                <p class="text-text-muted text-xs font-mono mb-3">2017 — 2018</p>
+                <ul class="text-text-muted text-sm space-y-1.5 list-none">
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span><strong class="text-text-primary font-medium">Ahsay Systems</strong> — Developed AhsayOBM for QNAP, now a mainstream product</li>
+                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span><strong class="text-text-primary font-medium">Oyalabs</strong> — Built a React Native mobile app with AWS serverless backend</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EDUCATION & CERTIFICATIONS ========== -->
+  <section id="education" class="py-24 px-6 bg-surface/30">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Education & <span class="text-cyan">Certifications</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- MPhil -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">mphil.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-purple"></i>
+              </div>
+              <div>
+                <h3 class="font-heading font-bold text-text-primary">MPhil Computer Science</h3>
+                <p class="text-text-muted text-xs font-mono">The Chinese University of Hong Kong</p>
+              </div>
+            </div>
+            <p class="text-text-muted text-xs font-mono mb-3">Aug 2019 — Jul 2021</p>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none">
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Supervisor: Prof. Patrick P. C. Lee</li>
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Research on distributed systems, Raft consensus, and data replication</li>
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Raft consensus, high availability, distributed systems</li>
+            </ul>
+          </div>
+        </div>
+        <!-- BSc -->
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">bsc.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="award" class="w-5 h-5 text-purple"></i>
+              </div>
+              <div>
+                <h3 class="font-heading font-bold text-text-primary">BSc Computer Science</h3>
+                <p class="text-text-muted text-xs font-mono">The Chinese University of Hong Kong</p>
+              </div>
+            </div>
+            <p class="text-text-muted text-xs font-mono mb-3">Sep 2015 — Jul 2019</p>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none">
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>First Class Honours — CGPA: 3.55 / 4.0</li>
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Minor in Information Engineering</li>
+              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Dean's List & Head List (2016, 2018, 2019)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certification -->
+      <div class="fade-in-section max-w-md mx-auto">
+        <a href="https://www.credly.com/badges/3e4c61e3-9c14-4c62-897e-f78785e10152" target="_blank" rel="noopener"
+           class="block card-hover terminal-window text-center group">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">certification.json</span>
+          </div>
+          <div class="p-6">
+            <div class="w-12 h-12 rounded-lg bg-cyan/10 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="shield-check" class="w-6 h-6 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-bold text-text-primary mb-1">AWS Solutions Architect — Professional</h3>
+            <p class="text-text-muted text-xs font-mono mb-2">Dec 2022 — Dec 2025</p>
+            <span class="text-cyan text-sm font-mono group-hover:underline">View on Credly →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PUBLICATIONS ========== -->
+  <section id="publications" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan">Publications</span>
+        </h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Peer-reviewed research in confidential computing and distributed systems</p>
+      </div>
+
+      <div class="fade-in-section terminal-window mb-6">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">udds-paper.bib</span>
+        </div>
+        <div class="terminal-body">
+          <div class="mb-4">
+            <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat citation.bib</p>
+            <div class="pl-0">
+              <h3 class="font-heading font-bold text-text-primary text-xl mb-1">uDDS: Universal Distributed Data Sealing for TEE</h3>
+              <p class="text-text-muted text-sm font-mono mb-3">
+                <span class="text-cyan">Ivan Tsz Fung Wong</span>, Sam Ng, Jason Lau
+              </p>
+              <p class="text-text-muted text-xs font-mono mb-1">Accepted — 2026 10th International Conference on Cryptography, Security and Privacy (CSP 2026)</p>
+              <p class="text-text-muted text-xs font-mono mb-4">IEEE · Confidential Computing · 2026</p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat abstract.txt</p>
+            <p class="text-text-muted text-sm leading-relaxed">
+              Trusted Execution Environments (TEEs) provide hardware-rooted confidentiality, yet their native sealing mechanisms remain platform-specific. uDDS is a Universal Distributed Data Sealing framework that provides a single, unified sealing interface across heterogeneous TEEs while preserving data confidentiality even from the sealing service operator.
+            </p>
+          </div>
+
+          <p class="font-mono text-xs text-text-muted mb-3"><span class="text-green">$</span> cat contributions.md</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-lg border border-border bg-surface/50 p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="eye-off" class="w-4 h-4 text-cyan"></i>
+                <span class="font-mono text-sm text-cyan">Blind Decryption</span>
+              </div>
+              <p class="text-text-muted text-xs leading-relaxed">Operator-oblivious unsealing — clients blind their ciphertext so uDDS decrypts without ever learning the plaintext.</p>
+            </div>
+            <div class="rounded-lg border border-border bg-surface/50 p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="shield" class="w-4 h-4 text-green"></i>
+                <span class="font-mono text-sm text-green">Raft Consensus</span>
+              </div>
+              <p class="text-text-muted text-xs leading-relaxed">Volatile-only secret replication across TEE memory via Raft — crash fault tolerance and rollback resistance without persistent storage.</p>
+            </div>
+            <div class="rounded-lg border border-border bg-surface/50 p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="plug" class="w-4 h-4 text-purple"></i>
+                <span class="font-mono text-sm text-purple">Universal TEE Interface</span>
+              </div>
+              <p class="text-text-muted text-xs leading-relaxed">A single sealing API across SGX, TrustZone, and Nitro Enclaves — write once, deploy to any platform without modification.</p>
+            </div>
+            <div class="rounded-lg border border-border bg-surface/50 p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="globe" class="w-4 h-4 text-cyan"></i>
+                <span class="font-mono text-sm text-cyan">Production Validated</span>
+              </div>
+              <p class="text-text-muted text-xs leading-relaxed">9-node AWS Nitro deployment across 5 regions — 315ms unsealing latency with full attestation and geographic fault tolerance.</p>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-border">
+            <p class="font-mono text-xs text-text-muted">
+              <span class="text-green">$</span> echo $KEYWORDS
+            </p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">TEE</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Data Sealing</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Confidential Computing</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Distributed Consensus</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Blind Decryption</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">AWS Nitro</span>
+              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Intel SGX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT / FOOTER ========== -->
+  <section id="contact" class="py-24 px-6 bg-surface/30">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Let's <span class="text-cyan">Connect</span>
+        </h2>
+        <p class="text-text-muted mb-10 max-w-lg mx-auto font-mono text-sm">// Interested in DevOps, infrastructure, or just want to chat?</p>
+
+        <div class="flex items-center justify-center gap-6 mb-10">
+          <a href="mailto:jobs@ivan.bz" class="text-text-muted hover:text-cyan transition-colors" aria-label="Email">
+            <i data-lucide="mail" class="w-6 h-6"></i>
+          </a>
+          <a href="https://github.com/ivanwongtf" target="_blank" rel="noopener" class="text-text-muted hover:text-cyan transition-colors" aria-label="GitHub">
+            <i data-lucide="github" class="w-6 h-6"></i>
+          </a>
+          <a href="https://linkedin.com/in/ivan-wong-tf" target="_blank" rel="noopener" class="text-text-muted hover:text-cyan transition-colors" aria-label="LinkedIn">
+            <i data-lucide="linkedin" class="w-6 h-6"></i>
+          </a>
+        </div>
+
+        <a href="ivan-wong-cv.pdf" download
+           class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-shadow">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-6 px-6 border-t border-border text-center">
+    <p class="text-text-muted text-xs font-mono">&copy; 2025 Ivan Wong. Built with <span class="text-green">caffeine</span> && <span class="text-cyan">kubectl</span></p>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // --- Typing Background Animation ---
+    (function() {
+      const canvas = document.getElementById('matrix-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const hero = document.getElementById('hero');
+      const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (noMotion) return;
+
+      const fontSize = 13;
+      const lineHeight = 17;
+      const charWidth = 7.8;
+
+      function resize() {
+        canvas.width = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Content pool: accurate ASCII art, code snippets, tech terms
+      const pool = [
+        // --- Docker whale (canonical from docker/whalesay) ---
+        { lines: [
+          '    ##         .  ',
+          '  ## ## ##        ',
+          ' ## ## ## ##      ',
+          ' ## ## ## ## ##   ',
+          '    ____          ',
+          '   / __ \\____  __ ',
+          '  / / / / __ \\/ / ',
+          ' / /_/ / /_/ /\\  /',
+          ' \\____/\\____/  / ',
+          '              /   ',
+        ], clr: '#00FFFF' },
+
+        // --- Kubernetes (FIGlet banner) ---
+        { lines: [
+          ' _    ___        ',
+          '| | _( _ ) ___   ',
+          '| |/ / _ \\/ __|  ',
+          '|   < (_) \\__ \\  ',
+          '|_|\\_\\___/|___/  ',
+        ], clr: '#00FFFF' },
+
+        // --- Terraform (FIGlet banner) ---
+        { lines: [
+          ' ___ ___       ',
+          '|_ _|  _|      ',
+          ' | || |_ ___   ',
+          ' | ||  _/ -_)  ',
+          '|___|_| \\___|  ',
+        ], clr: '#8B5CF6' },
+
+        // --- Go gopher (FIGlet banner) ---
+        { lines: [
+          '  ____         ',
+          ' / ___| ___    ',
+          '| |  _ / _ \\   ',
+          '| |_| | (_) |  ',
+          ' \\____|\\___/   ',
+        ], clr: '#22C55E' },
+
+        // --- AWS (FIGlet banner) ---
+        { lines: [
+          '    _  __      __  ____',
+          '   / \\|  \\ /\\ /  \\/ ___)',
+          '  / _ \\ \\/ /\\ \\___\\__ \\',
+          ' /_/ \\_\\__/    (____/  ',
+        ], clr: '#8B5CF6' },
+
+        // --- Python (FIGlet banner) ---
+        { lines: [
+          '  ____        ',
+          ' |  _ \\ _   _ ',
+          ' | |_) | | | |',
+          ' |  __/| |_| |',
+          ' |_|    \\__, |',
+          '        |___/ ',
+        ], clr: '#22C55E' },
+
+        // --- Helm (FIGlet banner) ---
+        { lines: [
+          ' _  _ ___ _    __  __ ',
+          '| || | __| |  |  \\/  |',
+          '| __ | _|| |__| |\\/| |',
+          '|_||_|___|____|_|  |_|',
+        ], clr: '#00FFFF' },
+
+        // --- Grafana (FIGlet banner) ---
+        { lines: [
+          '  ____            __                 ',
+          ' / ___|_ __ __ _ / _| __ _ _ __  __ _',
+          '| |  _| \'__/ _` | |_ / _` | \'_ \\ /',
+          '| |_| | | | (_| |  _| (_| | | | | (_|',
+          ' \\____|_|  \\__,_|_|  \\__,_|_| |_|\\__,|',
+        ], clr: '#22C55E' },
+
+        // --- Prometheus (FIGlet banner) ---
+        { lines: [
+          ' ____                       ',
+          '|  _ \\ _ __ ___  _ __ ___   ',
+          '| |_) | \'__/ _ \\| \'_ ` _ \\  ',
+          '|  __/| | | (_) | | | | | | ',
+          '|_|   |_|  \\___/|_| |_| |_| ',
+        ], clr: '#00FFFF' },
+
+        // --- FluxCD (FIGlet banner) ---
+        { lines: [
+          ' _____ _            ',
+          '|  ___| |_   ___  __',
+          '| |_  | | | | \\ \\/ /',
+          '|  _| | | |_| |>  < ',
+          '|_|   |_|\\__,_/_/\\_\\',
+        ], clr: '#00FFFF' },
+
+        // --- Code snippets ---
+        { lines: [
+          '$ kubectl get pods -n prod',
+          'NAME            READY  STATUS',
+          'api-6f8d2       1/1    Running',
+          'worker-3dc9     1/1    Running',
+          'redis-0         1/1    Running',
+          'grafana-7b41    1/1    Running'
+        ], clr: '#22C55E' },
+        { lines: [
+          'resource "aws_eks_cluster" {',
+          '  name    = "prod-main"',
+          '  version = "1.29"',
+          '  vpc_config {',
+          '    subnet_ids = var.subnets',
+          '  }',
+          '}'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          'func main() {',
+          '  srv := &http.Server{',
+          '    Addr: ":8080",',
+          '  }',
+          '  log.Fatal(srv.ListenAndServe())',
+          '}'
+        ], clr: '#22C55E' },
+        { lines: [
+          'FROM golang:1.22-alpine',
+          'WORKDIR /app',
+          'COPY go.mod go.sum ./',
+          'RUN go mod download',
+          'COPY . .',
+          'RUN go build -o svc .',
+          'CMD ["./svc"]'
+        ], clr: '#00FFFF' },
+        { lines: [
+          'apiVersion: apps/v1',
+          'kind: Deployment',
+          'metadata:',
+          '  name: api-gateway',
+          'spec:',
+          '  replicas: 3'
+        ], clr: '#00FFFF' },
+        { lines: [
+          '$ terraform plan',
+          'Plan: 12 to add',
+          '       3 to change',
+          '       0 to destroy',
+          '',
+          'Do you want to perform',
+          'these actions? yes'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          '$ helm upgrade --install',
+          '  app ./charts/app',
+          '  --namespace prod',
+          'Release "app" upgraded.',
+          'STATUS: deployed',
+          'REVISION: 42'
+        ], clr: '#00FFFF' },
+        { lines: [
+          '--- cluster metrics ---',
+          '  cpu:    42% avg',
+          '  memory: 2.1Gi / 4Gi',
+          '  pods:   28/30 ready',
+          '  p99:    12ms',
+          '  uptime: 99.99%'
+        ], clr: '#22C55E' },
+        { lines: [
+          '$ git push origin main',
+          'remote: Resolving deltas',
+          'To github.com:ivanwongtf',
+          '   a1b2c3..d4e5f6 main',
+          'Actions: build..deploy',
+          '  [====] 100% complete'
+        ], clr: '#22C55E' },
+        { lines: [
+          'sealed, err := udds.Seal(',
+          '  ctx,',
+          '  plaintext,',
+          '  attestation,',
+          ')',
+          '// latency: 315ms p99'
+        ], clr: '#00FFFF' },
+        { lines: [
+          'alert: HighErrorRate',
+          'expr: |',
+          '  rate(http_req_total',
+          '    {code=~"5.."}[5m])',
+          '  / rate(http_req_total',
+          '    [5m]) > 0.05',
+          'severity: critical'
+        ], clr: '#22C55E' },
+        { lines: [
+          '$ flux get kustomizations',
+          'NAME     READY  MESSAGE',
+          'infra    True   Applied v2.1',
+          'apps     True   Applied v3.7',
+          'monitor  True   Applied v1.4'
+        ], clr: '#00FFFF' },
+        { lines: [
+          'apiVersion: source/v1',
+          'kind: GitRepository',
+          'spec:',
+          '  url: https://github',
+          '  interval: 1m',
+          '  ref:',
+          '    branch: main'
+        ], clr: '#00FFFF' },
+        { lines: [
+          '$ spacelift plan',
+          'Stack: prod-eks-cluster',
+          'Changes: 4 resources',
+          'Policy: PASS (3/3)',
+          'Approval: auto-deploy'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          'scrape_configs:',
+          '  - job_name: k8s',
+          '    kubernetes_sd:',
+          '      role: pod',
+          '    relabel_configs:',
+          '      - source: __meta'
+        ], clr: '#00FFFF' },
+        { lines: [
+          'SELECT cluster,',
+          '  count(*) as pods,',
+          '  avg(cpu_pct)',
+          'FROM k8s_metrics',
+          'WHERE ts > now()-1h',
+          'GROUP BY cluster;'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          'if attestation.Verify() {',
+          '  secret := vault.Unseal(',
+          '    key, enclave.Report(),',
+          '  )',
+          '  return secret, nil',
+          '}'
+        ], clr: '#22C55E' },
+        { lines: [
+          '$ docker compose up -d',
+          'Network app_net  Created',
+          'Container redis  Started',
+          'Container api    Started',
+          'Container nginx  Started'
+        ], clr: '#00FFFF' },
+
+        // --- AI / LLM code snippets ---
+        { lines: [
+          'from langchain.chains import',
+          '  RetrievalQA',
+          'chain = RetrievalQA.from_llm(',
+          '  llm=ChatAnthropic(',
+          '    model="claude-sonnet"',
+          '  ),',
+          '  retriever=vectorstore',
+          ')'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          'graph = StateGraph(State)',
+          'graph.add_node("agent",',
+          '  call_model)',
+          'graph.add_node("tools",',
+          '  tool_executor)',
+          'graph.add_edge(',
+          '  "tools", "agent")',
+          'app = graph.compile()'
+        ], clr: '#22C55E' },
+        { lines: [
+          'resp = client.messages(',
+          '  model="claude-sonnet",',
+          '  messages=[{',
+          '    "role": "user",',
+          '    "content": prompt',
+          '  }],',
+          '  tools=mcp_tools',
+          ')'
+        ], clr: '#8B5CF6' },
+        { lines: [
+          '# RAG pipeline',
+          'docs = loader.load()',
+          'chunks = splitter.split(',
+          '  docs, chunk_size=512)',
+          'vectorstore.add(chunks)',
+          'results = vectorstore',
+          '  .similarity_search(q, k=5)'
+        ], clr: '#00FFFF' },
+        { lines: [
+          'embedding = openai.embed(',
+          '  input=text,',
+          '  model="text-3-large"',
+          ')',
+          '# dim=3072, cosine sim'
+        ], clr: '#22C55E' },
+        { lines: [
+          'tools = [',
+          '  {"name": "get_price",',
+          '   "input_schema": {',
+          '     "ticker": "string"',
+          '   }},',
+          '  {"name": "analyze"},',
+          ']'
+        ], clr: '#8B5CF6' },
+
+        // --- Single-line terms ---
+        { lines: ['Kubernetes'], clr: '#00FFFF' },
+        { lines: ['Terraform'], clr: '#8B5CF6' },
+        { lines: ['Prometheus'], clr: '#00FFFF' },
+        { lines: ['LangChain'], clr: '#22C55E' },
+        { lines: ['LangGraph'], clr: '#22C55E' },
+        { lines: ['Claude API'], clr: '#8B5CF6' },
+        { lines: ['OpenAI API'], clr: '#8B5CF6' },
+        { lines: ['RAG Pipeline'], clr: '#00FFFF' },
+        { lines: ['Vector DB'], clr: '#8B5CF6' },
+        { lines: ['MCP Protocol'], clr: '#22C55E' },
+        { lines: ['AI Agents'], clr: '#8B5CF6' },
+        { lines: ['Prompt Engineering'], clr: '#22C55E' },
+        { lines: ['FluxCD'], clr: '#00FFFF' },
+        { lines: ['ArgoCD'], clr: '#00FFFF' },
+        { lines: ['Spacelift'], clr: '#8B5CF6' },
+        { lines: ['MongoDB'], clr: '#22C55E' },
+        { lines: ['CockroachDB'], clr: '#8B5CF6' },
+        { lines: ['Teleport'], clr: '#00FFFF' },
+        { lines: ['Thanos'], clr: '#8B5CF6' },
+        { lines: ['Grafana Loki'], clr: '#22C55E' },
+        { lines: ['Fluent-bit'], clr: '#00FFFF' },
+        { lines: ['gRPC'], clr: '#22C55E' },
+        { lines: ['GraphQL'], clr: '#8B5CF6' },
+        { lines: ['pod/ready 1/1'], clr: '#22C55E' },
+        { lines: ['node/ok: healthy'], clr: '#22C55E' },
+        { lines: ['0xC0FFEE'], clr: '#00FFFF' },
+        { lines: ['>>> deploy()'], clr: '#22C55E' },
+        { lines: ['mTLS verified'], clr: '#00FFFF' },
+        { lines: ['EKS v1.29 active'], clr: '#8B5CF6' },
+        { lines: ['[PASS] 42/42 tests'], clr: '#22C55E' },
+        { lines: ['uptime: 99.99%'], clr: '#22C55E' },
+        { lines: ['latency p99: 12ms'], clr: '#00FFFF' },
+        { lines: ['3-region geo-dist'], clr: '#00FFFF' },
+        { lines: ['90% ops automated'], clr: '#22C55E' },
+        { lines: ['embeddings: 3072d'], clr: '#8B5CF6' },
+        { lines: ['tokens: 4096 ctx'], clr: '#00FFFF' },
+      ];
+
+      const entities = [];
+      const maxEntities = 12;
+      let nextSpawn = 0;
+
+      function spawnEntity() {
+        const content = pool[Math.floor(Math.random() * pool.length)];
+        const maxLen = Math.max(...content.lines.map(l => l.length));
+        const bw = maxLen * charWidth + 30;
+        const bh = content.lines.length * lineHeight + 20;
+
+        let x, y, tries = 0;
+        do {
+          x = 20 + Math.random() * Math.max(10, canvas.width - bw - 40);
+          y = 20 + Math.random() * Math.max(10, canvas.height - bh - 40);
+          tries++;
+        } while (tries < 12 && entities.some(e =>
+          Math.abs(e.x - x) < 140 && Math.abs(e.y - y) < 70
+        ));
+
+        const totalChars = content.lines.reduce((s, l) => s + l.length, 0);
+
+        entities.push({
+          x, y, lines: content.lines, clr: content.clr,
+          charIdx: 0, totalChars,
+          phase: 'typing',
+          opacity: 1,
+          holdFrames: 40 + Math.random() * 50,
+          speed: 1.5 + Math.random() * 2
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '500 ' + fontSize + 'px "JetBrains Mono", monospace';
+
+        for (let i = entities.length - 1; i >= 0; i--) {
+          const e = entities[i];
+
+          // Update phase
+          if (e.phase === 'typing') {
+            e.charIdx += e.speed;
+            if (e.charIdx >= e.totalChars) e.phase = 'hold';
+          } else if (e.phase === 'hold') {
+            e.holdFrames--;
+            if (e.holdFrames <= 0) e.phase = 'fading';
+          } else if (e.phase === 'fading') {
+            e.opacity -= 0.02;
+            if (e.opacity <= 0) { entities.splice(i, 1); continue; }
+          }
+
+          // Draw revealed characters
+          ctx.globalAlpha = e.opacity;
+          ctx.fillStyle = e.clr;
+          let left = Math.floor(e.charIdx);
+          for (let li = 0; li < e.lines.length && left > 0; li++) {
+            const line = e.lines[li];
+            const show = Math.min(left, line.length);
+            ctx.fillText(line.substring(0, show), e.x, e.y + li * lineHeight);
+            left -= line.length;
+          }
+
+          // Blinking cursor at typing position
+          if (e.phase === 'typing') {
+            let rem = Math.floor(e.charIdx);
+            for (let li = 0; li < e.lines.length; li++) {
+              if (rem <= e.lines[li].length) {
+                const cx = e.x + rem * charWidth;
+                const cy = e.y + li * lineHeight;
+                if (Math.floor(Date.now() / 400) % 2 === 0) {
+                  ctx.fillRect(cx, cy - fontSize + 2, charWidth - 1, fontSize);
+                }
+                break;
+              }
+              rem -= e.lines[li].length;
+            }
+          }
+        }
+
+        ctx.globalAlpha = 1;
+
+        // Spawn control — fast & dense
+        nextSpawn--;
+        if (entities.length < maxEntities && nextSpawn <= 0) {
+          spawnEntity();
+          nextSpawn = 25 + Math.floor(Math.random() * 25);
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      // Initial burst of 4 entities
+      for (let i = 0; i < 4; i++) spawnEntity();
+      nextSpawn = 15;
+      draw();
+    })();
+
+    // --- Hero Terminal: Claude Code Conversation ---
+    (async function() {
+      const t = document.getElementById('hero-terminal');
+      let skipped = false;
+      const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      document.getElementById('hero-terminal-wrap').addEventListener('click', () => { skipped = true; });
+
+      function wait(ms) {
+        return new Promise(r => setTimeout(r, (skipped || noMotion) ? 0 : ms));
+      }
+
+      async function addLine(parts, preDelay) {
+        if (preDelay) await wait(preDelay);
+        const div = document.createElement('div');
+        div.className = 'min-h-[1.4em] leading-relaxed';
+        t.appendChild(div);
+        for (const p of parts) {
+          const span = document.createElement('span');
+          span.className = p.c || '';
+          div.appendChild(span);
+          if (p.s > 0 && !skipped && !noMotion) {
+            for (const ch of p.t) {
+              span.textContent += ch;
+              await wait(p.s);
+            }
+          } else {
+            span.textContent = p.t;
+          }
+        }
+        t.scrollTop = t.scrollHeight;
+      }
+
+      // Shorthand aliases
+      const m = 'text-text-muted', c = 'text-cyan', g = 'text-green', p = 'text-purple';
+      const sp = 8; // response char speed
+      const qsp = 35; // question typing speed
+
+      // Helper for a user question
+      async function ask(question, delay) {
+        await addLine([], delay || 300);
+        await addLine([{ t: '> ', c: p, s: 0 }, { t: question, c: 'text-text-primary', s: qsp }]);
+        await wait(700);
+        await addLine([]);
+      }
+
+      // === Launch ===
+      await addLine([{ t: '$ claude', c: g, s: 70 }]);
+      await wait(500);
+      await addLine([]);
+      await addLine([{ t: '\u25C6 Claude Code', c: p + ' font-bold', s: 0 }]);
+      await wait(300);
+
+      // === Q1: Who is Ivan? ===
+      await ask('Tell me about Ivan Wong');
+      await addLine([
+        { t: 'Ivan Wong is a ', c: m, s: sp },
+        { t: 'DevOps Manager', c: c, s: sp },
+        { t: ' at ', c: m, s: sp },
+        { t: 'Crypto.com', c: c, s: sp },
+        { t: ', based in Hong Kong.', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'He leads the Infra DevOps team \u2014 managing ', c: m, s: sp },
+        { t: 'geo-distributed Teleport platform', c: c, s: sp },
+        { t: ' on EKS', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'and building automations that cut ', c: m, s: sp },
+        { t: '90% of ops overhead', c: c, s: sp },
+        { t: '.', c: m, s: sp }
+      ]);
+
+      // === Q2: Hot-wallet vault ===
+      await ask('What is the hot-wallet vault?');
+      await addLine([
+        { t: 'A production ', c: m, s: sp },
+        { t: 'distributed hot-wallet vault', c: c, s: sp },
+        { t: ' for crypto custody.', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'It implements ', c: m, s: sp },
+        { t: 'uDDS', c: c, s: sp },
+        { t: ' \u2014 zero-knowledge ', c: m, s: sp },
+        { t: 'blind RSA decryption', c: c, s: sp },
+        { t: ' inside TEEs,', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'so the server never sees plaintext. ', c: m, s: sp },
+        { t: '9-node Raft cluster', c: c, s: sp },
+        { t: ' across 5 AWS', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'regions using ', c: m, s: sp },
+        { t: 'Nitro Enclaves', c: p, s: sp },
+        { t: ' + ', c: m, s: sp },
+        { t: 'Intel SGX', c: p, s: sp },
+        { t: '. Built in ', c: m, s: sp },
+        { t: 'Go', c: g, s: sp },
+        { t: ' and ', c: m, s: sp },
+        { t: 'Rust', c: g, s: sp },
+        { t: '.', c: m, s: sp }
+      ]);
+
+      // === Q3: Tech stack ===
+      await ask("What's his tech stack?");
+      await addLine([
+        { t: '  Infra:   ', c: m, s: 0 },
+        { t: 'Kubernetes \u00b7 Terraform \u00b7 Helm \u00b7 FluxCD \u00b7 Spacelift', c: c, s: sp }
+      ]);
+      await addLine([
+        { t: '  Monitor: ', c: m, s: 0 },
+        { t: 'Prometheus \u00b7 Grafana \u00b7 Thanos \u00b7 Loki \u00b7 Fluentd', c: c, s: sp }
+      ]);
+      await addLine([
+        { t: '  Dev:     ', c: m, s: 0 },
+        { t: 'Go \u00b7 Rust \u00b7 Python \u00b7 Bash \u00b7 React \u00b7 gRPC', c: g, s: sp }
+      ]);
+      await addLine([
+        { t: '  AI/ML:   ', c: m, s: 0 },
+        { t: 'LangChain \u00b7 LangGraph \u00b7 Claude API \u00b7 RAG \u00b7 MCP', c: p, s: sp }
+      ]);
+      await addLine([
+        { t: '  Cloud:   ', c: m, s: 0 },
+        { t: 'AWS (SA Pro) \u00b7 EKS \u00b7 Nitro Enclaves \u00b7 Azure SGX', c: p, s: sp }
+      ]);
+
+      // === Q4: Other notable projects ===
+      await ask('Any other notable projects?');
+      await addLine([
+        { t: 'Echo Bot', c: g, s: sp },
+        { t: ' \u2014 AI Slack assistant that learns your style and', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'replies on your behalf. RBAC knowledge system + ', c: m, s: sp },
+        { t: 'RAG', c: g, s: sp },
+        { t: ' + ', c: m, s: sp },
+        { t: 'Claude API', c: g, s: sp },
+        { t: '.', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'Foxly Invest', c: g, s: sp },
+        { t: ' \u2014 personal AI investment platform.', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'Microservice backend in Go & Python on K8s, with ', c: m, s: sp },
+        { t: 'LangChain', c: g, s: sp },
+        { t: ' + ', c: m, s: sp },
+        { t: 'MCP', c: g, s: sp },
+      ]);
+      await addLine([
+        { t: 'for AI-powered portfolio insights. Web, Android & iOS.', c: m, s: sp }
+      ]);
+
+      // === Q5: Research ===
+      await ask('What about research?');
+      await addLine([
+        { t: '"', c: p, s: sp },
+        { t: 'uDDS: Universal Distributed Data Sealing for TEE', c: p, s: sp },
+        { t: '"', c: p, s: sp }
+      ]);
+      await addLine([
+        { t: 'Accepted at ', c: m, s: sp },
+        { t: 'IEEE CSP 2026', c: p, s: sp },
+        { t: '. The academic foundation behind the', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'hot-wallet vault \u2014 ', c: m, s: sp },
+        { t: 'blind decryption', c: c, s: sp },
+        { t: ' + ', c: m, s: sp },
+        { t: 'Raft consensus', c: c, s: sp },
+        { t: ' in TEEs, validated', c: m, s: sp }
+      ]);
+      await addLine([
+        { t: 'on 9 AWS Nitro nodes across 5 regions with ', c: m, s: sp },
+        { t: '315ms latency', c: c, s: sp },
+        { t: '.', c: m, s: sp }
+      ]);
+
+      // === Final prompt with blinking cursor ===
+      await addLine([], 300);
+      await addLine([{ t: '> ', c: p, s: 0 }, { t: '', c: 'typing-cursor', s: 0 }]);
+    })();
+
+    // --- Scroll Fade-in ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+    // --- Navbar solid on scroll ---
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-bg/90', 'backdrop-blur-md', 'border-b', 'border-border');
+      } else {
+        navbar.classList.remove('bg-bg/90', 'backdrop-blur-md', 'border-b', 'border-border');
+      }
+    });
+
+    // --- Active nav link on scroll ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 100;
+        if (window.scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // --- Mobile menu toggle ---
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
