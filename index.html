@@ -228,9 +228,11 @@
       .fade-in-section { opacity: 1; transform: none; }
       html { scroll-behavior: auto; }
     }
+
   </style>
 </head>
 <body class="antialiased">
+
 
   <!-- ========== NAVIGATION ========== -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
@@ -238,12 +240,16 @@
       <a href="#hero" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
       <!-- Desktop links -->
       <div class="hidden md:flex items-center gap-8">
+        <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
         <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Work</a>
         <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
-        <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
-        <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
         <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
+        <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
         <a href="#contact" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contact</a>
+        <a href="cv.html" target="_blank" class="px-4 py-1.5 rounded-full bg-cyan text-bg font-mono font-semibold text-xs hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-1.5 no-underline">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          CV
+        </a>
       </div>
       <!-- Mobile hamburger -->
       <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
@@ -253,12 +259,16 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
       <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
         <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Work</a>
         <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
-        <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
-        <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
         <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
+        <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
         <a href="#contact" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contact</a>
+        <a href="cv.html" target="_blank" class="mt-2 px-4 py-2 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-2 w-full justify-center no-underline">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          Download CV
+        </a>
       </div>
     </div>
   </nav>
@@ -295,23 +305,7 @@
         </a>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8">
-        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
-          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">5+</div>
-          <div class="text-text-muted text-xs font-mono">years_devops</div>
-        </div>
-        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
-          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">8+</div>
-          <div class="text-text-muted text-xs font-mono">prod_systems</div>
-        </div>
-        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
-          <div class="font-mono font-bold text-2xl sm:text-3xl text-cyan mb-1">90%</div>
-          <div class="text-text-muted text-xs font-mono">ops_automated</div>
-        </div>
-        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
-          <div class="font-mono font-bold text-2xl sm:text-3xl text-purple mb-1">AWS</div>
-          <div class="text-text-muted text-xs font-mono">sa_professional</div>
-        </div>
+      <div id="hero-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8">
       </div>
 
       <div class="text-center">
@@ -322,627 +316,8 @@
     </div>
   </section>
 
-  <!-- ========== PROJECTS ========== -->
-  <section id="projects" class="py-24 px-6 bg-surface/30">
-    <div class="max-w-6xl mx-auto">
-      <div class="fade-in-section">
-        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Work <span class="text-cyan">Projects</span>
-        </h2>
-        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Highlights from building and scaling infrastructure at Crypto.com</p>
-      </div>
-      <!-- Hot-Wallet Vault: Highlighted full-width card -->
-      <div class="fade-in-section mb-8">
-        <div class="card-hover terminal-window border-cyan/30 relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-cyan/5 via-transparent to-purple/5 pointer-events-none"></div>
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">hot-wallet-vault.go</span>
-            <span class="ml-auto text-xs font-mono text-cyan px-2 py-0.5 rounded-full border border-cyan/30 bg-cyan/10">featured</span>
-          </div>
-          <div class="p-8 relative">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div class="lg:col-span-2">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-12 h-12 rounded-lg bg-cyan/10 flex items-center justify-center">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-cyan"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-heading font-bold text-xl text-text-primary">Hot-Wallet Vault</h3>
-                    <p class="text-cyan text-xs font-mono">Distributed Zero-Knowledge Data Sealing</p>
-                  </div>
-                </div>
-                <p class="text-text-muted text-sm mb-4 leading-relaxed">Production distributed vault system for cryptocurrency hot-wallet custody. Implements the uDDS (Universal Distributed Data Sealing) framework — zero-knowledge blind RSA decryption inside Trusted Execution Environments, where the server performs cryptographic operations on blinded data without ever seeing plaintext.</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
-                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>9-node Raft cluster across 5 AWS regions (315ms p99 latency)</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Multi-TEE: AWS Nitro Enclaves + Intel SGX on Azure</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Blind RSA decryption with PKCS#1 v1.5 padding</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>AES-256-GCM encrypted Raft transport, VSOCK enclave comms</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Rust-based Nitro enclave proxy (iproxy/oproxy)</li>
-                </ul>
-              </div>
-              <div class="flex flex-col justify-center">
-                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
-                  <div class="text-cyan mb-2">// cluster topology</div>
-                  <div class="text-green">nodes:    <span class="text-text-primary">9</span></div>
-                  <div class="text-green">regions:  <span class="text-text-primary">5</span></div>
-                  <div class="text-green">quorum:   <span class="text-text-primary">5/9</span></div>
-                  <div class="text-green">latency:  <span class="text-text-primary">315ms p99</span></div>
-                  <div class="text-green">tee:      <span class="text-text-primary">Nitro + SGX</span></div>
-                  <div class="text-green">crypto:   <span class="text-text-primary">blind RSA</span></div>
-                  <div class="text-green">status:   <span class="text-cyan">● production</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 mt-4">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Go</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Rust</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Raft</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">AWS Nitro</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Intel SGX</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">K8s / ArgoCD</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Blind Cryptography</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Echo Bot: Highlighted full-width card -->
-      <div class="fade-in-section mb-8">
-        <div class="card-hover terminal-window border-purple/30 relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-purple/5 via-transparent to-cyan/5 pointer-events-none"></div>
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">echo-bot ~ python main.py</span>
-            <span class="ml-auto text-xs font-mono text-purple px-2 py-0.5 rounded-full border border-purple/30 bg-purple/10">featured</span>
-          </div>
-          <div class="p-8 relative">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div class="lg:col-span-2">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-12 h-12 rounded-lg bg-purple/10 flex items-center justify-center">
-                    <i data-lucide="message-circle" class="w-6 h-6 text-purple"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-heading font-bold text-xl text-text-primary">Echo Bot — AI Slack Assistant</h3>
-                    <p class="text-purple text-xs font-mono">Intelligent Knowledge Management & Auto-Reply</p>
-                  </div>
-                </div>
-                <p class="text-text-muted text-sm mb-4 leading-relaxed">AI-powered Slack bot that learns communication styles and responds on your behalf. Features a full RBAC knowledge management system with topic-based organization, semantic vector search, and adaptive response generation — turning institutional knowledge into instant, context-aware replies.</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
-                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RBAC with topic-based knowledge, user traits, and invitation system</li>
-                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RAG pipeline with sentence transformer embeddings & similarity search</li>
-                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>LangChain + Claude API for style-adaptive response generation</li>
-                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Portal UI for knowledge management, training data, and analytics</li>
-                  <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Multi-channel Slack support with auto-reply and mention detection</li>
-                </ul>
-              </div>
-              <div class="flex flex-col justify-center">
-                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
-                  <div class="text-purple mb-2">// echo-bot pipeline</div>
-                  <div class="text-green">input:     <span class="text-text-primary">Slack msg</span></div>
-                  <div class="text-green">embed:     <span class="text-text-primary">SentenceTransformer</span></div>
-                  <div class="text-green">retrieve:  <span class="text-text-primary">vector similarity</span></div>
-                  <div class="text-green">context:   <span class="text-text-primary">RBAC + traits</span></div>
-                  <div class="text-green">generate:  <span class="text-text-primary">Claude API</span></div>
-                  <div class="text-green">output:    <span class="text-text-primary">adaptive reply</span></div>
-                  <div class="text-green">status:    <span class="text-purple">&bull; production</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 mt-4">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Python</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">LangChain</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-purple/30 text-purple">Claude API</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Flask</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">MongoDB</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Slack SDK</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Sentence Transformers</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">RAG</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">RBAC</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Teleport: Highlighted full-width card -->
-      <div class="fade-in-section mb-8">
-        <div class="card-hover terminal-window border-green/30 relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-green/5 via-transparent to-cyan/5 pointer-events-none"></div>
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">teleport-platform.yaml</span>
-            <span class="ml-auto text-xs font-mono text-green px-2 py-0.5 rounded-full border border-green/30 bg-green/10">featured</span>
-          </div>
-          <div class="p-8 relative">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div class="lg:col-span-2">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-12 h-12 rounded-lg bg-green/10 flex items-center justify-center">
-                    <i data-lucide="server" class="w-6 h-6 text-green"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-heading font-bold text-xl text-text-primary">Teleport — Geo-Distributed Access Platform</h3>
-                    <p class="text-green text-xs font-mono">High-Availability PAM Infrastructure at Scale</p>
-                  </div>
-                </div>
-                <p class="text-text-muted text-sm mb-4 leading-relaxed">Enterprise-scale Privileged Access Management platform with a unified Teleport cluster geo-distributed across 3 AWS regions backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents spanning AWS, Azure, and GCP — plus automated access request workflows, Slack notifications, and Okta identity integration.</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">
-                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Geo-distributed across 3 AWS regions with CockroachDB backend</li>
-                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Teleport agents across AWS, Azure, and GCP</li>
-                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Fully GitOps: FluxCD/ArgoCD + Spacelift for infrastructure</li>
-                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>High availability with autoscaling on EKS</li>
-                  <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Go-based PAM orchestrator: Slack + Okta + auto-approval workflows</li>
-                </ul>
-              </div>
-              <div class="flex flex-col justify-center">
-                <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
-                  <div class="text-green mb-2">// teleport platform</div>
-                  <div class="text-green">cluster:   <span class="text-text-primary">unified HA</span></div>
-                  <div class="text-green">regions:   <span class="text-text-primary">3 (AWS)</span></div>
-                  <div class="text-green">backend:   <span class="text-text-primary">CockroachDB</span></div>
-                  <div class="text-green">agents:    <span class="text-text-primary">AWS + Azure + GCP</span></div>
-                  <div class="text-green">deploy:    <span class="text-text-primary">GitOps (Flux)</span></div>
-                  <div class="text-green">infra:     <span class="text-text-primary">Terraform + Spacelift</span></div>
-                  <div class="text-green">status:    <span class="text-green">&bull; production</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 mt-4">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-green/30 text-green">Go</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-green/30 text-green">gRPC</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">EKS</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">CockroachDB</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-cyan/30 text-cyan">Teleport</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">FluxCD / ArgoCD</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Spacelift</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Okta</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Remaining work project cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card: Security Canary Platform -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">canary-deploy.tf</span>
-          </div>
-          <div class="p-6">
-            <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center mb-4">
-              <i data-lucide="radar" class="w-5 h-5 text-purple"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Security Canary Platform</h3>
-            <p class="text-text-muted text-sm mb-4 leading-relaxed">Enterprise security monitoring platform that auto-deploys canary resources across AWS Organization accounts with zero-touch IAM provisioning via CloudFormation StackSets.</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Spacelift</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">AWS Orgs</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">StackSets</span>
-            </div>
-          </div>
-        </div>
-        <!-- Card: Observability -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">observability.yaml</span>
-          </div>
-          <div class="p-6">
-            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
-              <i data-lucide="activity" class="w-5 h-5 text-cyan"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Observability Platform</h3>
-            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and deployed monitoring dashboards and alert automations for multiple applications with Prometheus, Thanos, Loki and Grafana.</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Prometheus</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Thanos</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Grafana</span>
-            </div>
-          </div>
-        </div>
-        <!-- Card: Log Pipeline -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">logging.yaml</span>
-          </div>
-          <div class="p-6">
-            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
-              <i data-lucide="scroll-text" class="w-5 h-5 text-cyan"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Log Pipeline Architecture</h3>
-            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and deployed critical logs pipeline with Fluent-bit and Fluentd for reliable log collection and forwarding at scale.</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Fluent-bit</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Fluentd</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">EKS</span>
-            </div>
-          </div>
-        </div>
-        <!-- Card: IaC Automation -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">infra.tf</span>
-          </div>
-          <div class="p-6">
-            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
-              <i data-lucide="workflow" class="w-5 h-5 text-cyan"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">IaC Automation Suite</h3>
-            <p class="text-text-muted text-sm mb-4 leading-relaxed">Designed and developed pipelines for applications and network infrastructure with Terraform, Python, and GitHub Actions.</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Python</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">GitHub Actions</span>
-            </div>
-          </div>
-        </div>
-        <!-- Card: Operations Automation -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">automate.go</span>
-          </div>
-          <div class="p-6">
-            <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center mb-4">
-              <i data-lucide="bot" class="w-5 h-5 text-green"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Operations Automation</h3>
-            <p class="text-text-muted text-sm mb-4 leading-relaxed">Developed multiple automations with Go, Python, and Terraform that reduced 90% of manual operations overhead.</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Go</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Python</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Terraform</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== FOXLY INVEST ========== -->
-  <section id="foxly" class="py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="fade-in-section">
-        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Personal <span class="text-cyan">Projects</span>
-        </h2>
-        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Side projects built from the ground up</p>
-      </div>
-
-      <div class="fade-in-section mb-3">
-        <h3 class="font-heading font-semibold text-xl text-text-primary flex items-center gap-2">
-          <i data-lucide="trending-up" class="w-5 h-5 text-cyan"></i>
-          Foxly Invest
-        </h3>
-      </div>
-
-      <div class="fade-in-section terminal-window mb-8">
-        <div class="terminal-titlebar">
-          <div class="terminal-dot bg-red-500"></div>
-          <div class="terminal-dot bg-yellow-500"></div>
-          <div class="terminal-dot bg-green-500"></div>
-          <span class="terminal-title">foxly-invest ~ kubectl get pods</span>
-        </div>
-        <div class="terminal-body">
-          <p class="text-text-muted mb-4 text-sm"><span class="text-green">$</span> <span class="text-text-primary">cat README.md</span></p>
-          <p class="text-text-muted text-sm leading-relaxed mb-6">
-            A full-stack AI investment portfolio platform that delivers tailored news summaries, insights, and analysis based on your portfolio — crafted to save time and help users make confident investment decisions. Built as a production-grade microservices system from the ground up.
-          </p>
-          <a href="https://www.foxlyinvest.com/" target="_blank" rel="noopener"
-             class="inline-flex items-center gap-2 text-cyan font-mono text-sm hover:underline">
-            <i data-lucide="external-link" class="w-4 h-4"></i>
-            www.foxlyinvest.com
-          </a>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- Architecture -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">architecture.yaml</span>
-          </div>
-          <div class="p-6">
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
-              <i data-lucide="layout-grid" class="w-5 h-5 text-cyan"></i>
-              System Architecture
-            </h3>
-            <ul class="text-text-muted text-sm space-y-2 list-none font-mono">
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Microservice backend in Go and Python</li>
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Deployed on Kubernetes (production K8s cluster)</li>
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Web client + Android + iOS apps</li>
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Real-time market data and news pipelines</li>
-            </ul>
-          </div>
-        </div>
-        <!-- AI / ML -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">ai-agents.py</span>
-          </div>
-          <div class="p-6">
-            <h3 class="font-heading font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
-              <i data-lucide="brain" class="w-5 h-5 text-purple"></i>
-              AI & Agent Workflows
-            </h3>
-            <ul class="text-text-muted text-sm space-y-2 list-none font-mono">
-              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>LangChain + LangGraph for LLM orchestration</li>
-              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>MCP (Model Context Protocol) for agent tooling</li>
-              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>RAG pipeline with vector DB for knowledge retrieval</li>
-              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Claude & OpenAI APIs for multi-model inference</li>
-              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>AI-powered news summaries and portfolio insights</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tech tags -->
-      <div class="fade-in-section flex flex-wrap justify-center gap-3">
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Go</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Python</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">Kubernetes</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">LangChain</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">LangGraph</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">MCP</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">RAG</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">Claude API</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">OpenAI API</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">React</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">Android</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-purple/30 text-purple bg-purple/5">iOS</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">Microservices</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">AI Agents</span>
-        <span class="text-xs font-mono px-3 py-1.5 rounded-full border border-green/30 text-green bg-green/5">Vector DB</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========== SKILLS ========== -->
-  <section id="skills" class="py-24 px-6 bg-surface/30">
-    <div class="max-w-5xl mx-auto">
-      <div class="fade-in-section">
-        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Tech <span class="text-cyan">Stack</span>
-        </h2>
-      </div>
-
-      <!-- Infrastructure & Orchestration -->
-      <div class="fade-in-section mb-10">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="container" class="w-4 h-4 text-cyan"></i>
-          infrastructure && orchestration
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-kubernetes-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Kubernetes</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-docker-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Docker</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-helm-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Helm</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-flux-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">FluxCD</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-terraform-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Terraform</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="layers" class="w-4 h-4 text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Spacelift</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Monitoring & Observability -->
-      <div class="fade-in-section mb-10">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="bar-chart-3" class="w-4 h-4 text-cyan"></i>
-          monitoring && observability
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-prometheus-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Prometheus</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-grafana-plain text-lg text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Grafana</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="eye" class="w-4 h-4 text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Thanos</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="file-text" class="w-4 h-4 text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Loki</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="arrow-right-left" class="w-4 h-4 text-cyan"></i>
-            <span class="text-sm font-mono text-text-primary">Fluentd</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Development -->
-      <div class="fade-in-section mb-10">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="code-2" class="w-4 h-4 text-green"></i>
-          development
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-go-plain text-lg text-green"></i>
-            <span class="text-sm font-mono text-text-primary">Go</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-python-plain text-lg text-green"></i>
-            <span class="text-sm font-mono text-text-primary">Python</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-bash-plain text-lg text-green"></i>
-            <span class="text-sm font-mono text-text-primary">Bash</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-react-original text-lg text-green"></i>
-            <span class="text-sm font-mono text-text-primary">React</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-graphql-plain text-lg text-green"></i>
-            <span class="text-sm font-mono text-text-primary">GraphQL</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="arrow-left-right" class="w-4 h-4 text-green"></i>
-            <span class="text-sm font-mono text-text-primary">gRPC</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- AI & Machine Learning -->
-      <div class="fade-in-section mb-10">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="brain" class="w-4 h-4 text-purple"></i>
-          ai && machine_learning
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="link" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">LangChain</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="workflow" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">LangGraph</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="bot" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">Claude API</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="sparkles" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">OpenAI API</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="database" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">RAG</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="scan-search" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">Vector DB</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="users" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">AI Agents</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="message-square" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">Prompt Engineering</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="wrench" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">MCP</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="code" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">Claude Code</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cloud & Data -->
-      <div class="fade-in-section mb-10">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="cloud" class="w-4 h-4 text-purple"></i>
-          cloud && data
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-amazonwebservices-plain-wordmark text-lg text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">AWS (SA Pro)</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="box" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">EKS</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i data-lucide="database" class="w-4 h-4 text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">RDS</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-mongodb-plain text-lg text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">MongoDB</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <i class="devicon-redis-plain text-lg text-purple"></i>
-            <span class="text-sm font-mono text-text-primary">Redis</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Practices -->
-      <div class="fade-in-section">
-        <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
-          <i data-lucide="repeat" class="w-4 h-4 text-green"></i>
-          practices
-        </h3>
-        <div class="flex flex-wrap gap-3">
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <span class="text-sm font-mono text-text-primary">CI/CD</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <span class="text-sm font-mono text-text-primary">GitOps</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <span class="text-sm font-mono text-text-primary">High Availability</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <span class="text-sm font-mono text-text-primary">Cloud-native</span>
-          </div>
-          <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
-            <span class="text-sm font-mono text-text-primary">Agile / Scrum</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ========== EXPERIENCE ========== -->
-  <section id="experience" class="py-24 px-6">
+  <section id="experience" class="py-16 px-6 bg-surface/30">
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-16 text-center">
@@ -951,234 +326,44 @@
       </div>
 
       <div class="relative">
-        <!-- Timeline line (hidden on mobile, shown on md+) -->
         <div class="timeline-line hidden md:block"></div>
-
-        <!-- Mobile timeline line -->
         <div class="timeline-line md:hidden"></div>
-
-        <!-- Entry 1: Manager -->
-        <div class="fade-in-section relative mb-12 md:mb-16">
-          <div class="timeline-dot"></div>
-          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
-            <div class="terminal-window">
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">crypto.com/manager</span>
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
-                </div>
-                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Infra DevOps Manager</h3>
-                <p class="text-text-muted text-xs font-mono mb-3">Jan 2023 — Present · Hong Kong</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none">
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Leading the Infra DevOps team, coordinating projects and guiding junior engineers</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Driving DevOps integration with the Network team for daily operations</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed automations that reduced 90% of operational overhead</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Entry 2: Senior Engineer -->
-        <div class="fade-in-section relative mb-12 md:mb-16">
-          <div class="timeline-dot"></div>
-          <div class="md:w-[calc(50%-40px)] pl-12 md:pl-0 md:pr-10">
-            <div class="terminal-window">
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">crypto.com/senior</span>
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
-                </div>
-                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Senior Engineer, Infra DevOps</h3>
-                <p class="text-text-muted text-xs font-mono mb-3">Jan 2023 — Present · Hong Kong</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none">
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Manage geo-distributed Teleport platform across 3 regions on EKS with CockroachDB</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Deployed monitoring dashboards with Prometheus, Thanos, Loki & Grafana</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed critical logs pipeline with Fluent-bit and Fluentd</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Entry 3: Engineer -->
-        <div class="fade-in-section relative mb-12 md:mb-16">
-          <div class="timeline-dot"></div>
-          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
-            <div class="terminal-window">
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">crypto.com/engineer</span>
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-cyan font-mono font-semibold text-sm">Crypto.com</span>
-                </div>
-                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Engineer, Infra DevOps</h3>
-                <p class="text-text-muted text-xs font-mono mb-3">Jan 2022 — Jan 2023 · Hong Kong</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none">
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Deployed apps on EKS with Dockerfiles, Helm Charts and Helmfiles</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed CI/CD pipelines with GitHub Action, ECR, OPA and ArgoCD</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Developed Terraform stacks for provisioning AWS resources</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Entry 4: Ahsay -->
-        <div class="fade-in-section relative mb-12 md:mb-16">
-          <div class="timeline-dot"></div>
-          <div class="md:w-[calc(50%-40px)] pl-12 md:pl-0 md:pr-10">
-            <div class="terminal-window">
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">ahsay/analyst</span>
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-cyan font-mono font-semibold text-sm">Ahsay Systems</span>
-                </div>
-                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Software Analyst</h3>
-                <p class="text-text-muted text-xs font-mono mb-3">Jul 2021 — Nov 2021 · Hong Kong</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none">
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Designed a disaster recovery system for on-premise Hyper-V on Azure</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>Developed a prototype with automatic network setups in Java</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Entry 5: Earlier Roles -->
-        <div class="fade-in-section relative">
-          <div class="timeline-dot"></div>
-          <div class="md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10">
-            <div class="terminal-window">
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">git log --oneline</span>
-              </div>
-              <div class="p-6">
-                <h3 class="font-heading font-bold text-text-primary text-lg mb-1">Earlier Roles</h3>
-                <p class="text-text-muted text-xs font-mono mb-3">2017 — 2018</p>
-                <ul class="text-text-muted text-sm space-y-1.5 list-none">
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span><strong class="text-text-primary font-medium">Ahsay Systems</strong> — Developed AhsayOBM for QNAP, now a mainstream product</li>
-                  <li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span><strong class="text-text-primary font-medium">Oyalabs</strong> — Built a React Native mobile app with AWS serverless backend</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="experience-entries"></div>
       </div>
     </div>
   </section>
 
-  <!-- ========== EDUCATION & CERTIFICATIONS ========== -->
-  <section id="education" class="py-24 px-6 bg-surface/30">
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Work <span class="text-cyan">Projects</span>
+        </h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Highlights from building and scaling infrastructure at Crypto.com</p>
+      </div>
+      <div id="projects-featured"></div>
+      <div id="projects-other" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ========== FOXLY INVEST ========== -->
+  <section id="foxly" class="py-16 px-6 bg-surface/30">
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
-        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Education & <span class="text-cyan">Certifications</span>
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Personal <span class="text-cyan">Projects</span>
         </h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Side projects built from the ground up</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- MPhil -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">mphil.md</span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
-                <i data-lucide="graduation-cap" class="w-5 h-5 text-purple"></i>
-              </div>
-              <div>
-                <h3 class="font-heading font-bold text-text-primary">MPhil Computer Science</h3>
-                <p class="text-text-muted text-xs font-mono">The Chinese University of Hong Kong</p>
-              </div>
-            </div>
-            <p class="text-text-muted text-xs font-mono mb-3">Aug 2019 — Jul 2021</p>
-            <ul class="text-text-muted text-sm space-y-1.5 list-none">
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Supervisor: Prof. Patrick P. C. Lee</li>
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Research on distributed systems, Raft consensus, and data replication</li>
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Raft consensus, high availability, distributed systems</li>
-            </ul>
-          </div>
-        </div>
-        <!-- BSc -->
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">bsc.md</span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
-                <i data-lucide="award" class="w-5 h-5 text-purple"></i>
-              </div>
-              <div>
-                <h3 class="font-heading font-bold text-text-primary">BSc Computer Science</h3>
-                <p class="text-text-muted text-xs font-mono">The Chinese University of Hong Kong</p>
-              </div>
-            </div>
-            <p class="text-text-muted text-xs font-mono mb-3">Sep 2015 — Jul 2019</p>
-            <ul class="text-text-muted text-sm space-y-1.5 list-none">
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>First Class Honours — CGPA: 3.55 / 4.0</li>
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Minor in Information Engineering</li>
-              <li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>Dean's List & Head List (2016, 2018, 2019)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <div id="foxly-content"></div>
 
-      <!-- Certification -->
-      <div class="fade-in-section max-w-md mx-auto">
-        <a href="https://www.credly.com/badges/3e4c61e3-9c14-4c62-897e-f78785e10152" target="_blank" rel="noopener"
-           class="block card-hover terminal-window text-center group">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div>
-            <div class="terminal-dot bg-yellow-500"></div>
-            <div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">certification.json</span>
-          </div>
-          <div class="p-6">
-            <div class="w-12 h-12 rounded-lg bg-cyan/10 flex items-center justify-center mx-auto mb-3">
-              <i data-lucide="shield-check" class="w-6 h-6 text-cyan"></i>
-            </div>
-            <h3 class="font-heading font-bold text-text-primary mb-1">AWS Solutions Architect — Professional</h3>
-            <p class="text-text-muted text-xs font-mono mb-2">Dec 2022 — Dec 2025</p>
-            <span class="text-cyan text-sm font-mono group-hover:underline">View on Credly →</span>
-          </div>
-        </a>
-      </div>
     </div>
   </section>
 
   <!-- ========== PUBLICATIONS ========== -->
-  <section id="publications" class="py-24 px-6">
+  <section id="publications" class="py-16 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
@@ -1187,86 +372,38 @@
         <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Peer-reviewed research in confidential computing and distributed systems</p>
       </div>
 
-      <div class="fade-in-section terminal-window mb-6">
-        <div class="terminal-titlebar">
-          <div class="terminal-dot bg-red-500"></div>
-          <div class="terminal-dot bg-yellow-500"></div>
-          <div class="terminal-dot bg-green-500"></div>
-          <span class="terminal-title">udds-paper.bib</span>
-        </div>
-        <div class="terminal-body">
-          <div class="mb-4">
-            <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat citation.bib</p>
-            <div class="pl-0">
-              <h3 class="font-heading font-bold text-text-primary text-xl mb-1">uDDS: Universal Distributed Data Sealing for TEE</h3>
-              <p class="text-text-muted text-sm font-mono mb-3">
-                <span class="text-cyan">Ivan Tsz Fung Wong</span>, Sam Ng, Jason Lau
-              </p>
-              <p class="text-text-muted text-xs font-mono mb-1">Accepted — 2026 10th International Conference on Cryptography, Security and Privacy (CSP 2026)</p>
-              <p class="text-text-muted text-xs font-mono mb-4">IEEE · Confidential Computing · 2026</p>
-            </div>
-          </div>
+      <div id="publications-content"></div>
+    </div>
+  </section>
 
-          <div class="mb-6">
-            <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat abstract.txt</p>
-            <p class="text-text-muted text-sm leading-relaxed">
-              Trusted Execution Environments (TEEs) provide hardware-rooted confidentiality, yet their native sealing mechanisms remain platform-specific. uDDS is a Universal Distributed Data Sealing framework that provides a single, unified sealing interface across heterogeneous TEEs while preserving data confidentiality even from the sealing service operator.
-            </p>
-          </div>
-
-          <p class="font-mono text-xs text-text-muted mb-3"><span class="text-green">$</span> cat contributions.md</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="rounded-lg border border-border bg-surface/50 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="eye-off" class="w-4 h-4 text-cyan"></i>
-                <span class="font-mono text-sm text-cyan">Blind Decryption</span>
-              </div>
-              <p class="text-text-muted text-xs leading-relaxed">Operator-oblivious unsealing — clients blind their ciphertext so uDDS decrypts without ever learning the plaintext.</p>
-            </div>
-            <div class="rounded-lg border border-border bg-surface/50 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="shield" class="w-4 h-4 text-green"></i>
-                <span class="font-mono text-sm text-green">Raft Consensus</span>
-              </div>
-              <p class="text-text-muted text-xs leading-relaxed">Volatile-only secret replication across TEE memory via Raft — crash fault tolerance and rollback resistance without persistent storage.</p>
-            </div>
-            <div class="rounded-lg border border-border bg-surface/50 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="plug" class="w-4 h-4 text-purple"></i>
-                <span class="font-mono text-sm text-purple">Universal TEE Interface</span>
-              </div>
-              <p class="text-text-muted text-xs leading-relaxed">A single sealing API across SGX, TrustZone, and Nitro Enclaves — write once, deploy to any platform without modification.</p>
-            </div>
-            <div class="rounded-lg border border-border bg-surface/50 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="globe" class="w-4 h-4 text-cyan"></i>
-                <span class="font-mono text-sm text-cyan">Production Validated</span>
-              </div>
-              <p class="text-text-muted text-xs leading-relaxed">9-node AWS Nitro deployment across 5 regions — 315ms unsealing latency with full attestation and geographic fault tolerance.</p>
-            </div>
-          </div>
-
-          <div class="mt-5 pt-4 border-t border-border">
-            <p class="font-mono text-xs text-text-muted">
-              <span class="text-green">$</span> echo $KEYWORDS
-            </p>
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">TEE</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Data Sealing</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Confidential Computing</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Distributed Consensus</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Blind Decryption</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">AWS Nitro</span>
-              <span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">Intel SGX</span>
-            </div>
-          </div>
-        </div>
+  <!-- ========== EDUCATION & CERTIFICATIONS ========== -->
+  <section id="education" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Education & <span class="text-cyan">Certifications</span>
+        </h2>
       </div>
+
+      <div id="education-content"></div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section id="skills" class="py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Tech <span class="text-cyan">Stack</span>
+        </h2>
+      </div>
+
+      <div id="skills-content"></div>
     </div>
   </section>
 
   <!-- ========== CONTACT / FOOTER ========== -->
-  <section id="contact" class="py-24 px-6 bg-surface/30">
+  <section id="contact" class="py-16 px-6 bg-surface/30">
     <div class="max-w-3xl mx-auto text-center">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4">
@@ -1286,8 +423,8 @@
           </a>
         </div>
 
-        <a href="ivan-wong-cv.pdf" download
-           class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-shadow">
+        <a href="cv.html" target="_blank"
+           class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer no-underline">
           <i data-lucide="download" class="w-4 h-4"></i>
           Download CV
         </a>
@@ -1300,7 +437,376 @@
   </footer>
 
   <!-- ========== SCRIPTS ========== -->
+  <!-- CV data as JS variable (works on file:// protocol; fetch used first when served over HTTP) -->
+  <script src="cv-data.js"></script>
   <script>
+    // --- Data-Driven Content Loading ---
+    function loadData() {
+      const data = CV_DATA;
+      renderHeroStats(data.hero.stats);
+      renderExperience(data.experience);
+      renderProjects(data.projects);
+      renderFoxly(data.personal);
+      renderSkills(data.skills);
+      renderPublications(data.publications);
+      renderEducation(data.education, data.certifications);
+      // Re-initialize Lucide icons for dynamically added elements
+      lucide.createIcons();
+      // Re-observe new fade-in-section elements
+      document.querySelectorAll('.fade-in-section:not(.observed)').forEach(el => {
+        el.classList.add('observed');
+        observer.observe(el);
+      });
+    }
+
+    function renderHeroStats(stats) {
+      const container = document.getElementById('hero-stats');
+      container.innerHTML = stats.map(s => `
+        <div class="text-center p-4 rounded-xl border border-border bg-surface/50 backdrop-blur-sm">
+          <div class="font-mono font-bold text-2xl sm:text-3xl ${s.label === 'sa_professional' ? 'text-purple' : 'text-cyan'} mb-1">${s.value}</div>
+          <div class="text-text-muted text-xs font-mono">${s.label}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderExperience(experience) {
+      const container = document.getElementById('experience-entries');
+      container.innerHTML = experience.map((exp, i) => {
+        const isLast = i === experience.length - 1;
+        const mbClass = isLast ? '' : 'mb-6 md:mb-8';
+        const sideClass = exp.side === 'right'
+          ? 'md:w-[calc(50%-40px)] md:ml-auto pl-12 md:pl-10'
+          : 'md:w-[calc(50%-40px)] pl-12 md:pl-0 md:pr-10';
+
+        let bodyHtml;
+        if (exp.entries) {
+          const items = exp.entries.map(e =>
+            `<li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span><strong class="text-text-primary font-medium">${e.company}</strong> — ${e.description}</li>`
+          ).join('');
+          bodyHtml = `
+            <h3 class="font-heading font-bold text-text-primary text-lg mb-1">${exp.title}</h3>
+            <p class="text-text-muted text-xs font-mono mb-3">${exp.duration}</p>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none">${items}</ul>
+          `;
+        } else {
+          const bullets = exp.bullets.map(b =>
+            `<li class="flex items-start gap-2"><span class="text-cyan mt-1.5 shrink-0">▸</span>${b}</li>`
+          ).join('');
+          bodyHtml = `
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-cyan font-mono font-semibold text-sm">${exp.company}</span>
+            </div>
+            <h3 class="font-heading font-bold text-text-primary text-lg mb-1">${exp.title}</h3>
+            <p class="text-text-muted text-xs font-mono mb-3">${exp.duration} · ${exp.location}</p>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none">${bullets}</ul>
+          `;
+        }
+
+        return `
+          <div class="fade-in-section relative ${mbClass}">
+            <div class="timeline-dot"></div>
+            <div class="${sideClass}">
+              <div class="terminal-window">
+                <div class="terminal-titlebar">
+                  <div class="terminal-dot bg-red-500"></div>
+                  <div class="terminal-dot bg-yellow-500"></div>
+                  <div class="terminal-dot bg-green-500"></div>
+                  <span class="terminal-title">${exp.terminalTitle}</span>
+                </div>
+                <div class="p-6">${bodyHtml}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderProjects(projects) {
+      const featuredContainer = document.getElementById('projects-featured');
+      const otherContainer = document.getElementById('projects-other');
+
+      featuredContainer.innerHTML = projects.featured.map(p => {
+        const bullets = p.bullets.map(b =>
+          `<li class="flex items-start gap-2"><span class="text-${p.accentColor} shrink-0">$</span>${b}</li>`
+        ).join('');
+        const tags = p.tags.map(t => {
+          const borderCls = t.color === 'muted' ? 'border-border' : `border-${t.color}/30`;
+          const textCls = t.color === 'muted' ? 'text-text-muted' : `text-${t.color}`;
+          return `<span class="text-xs font-mono px-2 py-1 rounded-full border ${borderCls} ${textCls}">${t.label}</span>`;
+        }).join('');
+        const metaLines = Object.entries(p.meta).map(([k, v]) => {
+          const valCls = k === 'status' ? `text-${p.accentColor}` : 'text-text-primary';
+          const prefix = k === 'status' ? '● ' : '';
+          return `<div class="text-green">${k}:${' '.repeat(Math.max(1, 10 - k.length))}<span class="${valCls}">${prefix}${v}</span></div>`;
+        }).join('');
+
+        return `
+          <div class="fade-in-section mb-8">
+            <div class="card-hover terminal-window border-${p.accentColor}/30 relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-br from-${p.accentColor}/5 via-transparent to-${p.accentColor === 'cyan' ? 'purple' : 'cyan'}/5 pointer-events-none"></div>
+              <div class="terminal-titlebar">
+                <div class="terminal-dot bg-red-500"></div>
+                <div class="terminal-dot bg-yellow-500"></div>
+                <div class="terminal-dot bg-green-500"></div>
+                <span class="terminal-title">${p.terminalTitle}</span>
+                <span class="ml-auto text-xs font-mono text-${p.accentColor} px-2 py-0.5 rounded-full border border-${p.accentColor}/30 bg-${p.accentColor}/10">featured</span>
+              </div>
+              <div class="p-8 relative">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                      <div class="w-12 h-12 rounded-lg bg-${p.accentColor}/10 flex items-center justify-center">
+                        <i data-lucide="${p.icon}" class="w-6 h-6 text-${p.accentColor}"></i>
+                      </div>
+                      <div>
+                        <h3 class="font-heading font-bold text-xl text-text-primary">${p.title}</h3>
+                        <p class="text-${p.accentColor} text-xs font-mono">${p.subtitle}</p>
+                      </div>
+                    </div>
+                    <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.description}</p>
+                    <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">${bullets}</ul>
+                  </div>
+                  <div class="flex flex-col justify-center">
+                    <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
+                      <div class="text-${p.accentColor} mb-2">// ${p.terminalTitle.replace(/\.\w+$/, '')}</div>
+                      ${metaLines}
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4">${tags}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      otherContainer.innerHTML = projects.other.map(p => {
+        const tags = p.tags.map(t => {
+          const borderCls = t.color === 'muted' ? 'border-border' : `border-${t.color}/30`;
+          const textCls = t.color === 'muted' ? 'text-text-muted' : `text-${t.color}`;
+          return `<span class="text-xs font-mono px-2 py-1 rounded-full border ${borderCls} ${textCls}">${t.label}</span>`;
+        }).join('');
+        const iconColor = p.iconColor || 'cyan';
+        return `
+          <div class="fade-in-section card-hover terminal-window">
+            <div class="terminal-titlebar">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+              <span class="terminal-title">${p.terminalTitle}</span>
+            </div>
+            <div class="p-6">
+              <div class="w-10 h-10 rounded-lg bg-${iconColor}/10 flex items-center justify-center mb-4">
+                <i data-lucide="${p.icon}" class="w-5 h-5 text-${iconColor}"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">${p.title}</h3>
+              <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.description}</p>
+              <div class="flex flex-wrap gap-2">${tags}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFoxly(personal) {
+      const container = document.getElementById('foxly-content');
+      const detailCards = personal.details.map(d => {
+        const markerColor = d.accentColor === 'purple' ? 'text-purple' : 'text-green';
+        const bullets = d.bullets.map(b =>
+          `<li class="flex items-start gap-2"><span class="${markerColor} shrink-0">$</span>${b}</li>`
+        ).join('');
+        return `
+          <div class="fade-in-section card-hover terminal-window">
+            <div class="terminal-titlebar">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+              <span class="terminal-title">${d.terminalTitle}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-heading font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
+                <i data-lucide="${d.icon}" class="w-5 h-5 text-${d.accentColor}"></i>
+                ${d.title}
+              </h3>
+              <ul class="text-text-muted text-sm space-y-2 list-none font-mono">${bullets}</ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const tags = personal.tags.map(t =>
+        `<span class="text-xs font-mono px-3 py-1.5 rounded-full border border-${t.color}/30 text-${t.color} bg-${t.color}/5">${t.label}</span>`
+      ).join('');
+
+      container.innerHTML = `
+        <div class="fade-in-section mb-3">
+          <h3 class="font-heading font-semibold text-xl text-text-primary flex items-center gap-2">
+            <i data-lucide="${personal.icon}" class="w-5 h-5 text-cyan"></i>
+            ${personal.name}
+          </h3>
+        </div>
+        <div class="fade-in-section terminal-window mb-8">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">foxly-invest ~ kubectl get pods</span>
+          </div>
+          <div class="terminal-body">
+            <p class="text-text-muted mb-4 text-sm"><span class="text-green">$</span> <span class="text-text-primary">cat README.md</span></p>
+            <p class="text-text-muted text-sm leading-relaxed mb-6">${personal.description}</p>
+            <a href="${personal.url}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-cyan font-mono text-sm hover:underline">
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+              ${personal.url.replace('https://', '').replace(/\/$/, '')}
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">${detailCards}</div>
+        <div class="fade-in-section flex flex-wrap justify-center gap-3">${tags}</div>
+      `;
+    }
+
+    function renderSkills(skills) {
+      const container = document.getElementById('skills-content');
+      container.innerHTML = skills.map((cat, i) => {
+        const isLast = i === skills.length - 1;
+        const pills = cat.items.map(item => {
+          let iconHtml = '';
+          if (item.devicon) {
+            iconHtml = `<i class="${item.devicon} text-lg text-${cat.iconColor}"></i>`;
+          } else if (item.lucide) {
+            iconHtml = `<i data-lucide="${item.lucide}" class="w-4 h-4 text-${cat.iconColor}"></i>`;
+          }
+          return `
+            <div class="skill-pill flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50">
+              ${iconHtml}
+              <span class="text-sm font-mono text-text-primary">${item.name}</span>
+            </div>
+          `;
+        }).join('');
+        return `
+          <div class="fade-in-section ${isLast ? '' : 'mb-10'}">
+            <h3 class="font-mono font-semibold text-sm text-text-muted mb-4 flex items-center gap-2">
+              <i data-lucide="${cat.icon}" class="w-4 h-4 text-${cat.iconColor}"></i>
+              ${cat.categoryKey}
+            </h3>
+            <div class="flex flex-wrap gap-3">${pills}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPublications(publications) {
+      const container = document.getElementById('publications-content');
+      container.innerHTML = publications.map(pub => {
+        const contributions = pub.contributions.map(c =>
+          `<div class="rounded-lg border border-border bg-surface/50 p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <i data-lucide="${c.icon}" class="w-4 h-4 text-${c.color}"></i>
+              <span class="font-mono text-sm text-${c.color}">${c.title}</span>
+            </div>
+            <p class="text-text-muted text-xs leading-relaxed">${c.description}</p>
+          </div>`
+        ).join('');
+        const keywords = pub.keywords.map(k =>
+          `<span class="text-xs font-mono px-2 py-1 rounded-full border border-border text-text-muted">${k}</span>`
+        ).join('');
+        const authorHtml = pub.authors.replace(
+          /(Ivan Tsz Fung Wong)/,
+          '<span class="text-cyan">$1</span>'
+        );
+        return `
+          <div class="fade-in-section terminal-window mb-6">
+            <div class="terminal-titlebar">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+              <span class="terminal-title">udds-paper.bib</span>
+            </div>
+            <div class="terminal-body">
+              <div class="mb-4">
+                <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat citation.bib</p>
+                <div class="pl-0">
+                  <h3 class="font-heading font-bold text-text-primary text-xl mb-1">${pub.title}</h3>
+                  <p class="text-text-muted text-sm font-mono mb-3">${authorHtml}</p>
+                  <p class="text-text-muted text-xs font-mono mb-1">${pub.status} — ${pub.conference}</p>
+                  <p class="text-text-muted text-xs font-mono mb-4">${pub.publisher} · Confidential Computing · 2026</p>
+                </div>
+              </div>
+              <div class="mb-6">
+                <p class="font-mono text-xs text-text-muted mb-2"><span class="text-green">$</span> cat abstract.txt</p>
+                <p class="text-text-muted text-sm leading-relaxed">${pub.abstract}</p>
+              </div>
+              <p class="font-mono text-xs text-text-muted mb-3"><span class="text-green">$</span> cat contributions.md</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">${contributions}</div>
+              <div class="mt-5 pt-4 border-t border-border">
+                <p class="font-mono text-xs text-text-muted"><span class="text-green">$</span> echo $KEYWORDS</p>
+                <div class="flex flex-wrap gap-2 mt-2">${keywords}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderEducation(education, certifications) {
+      const container = document.getElementById('education-content');
+      const eduCards = education.map(edu => {
+        const details = edu.details.map(d =>
+          `<li class="flex items-start gap-2"><span class="text-purple mt-1.5 shrink-0">▸</span>${d}</li>`
+        ).join('');
+        return `
+          <div class="fade-in-section card-hover terminal-window">
+            <div class="terminal-titlebar">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+              <span class="terminal-title">${edu.terminalTitle}</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                  <i data-lucide="${edu.icon}" class="w-5 h-5 text-purple"></i>
+                </div>
+                <div>
+                  <h3 class="font-heading font-bold text-text-primary">${edu.degree}</h3>
+                  <p class="text-text-muted text-xs font-mono">${edu.institution}</p>
+                </div>
+              </div>
+              <p class="text-text-muted text-xs font-mono mb-3">${edu.duration}</p>
+              <ul class="text-text-muted text-sm space-y-1.5 list-none">${details}</ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const certCards = certifications.map(cert => `
+        <div class="fade-in-section max-w-md mx-auto">
+          <a href="${cert.url}" target="_blank" rel="noopener" class="block card-hover terminal-window text-center group">
+            <div class="terminal-titlebar">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+              <span class="terminal-title">certification.json</span>
+            </div>
+            <div class="p-6">
+              <div class="w-12 h-12 rounded-lg bg-cyan/10 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="${cert.icon}" class="w-6 h-6 text-cyan"></i>
+              </div>
+              <h3 class="font-heading font-bold text-text-primary mb-1">${cert.name}</h3>
+              <p class="text-text-muted text-xs font-mono mb-2">${cert.validity}</p>
+              <span class="text-cyan text-sm font-mono group-hover:underline">View on Credly →</span>
+            </div>
+          </a>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">${eduCards}</div>
+        ${certCards}
+      `;
+    }
+
     // Initialize Lucide icons
     lucide.createIcons();
 
@@ -1953,7 +1459,13 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-in-section').forEach(el => {
+      el.classList.add('observed');
+      observer.observe(el);
+    });
+
+    // Load data from JSON and render all sections
+    loadData();
 
     // --- Navbar solid on scroll ---
     const navbar = document.getElementById('navbar');

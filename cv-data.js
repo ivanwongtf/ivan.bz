@@ -1,0 +1,437 @@
+const CV_DATA = {
+  "meta": {
+    "name": "Ivan Wong",
+    "title": "DevOps Manager & Infrastructure Architect",
+    "email": "jobs@ivan.bz",
+    "website": "ivan.bz",
+    "github": "github.com/ivanwongtf",
+    "linkedin": "linkedin.com/in/ivan-wong-tf",
+    "location": "Hong Kong"
+  },
+  "hero": {
+    "stats": [
+      { "value": "5+", "label": "years_devops" },
+      { "value": "8+", "label": "prod_systems" },
+      { "value": "90%", "label": "ops_automated" },
+      { "value": "AWS", "label": "sa_professional" }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Crypto.com",
+      "title": "Infra DevOps Manager",
+      "duration": "Jan 2024 — Present",
+      "location": "Hong Kong",
+      "terminalTitle": "crypto.com/manager",
+      "side": "right",
+      "bullets": [
+        "Leading the Infra DevOps team, coordinating projects and guiding junior engineers",
+        "Driving DevOps integration with the Network team for daily operations",
+        "Designed automations that reduced 90% of operational overhead"
+      ]
+    },
+    {
+      "company": "Crypto.com",
+      "title": "Senior Engineer, Infra DevOps",
+      "duration": "Jan 2023 — Present",
+      "location": "Hong Kong",
+      "terminalTitle": "crypto.com/senior",
+      "side": "left",
+      "bullets": [
+        "Manage geo-distributed Teleport platform across 3 regions on EKS with CockroachDB",
+        "Deployed monitoring dashboards with Prometheus, Thanos, Loki & Grafana",
+        "Designed critical logs pipeline with Fluent-bit and Fluentd"
+      ]
+    },
+    {
+      "company": "Crypto.com",
+      "title": "Engineer, Infra DevOps",
+      "duration": "Jan 2022 — Jan 2023",
+      "location": "Hong Kong",
+      "terminalTitle": "crypto.com/engineer",
+      "side": "right",
+      "bullets": [
+        "Deployed apps on EKS with Dockerfiles, Helm Charts and Helmfiles",
+        "Designed CI/CD pipelines with GitHub Action, ECR, OPA and ArgoCD",
+        "Developed Terraform stacks for provisioning AWS resources"
+      ]
+    },
+    {
+      "company": "Ahsay Systems",
+      "title": "Software Analyst",
+      "duration": "Jul 2021 — Nov 2021",
+      "location": "Hong Kong",
+      "terminalTitle": "ahsay/analyst",
+      "side": "left",
+      "bullets": [
+        "Designed a disaster recovery system for on-premise Hyper-V on Azure",
+        "Developed a prototype with automatic network setups in Java"
+      ]
+    },
+    {
+      "title": "Earlier Roles",
+      "duration": "2017 — 2018",
+      "terminalTitle": "git log --oneline",
+      "side": "right",
+      "entries": [
+        { "company": "Ahsay Systems", "description": "Developed AhsayOBM for QNAP, now a mainstream product" },
+        { "company": "Oyalabs", "description": "Built a React Native mobile app with AWS serverless backend" }
+      ]
+    }
+  ],
+  "projects": {
+    "featured": [
+      {
+        "title": "Hot-Wallet Vault",
+        "subtitle": "Distributed Zero-Knowledge Data Sealing",
+        "icon": "shield-check",
+        "accentColor": "cyan",
+        "terminalTitle": "hot-wallet-vault.go",
+        "description": "Production distributed vault system for cryptocurrency hot-wallet custody. Implements the uDDS (Universal Distributed Data Sealing) framework — zero-knowledge blind RSA decryption inside Trusted Execution Environments, where the server performs cryptographic operations on blinded data without ever seeing plaintext.",
+        "bullets": [
+          "Globally distributed Raft cluster across multiple AWS regions",
+          "Multi-TEE: AWS Nitro Enclaves + Intel SGX on Azure",
+          "Blind RSA decryption for zero-knowledge data sealing",
+          "AES-256-GCM encrypted Raft transport"
+        ],
+        "meta": {
+          "deploy": "global",
+          "consensus": "Raft",
+          "tee": "Nitro + SGX",
+          "crypto": "blind RSA",
+          "status": "production"
+        },
+        "tags": [
+          { "label": "Go", "color": "cyan" },
+          { "label": "Raft", "color": "cyan" },
+          { "label": "AWS Nitro", "color": "purple" },
+          { "label": "Intel SGX", "color": "purple" },
+          { "label": "Terraform", "color": "muted" },
+          { "label": "K8s / ArgoCD", "color": "muted" },
+          { "label": "Blind Cryptography", "color": "muted" }
+        ]
+      },
+      {
+        "title": "Teleport — Geo-Distributed Access Platform",
+        "subtitle": "High-Availability PAM Infrastructure at Scale",
+        "icon": "server",
+        "accentColor": "green",
+        "terminalTitle": "teleport-platform.yaml",
+        "description": "Enterprise-scale Privileged Access Management platform with a unified Teleport cluster geo-distributed across 3 AWS regions backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents spanning AWS, Azure, and GCP — plus automated access request workflows, Slack notifications, and Okta identity integration.",
+        "bullets": [
+          "Geo-distributed across 3 AWS regions with CockroachDB backend",
+          "Teleport agents across AWS, Azure, and GCP",
+          "Fully GitOps: FluxCD + Spacelift for infrastructure",
+          "High availability with autoscaling on EKS",
+          "Go-based PAM orchestrator: Slack + Okta + auto-approval workflows"
+        ],
+        "meta": {
+          "cluster": "unified HA",
+          "regions": "3 (AWS)",
+          "backend": "CockroachDB",
+          "agents": "AWS + Azure + GCP",
+          "deploy": "GitOps (Flux)",
+          "infra": "Terraform + Spacelift",
+          "status": "production"
+        },
+        "tags": [
+          { "label": "Go", "color": "green" },
+          { "label": "gRPC", "color": "green" },
+          { "label": "EKS", "color": "cyan" },
+          { "label": "CockroachDB", "color": "cyan" },
+          { "label": "Teleport", "color": "cyan" },
+          { "label": "FluxCD", "color": "muted" },
+          { "label": "Terraform", "color": "muted" },
+          { "label": "Spacelift", "color": "muted" },
+          { "label": "Okta", "color": "muted" }
+        ]
+      },
+      {
+        "title": "Echo Bot — AI Slack Assistant",
+        "subtitle": "Intelligent Knowledge Management & Auto-Reply",
+        "icon": "message-circle",
+        "accentColor": "purple",
+        "terminalTitle": "echo-bot ~ python main.py",
+        "description": "AI-powered Slack bot that learns communication styles and responds on your behalf. Features a full RBAC knowledge management system with topic-based organization, semantic vector search, and adaptive response generation — turning institutional knowledge into instant, context-aware replies.",
+        "bullets": [
+          "RBAC with topic-based knowledge, user traits, and invitation system",
+          "RAG pipeline with sentence transformer embeddings & similarity search",
+          "LangChain + LLM for style-adaptive response generation",
+          "Portal UI for knowledge management, training data, and analytics",
+          "Multi-channel Slack support with auto-reply and mention detection"
+        ],
+        "meta": {
+          "input": "Slack msg",
+          "embed": "SentenceTransformer",
+          "retrieve": "vector similarity",
+          "context": "RBAC + traits",
+          "generate": "LLM API",
+          "output": "adaptive reply",
+          "status": "production"
+        },
+        "tags": [
+          { "label": "Python", "color": "purple" },
+          { "label": "LangChain", "color": "purple" },
+          { "label": "Flask", "color": "cyan" },
+          { "label": "MongoDB", "color": "cyan" },
+          { "label": "Slack SDK", "color": "cyan" },
+          { "label": "Sentence Transformers", "color": "muted" },
+          { "label": "RAG", "color": "muted" },
+          { "label": "RBAC", "color": "muted" }
+        ]
+      }
+    ],
+    "other": [
+      {
+        "title": "Security Canary Platform",
+        "icon": "radar",
+        "iconColor": "purple",
+        "terminalTitle": "canary-deploy.tf",
+        "description": "Enterprise security monitoring platform that auto-deploys canary resources across AWS Organization accounts with zero-touch IAM provisioning via CloudFormation StackSets.",
+        "tags": [
+          { "label": "Terraform", "color": "muted" },
+          { "label": "Spacelift", "color": "muted" },
+          { "label": "AWS Orgs", "color": "muted" },
+          { "label": "StackSets", "color": "muted" }
+        ]
+      },
+      {
+        "title": "Observability Platform",
+        "icon": "activity",
+        "iconColor": "cyan",
+        "terminalTitle": "observability.yaml",
+        "description": "Designed and deployed monitoring dashboards and alert automations for multiple applications with Prometheus, Thanos, Loki, Grafana and Datadog.",
+        "tags": [
+          { "label": "Prometheus", "color": "muted" },
+          { "label": "Thanos", "color": "muted" },
+          { "label": "Grafana", "color": "muted" },
+          { "label": "Datadog", "color": "muted" }
+        ]
+      },
+      {
+        "title": "Log Pipeline Architecture",
+        "icon": "scroll-text",
+        "iconColor": "cyan",
+        "terminalTitle": "logging.yaml",
+        "description": "Designed and deployed critical logs pipeline with Fluent-bit and Fluentd for reliable log collection and forwarding at scale.",
+        "tags": [
+          { "label": "Fluent-bit", "color": "muted" },
+          { "label": "Fluentd", "color": "muted" },
+          { "label": "EKS", "color": "muted" }
+        ]
+      },
+      {
+        "title": "IaC Automation Suite",
+        "icon": "workflow",
+        "iconColor": "cyan",
+        "terminalTitle": "infra.tf",
+        "description": "Designed and developed pipelines for applications and network infrastructure with Terraform, Python, and GitHub Actions.",
+        "tags": [
+          { "label": "Terraform", "color": "muted" },
+          { "label": "Python", "color": "muted" },
+          { "label": "GitHub Actions", "color": "muted" }
+        ]
+      },
+      {
+        "title": "Operations Automation",
+        "icon": "bot",
+        "iconColor": "green",
+        "terminalTitle": "automate.go",
+        "description": "Developed multiple automations with Go, Python, and Terraform that reduced 90% of manual operations overhead.",
+        "tags": [
+          { "label": "Go", "color": "muted" },
+          { "label": "Python", "color": "muted" },
+          { "label": "Terraform", "color": "muted" }
+        ]
+      }
+    ]
+  },
+  "personal": {
+    "name": "Foxly Invest",
+    "icon": "trending-up",
+    "description": "A full-stack AI investment portfolio platform that delivers tailored news summaries, insights, and analysis based on your portfolio — crafted to save time and help users make confident investment decisions. Built as a production-grade microservices system from the ground up.",
+    "url": "https://www.foxlyinvest.com/",
+    "details": [
+      {
+        "title": "System Architecture",
+        "icon": "layout-grid",
+        "accentColor": "cyan",
+        "terminalTitle": "architecture.yaml",
+        "bullets": [
+          "Microservice backend in Go and Python",
+          "Deployed on Kubernetes (production K8s cluster)",
+          "Web client + Android + iOS apps",
+          "Real-time market data and news pipelines"
+        ]
+      },
+      {
+        "title": "AI & Agent Workflows",
+        "icon": "brain",
+        "accentColor": "purple",
+        "terminalTitle": "ai-agents.py",
+        "bullets": [
+          "LangChain + LangGraph for LLM orchestration",
+          "MCP (Model Context Protocol) for agent tooling",
+          "RAG pipeline with vector DB for knowledge retrieval",
+          "Claude & OpenAI APIs for multi-model inference",
+          "AI-powered news summaries and portfolio insights"
+        ]
+      }
+    ],
+    "tags": [
+      { "label": "Go", "color": "cyan" },
+      { "label": "Python", "color": "cyan" },
+      { "label": "Kubernetes", "color": "cyan" },
+      { "label": "LangChain", "color": "cyan" },
+      { "label": "LangGraph", "color": "cyan" },
+      { "label": "MCP", "color": "cyan" },
+      { "label": "RAG", "color": "cyan" },
+      { "label": "Claude API", "color": "purple" },
+      { "label": "OpenAI API", "color": "purple" },
+      { "label": "React", "color": "purple" },
+      { "label": "Android", "color": "purple" },
+      { "label": "iOS", "color": "purple" },
+      { "label": "Microservices", "color": "green" },
+      { "label": "AI Agents", "color": "green" },
+      { "label": "Vector DB", "color": "green" }
+    ]
+  },
+  "skills": [
+    {
+      "category": "Infrastructure & Orchestration",
+      "categoryKey": "infrastructure && orchestration",
+      "icon": "container",
+      "iconColor": "cyan",
+      "items": [
+        { "name": "Kubernetes", "devicon": "devicon-kubernetes-plain" },
+        { "name": "Docker", "devicon": "devicon-docker-plain" },
+        { "name": "Helm", "devicon": "devicon-helm-plain" },
+        { "name": "FluxCD", "devicon": "devicon-flux-plain" },
+        { "name": "Terraform", "devicon": "devicon-terraform-plain" },
+        { "name": "Spacelift", "lucide": "layers" }
+      ]
+    },
+    {
+      "category": "Monitoring & Observability",
+      "categoryKey": "monitoring && observability",
+      "icon": "bar-chart-3",
+      "iconColor": "cyan",
+      "items": [
+        { "name": "Prometheus", "devicon": "devicon-prometheus-plain" },
+        { "name": "Grafana", "devicon": "devicon-grafana-plain" },
+        { "name": "Thanos", "lucide": "eye" },
+        { "name": "Loki", "lucide": "file-text" },
+        { "name": "Fluentd", "lucide": "arrow-right-left" }
+      ]
+    },
+    {
+      "category": "Development",
+      "categoryKey": "development",
+      "icon": "code-2",
+      "iconColor": "green",
+      "items": [
+        { "name": "Go", "devicon": "devicon-go-plain" },
+        { "name": "Python", "devicon": "devicon-python-plain" },
+        { "name": "Bash", "devicon": "devicon-bash-plain" },
+        { "name": "React", "devicon": "devicon-react-original" },
+        { "name": "GraphQL", "devicon": "devicon-graphql-plain" },
+        { "name": "gRPC", "lucide": "arrow-left-right" }
+      ]
+    },
+    {
+      "category": "AI & Machine Learning",
+      "categoryKey": "ai && machine_learning",
+      "icon": "brain",
+      "iconColor": "purple",
+      "items": [
+        { "name": "LangChain", "lucide": "link" },
+        { "name": "LangGraph", "lucide": "workflow" },
+        { "name": "Claude API", "lucide": "bot" },
+        { "name": "OpenAI API", "lucide": "sparkles" },
+        { "name": "RAG", "lucide": "database" },
+        { "name": "Vector DB", "lucide": "scan-search" },
+        { "name": "AI Agents", "lucide": "users" },
+        { "name": "Prompt Engineering", "lucide": "message-square" },
+        { "name": "MCP", "lucide": "wrench" },
+        { "name": "Claude Code", "lucide": "code" }
+      ]
+    },
+    {
+      "category": "Cloud & Data",
+      "categoryKey": "cloud && data",
+      "icon": "cloud",
+      "iconColor": "purple",
+      "items": [
+        { "name": "AWS (SA Pro)", "devicon": "devicon-amazonwebservices-plain-wordmark" },
+        { "name": "EKS", "lucide": "box" },
+        { "name": "RDS", "lucide": "database" },
+        { "name": "MongoDB", "devicon": "devicon-mongodb-plain" },
+        { "name": "Redis", "devicon": "devicon-redis-plain" }
+      ]
+    },
+    {
+      "category": "Practices",
+      "categoryKey": "practices",
+      "icon": "repeat",
+      "iconColor": "green",
+      "items": [
+        { "name": "CI/CD" },
+        { "name": "GitOps" },
+        { "name": "High Availability" },
+        { "name": "Cloud-native" },
+        { "name": "Agile / Scrum" }
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "title": "uDDS: Universal Distributed Data Sealing for TEE",
+      "authors": "Ivan Tsz Fung Wong, Sam Ng, Jason Lau",
+      "conference": "2026 10th International Conference on Cryptography, Security and Privacy (CSP 2026)",
+      "publisher": "IEEE",
+      "status": "Accepted",
+      "abstract": "Trusted Execution Environments (TEEs) provide hardware-rooted confidentiality, yet their native sealing mechanisms remain platform-specific. uDDS is a Universal Distributed Data Sealing framework that provides a single, unified sealing interface across heterogeneous TEEs while preserving data confidentiality even from the sealing service operator.",
+      "contributions": [
+        { "title": "Blind Decryption", "icon": "eye-off", "color": "cyan", "description": "Operator-oblivious unsealing — clients blind their ciphertext so uDDS decrypts without ever learning the plaintext." },
+        { "title": "Raft Consensus", "icon": "shield", "color": "green", "description": "Volatile-only secret replication across TEE memory via Raft — crash fault tolerance and rollback resistance without persistent storage." },
+        { "title": "Universal TEE Interface", "icon": "plug", "color": "purple", "description": "A single sealing API across SGX, TrustZone, and Nitro Enclaves — write once, deploy to any platform without modification." },
+        { "title": "Production Validated", "icon": "globe", "color": "cyan", "description": "9-node AWS Nitro deployment across 5 regions — 315ms unsealing latency with full attestation and geographic fault tolerance." }
+      ],
+      "keywords": ["TEE", "Data Sealing", "Confidential Computing", "Distributed Consensus", "Blind Decryption", "AWS Nitro", "Intel SGX"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "MPhil Computer Science",
+      "institution": "The Chinese University of Hong Kong",
+      "duration": "Aug 2019 — Jul 2021",
+      "icon": "graduation-cap",
+      "terminalTitle": "mphil.md",
+      "details": [
+        "Supervisor: Prof. Patrick P. C. Lee",
+        "Research on distributed systems, Raft consensus, and data replication",
+        "Raft consensus, high availability, distributed systems"
+      ]
+    },
+    {
+      "degree": "BSc Computer Science",
+      "institution": "The Chinese University of Hong Kong",
+      "duration": "Sep 2015 — Jul 2019",
+      "icon": "award",
+      "terminalTitle": "bsc.md",
+      "details": [
+        "First Class Honours — CGPA: 3.55 / 4.0",
+        "Minor in Information Engineering",
+        "Dean's List & Head List (2016, 2018, 2019)"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Solutions Architect — Professional",
+      "icon": "shield-check",
+      "validity": "Dec 2022 — Dec 2025",
+      "url": "https://www.credly.com/badges/3e4c61e3-9c14-4c62-897e-f78785e10152"
+    }
+  ]
+};

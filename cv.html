@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan Wong — CV</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    html { font-size: 9px; line-height: 1.35; }
+    body {
+      background: #0F172A;
+      color: #F8FAFC;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Page setup ── */
+    @page { size: A4; margin: 0; }
+
+    /* ── Colors ── */
+    :root {
+      --bg: #0F172A;
+      --surface: rgba(30, 41, 59, 0.5);
+      --border: #334155;
+      --cyan: #00FFFF;
+      --green: #22C55E;
+      --purple: #8B5CF6;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+    }
+
+    /* ── Print button ── */
+    .no-print {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .no-print button {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 6px 20px;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .no-print button:hover { box-shadow: 0 0 15px rgba(0, 255, 255, 0.4); }
+    .no-print span { color: var(--muted); font-size: 10px; }
+
+    @media print {
+      .no-print { display: none !important; }
+    }
+
+    /* ── CV Container ── */
+    .cv { padding: 4mm 5mm 2mm 5mm; }
+
+    /* ── Header ── */
+    .cv-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+    }
+    .cv-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      margin-bottom: 2px;
+    }
+    .cv-header .subtitle {
+      font-size: 9px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .cv-header .subtitle .prompt { color: var(--green); }
+    .cv-header .contact {
+      font-size: 8px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .cv-header .contact .link { color: var(--cyan); }
+    .cv-header .contact .sep { margin: 0 3px; }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+      margin: 14px 0 8px 0;
+    }
+    .section-heading .accent { color: var(--cyan); }
+    .section-heading .prompt { color: var(--green); font-family: 'JetBrains Mono', monospace; font-size: 9px; margin-right: 4px; }
+
+    /* ── Card base ── */
+    .card {
+      background: var(--surface);
+      padding: 5px 10px;
+      margin-bottom: 6px;
+      border-radius: 0 6px 6px 0;
+      border-left: 3px solid var(--border);
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .card.accent-cyan { border-left-color: var(--cyan); }
+    .card.accent-purple { border-left-color: var(--purple); }
+    .card.accent-green { border-left-color: var(--green); }
+    .card.full-border {
+      border-left: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    /* ── Typography ── */
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1px;
+    }
+    .company { color: var(--cyan); font-size: 8px; font-weight: 600; }
+    .duration { color: var(--muted); font-size: 7px; margin-bottom: 3px; }
+    .description { color: var(--muted); font-size: 8px; line-height: 1.4; margin-bottom: 3px; }
+
+    /* ── Bullet lists ── */
+    .bullets { list-style: none; }
+    .bullets li {
+      color: var(--muted);
+      font-size: 8px;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      margin-bottom: 1px;
+    }
+    .bullets li .marker {
+      color: var(--cyan);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .bullets li .marker.green { color: var(--green); }
+    .bullets li .marker.purple { color: var(--purple); }
+    .bullets li strong { color: var(--text); font-weight: 500; }
+
+    /* ── Tech tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 2px; }
+    .tag {
+      font-size: 6px;
+      padding: 0 3px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .tag.cyan { border-color: rgba(0, 255, 255, 0.3); color: var(--cyan); }
+    .tag.purple { border-color: rgba(139, 92, 246, 0.3); color: var(--purple); }
+    .tag.green { border-color: rgba(34, 197, 94, 0.3); color: var(--green); }
+
+    /* ── Grid layouts ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+
+    /* ── Skills section ── */
+    .skill-category {
+      margin-bottom: 4px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .skill-category h3 {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 2px; }
+    .skill-pill {
+      padding: 1px 5px;
+      font-size: 7px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    /* ── Publication ── */
+    .pub-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1px;
+    }
+    .pub-authors { color: var(--muted); font-size: 8px; margin-bottom: 2px; }
+    .pub-authors .first-author { color: var(--cyan); }
+    .pub-venue { color: var(--muted); font-size: 7px; margin-bottom: 3px; }
+    .pub-abstract { color: var(--muted); font-size: 8px; line-height: 1.4; }
+
+    /* ── Education ── */
+    .edu-card {
+      background: var(--surface);
+      padding: 5px 10px;
+      border-left: 3px solid var(--purple);
+      border-radius: 0 6px 6px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* ── Certification ── */
+    .cert-card {
+      background: var(--surface);
+      padding: 5px 10px;
+      border-left: 3px solid var(--cyan);
+      border-radius: 0 6px 6px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* ── Featured project meta box ── */
+    .meta-box {
+      font-size: 7px;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin-top: 3px;
+    }
+    .meta-box .meta-line { display: flex; gap: 4px; }
+    .meta-box .meta-key { color: var(--green); min-width: 55px; }
+    .meta-box .meta-val { color: var(--text); }
+    .meta-box .meta-status { color: var(--cyan); }
+
+    /* ── Foxly subsection header ── */
+    .foxly-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    /* ── Screen preview enhancements ── */
+    @media screen {
+      .cv { max-width: 210mm; margin: 0 auto; }
+      body { padding-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print toolbar -->
+  <div class="no-print">
+    <span>CV Preview — ivan.bz</span>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <!-- CV Content -->
+  <div class="cv" id="cv">
+    <!-- Header -->
+    <div class="cv-header" id="cv-header"></div>
+
+    <!-- Experience -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> <span class="accent">Experience</span></div>
+    <div id="cv-experience"></div>
+
+    <!-- Projects -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> Work <span class="accent">Projects</span></div>
+    <div id="cv-projects"></div>
+
+    <!-- Personal / Foxly -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> Personal <span class="accent">Projects</span></div>
+    <div id="cv-personal"></div>
+
+    <!-- Publications -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> <span class="accent">Publications</span></div>
+    <div id="cv-publications"></div>
+
+    <!-- Education -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> Education & <span class="accent">Certifications</span></div>
+    <div id="cv-education"></div>
+
+    <!-- Skills -->
+    <div class="section-heading"><span class="prompt">&gt;_</span> Tech <span class="accent">Stack</span></div>
+    <div id="cv-skills"></div>
+  </div>
+
+  <script src="cv-data.js"></script>
+  <script>
+    function loadCV() {
+      const data = CV_DATA;
+
+      renderHeader(data.meta);
+      renderExperience(data.experience);
+      renderProjects(data.projects);
+      renderPersonal(data.personal);
+      renderSkills(data.skills);
+      renderPublications(data.publications);
+      renderEducation(data.education, data.certifications);
+    }
+
+    function renderHeader(meta) {
+      document.getElementById('cv-header').innerHTML = `
+        <h1>${meta.name}</h1>
+        <div class="subtitle"><span class="prompt">&gt;_</span> ${meta.title}</div>
+        <div class="contact">
+          <span class="link">${meta.email}</span><span class="sep">&middot;</span>
+          <span class="link">${meta.website}</span><span class="sep">&middot;</span>
+          ${meta.github}<span class="sep">&middot;</span>
+          ${meta.linkedin}<span class="sep">&middot;</span>
+          ${meta.location}
+        </div>
+      `;
+    }
+
+    function renderExperience(experience) {
+      const container = document.getElementById('cv-experience');
+      container.innerHTML = experience.map(exp => {
+        if (exp.entries) {
+          const items = exp.entries.map(e =>
+            `<li><span class="marker">&#x25B8;</span><strong>${e.company}</strong> — ${e.description}</li>`
+          ).join('');
+          return `<div class="card accent-cyan">
+            <h3>${exp.title}</h3>
+            <div class="duration">${exp.duration}</div>
+            <ul class="bullets">${items}</ul>
+          </div>`;
+        }
+        const bullets = exp.bullets.map(b =>
+          `<li><span class="marker">&#x25B8;</span>${b}</li>`
+        ).join('');
+        return `<div class="card accent-cyan">
+          <div class="company">${exp.company}</div>
+          <h3>${exp.title}</h3>
+          <div class="duration">${exp.duration} &middot; ${exp.location}</div>
+          <ul class="bullets">${bullets}</ul>
+        </div>`;
+      }).join('');
+    }
+
+    function renderProjects(projects) {
+      const container = document.getElementById('cv-projects');
+
+      const featured = projects.featured.map(p => {
+        const bullets = p.bullets.map(b =>
+          `<li><span class="marker" style="color:var(--${p.accentColor})">$</span>${b}</li>`
+        ).join('');
+        const tags = p.tags.map(t =>
+          `<span class="tag ${t.color}">${t.label}</span>`
+        ).join('');
+        const metaLines = Object.entries(p.meta).map(([k, v]) => {
+          const valClass = k === 'status' ? 'meta-status' : 'meta-val';
+          return `<div class="meta-line"><span class="meta-key">${k}:</span><span class="${valClass}">${k === 'status' ? '● ' : ''}${v}</span></div>`;
+        }).join('');
+        return `<div class="card accent-${p.accentColor}">
+          <h3>${p.title}</h3>
+          <div class="duration" style="color:var(--${p.accentColor})">${p.subtitle}</div>
+          <div class="description">${p.description}</div>
+          <ul class="bullets">${bullets}</ul>
+          <div class="tags">${tags}</div>
+        </div>`;
+      }).join('');
+
+      const other = projects.other.map(p => {
+        const tags = p.tags.map(t =>
+          `<span class="tag ${t.color}">${t.label}</span>`
+        ).join('');
+        return `<div class="card">
+          <h3>${p.title}</h3>
+          <div class="description">${p.description}</div>
+          <div class="tags">${tags}</div>
+        </div>`;
+      }).join('');
+
+      container.innerHTML = featured + `<div class="grid-2" style="margin-top:4px">${other}</div>`;
+    }
+
+    function renderPersonal(personal) {
+      const container = document.getElementById('cv-personal');
+
+      const details = personal.details.map(d => {
+        const bullets = d.bullets.map(b =>
+          `<li><span class="marker ${d.accentColor}">${d.accentColor === 'purple' ? '$' : '$'}</span>${b}</li>`
+        ).join('');
+        return `<div class="card accent-${d.accentColor}">
+          <h3>${d.title}</h3>
+          <ul class="bullets">${bullets}</ul>
+        </div>`;
+      }).join('');
+
+      const tags = personal.tags.map(t =>
+        `<span class="tag ${t.color}">${t.label}</span>`
+      ).join('');
+
+      container.innerHTML = `
+        <div class="foxly-name">${personal.name}</div>
+        <div class="description" style="margin-bottom:4px">${personal.description}</div>
+        <div class="grid-2">${details}</div>
+        <div class="tags" style="margin-top:3px">${tags}</div>
+      `;
+    }
+
+    function renderSkills(skills) {
+      const container = document.getElementById('cv-skills');
+      container.innerHTML = `<div class="grid-2">${skills.map(cat => {
+        const pills = cat.items.map(item =>
+          `<span class="skill-pill">${item.name}</span>`
+        ).join('');
+        return `<div class="skill-category">
+          <h3>${cat.categoryKey}</h3>
+          <div class="skill-pills">${pills}</div>
+        </div>`;
+      }).join('')}</div>`;
+    }
+
+    function renderPublications(publications) {
+      const container = document.getElementById('cv-publications');
+      container.innerHTML = publications.map(pub => {
+        const authorHtml = pub.authors.replace(
+          /(Ivan Tsz Fung Wong)/,
+          '<span class="first-author">$1</span>'
+        );
+        return `<div class="card full-border" style="border-top: 3px solid var(--cyan);">
+          <div class="pub-title">${pub.title}</div>
+          <div class="pub-authors">${authorHtml}</div>
+          <div class="pub-venue">${pub.status} — ${pub.conference}<br>${pub.publisher} &middot; Confidential Computing &middot; 2026</div>
+          <div class="pub-abstract">${pub.abstract}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderEducation(education, certifications) {
+      const container = document.getElementById('cv-education');
+
+      const eduCards = education.map(edu => {
+        const details = edu.details.map(d =>
+          `<li><span class="marker purple">&#x25B8;</span>${d}</li>`
+        ).join('');
+        return `<div class="edu-card">
+          <h3>${edu.degree}</h3>
+          <div class="duration">${edu.institution}</div>
+          <div class="duration">${edu.duration}</div>
+          <ul class="bullets">${details}</ul>
+        </div>`;
+      }).join('');
+
+      const certCards = certifications.map(cert =>
+        `<div class="cert-card">
+          <h3>${cert.name}</h3>
+          <div class="duration">${cert.validity}</div>
+        </div>`
+      ).join('');
+
+      container.innerHTML = `<div class="grid-2">${eduCards}</div><div style="margin-top:4px">${certCards}</div>`;
+    }
+
+    loadCV();
+  </script>
+</body>
+</html>
