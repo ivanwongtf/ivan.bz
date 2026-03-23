@@ -11,8 +11,8 @@ const CV_DATA = {
   "hero": {
     "stats": [
       { "value": "5+", "label": "years_devops" },
-      { "value": "100+", "label": "aws_accounts" },
-      { "value": "4", "label": "team_size" },
+      { "value": "HA/DR", "label": "specialisation" },
+      { "value": "IEEE", "label": "published_author" },
       { "value": "AWS", "label": "sa_professional" }
     ]
   },
