@@ -55,7 +55,7 @@ const CV_DATA = {
       "side": "right",
       "bullets": [
         "Deployed and maintained 10+ containerised applications on EKS across prod and staging environments using Dockerfiles, Helm Charts, and Helmfiles",
-        "Led the consolidation of 26 Teleport clusters into a single HA/DR production and staging pair — designing and executing the full migration",
+        "Owned the Teleport platform end-to-end — consolidating 26 clusters into a unified HA/DR architecture (see Work Projects)",
         "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and ArgoCD",
         "Developed Terraform modules for provisioning and managing AWS infrastructure at scale"
       ]
