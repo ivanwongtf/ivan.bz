@@ -199,6 +199,37 @@ const CV_DATA = {
         ]
       }
     ],
+      {
+        "title": "Spacelift — Company-Wide IaC Platform",
+        "subtitle": "GitOps-Managed IaC Orchestration & Governance",
+        "icon": "layers",
+        "accentColor": "purple",
+        "terminalTitle": "spacelift ~ terraform plan",
+        "description": "Owned and operated the company-wide Spacelift IaC orchestration platform — the central control plane for all infrastructure changes across the organisation. Established the full governance model including OPA security policies, RBAC, and a self-managing GitOps stack where Spacelift itself is provisioned and maintained via Terraform.",
+        "bullets": [
+          "Single platform for all teams' IaC execution, enforcing consistent policy and auditability across the organisation",
+          "Authored OPA policies to enforce security guardrails, cost controls, and compliance rules on every infrastructure change",
+          "Designed RBAC model covering team-level access, stack permissions, and environment segregation",
+          "Built a fully GitOps-managed Spacelift setup — all stacks, policies, and contexts defined as Terraform, version-controlled and peer-reviewed",
+          "Conducted company-wide workshops for DevOps teams on Spacelift features, OPA best practices, and IaC governance standards"
+        ],
+        "meta": {
+          "scope": "company-wide",
+          "policy": "OPA",
+          "access": "RBAC",
+          "mgmt": "Terraform (GitOps)",
+          "status": "production"
+        },
+        "tags": [
+          { "label": "Spacelift", "color": "purple" },
+          { "label": "Terraform", "color": "purple" },
+          { "label": "OPA", "color": "cyan" },
+          { "label": "GitOps", "color": "cyan" },
+          { "label": "RBAC", "color": "muted" },
+          { "label": "FluxCD", "color": "muted" }
+        ]
+      }
+    ],
     "other": [
       {
         "title": "Security Canary Platform",
