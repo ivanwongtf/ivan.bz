@@ -11,8 +11,8 @@ const CV_DATA = {
   "hero": {
     "stats": [
       { "value": "5+", "label": "years_devops" },
-      { "value": "8+", "label": "prod_systems" },
-      { "value": "90%", "label": "ops_automated" },
+      { "value": "30+", "label": "prod_workloads" },
+      { "value": "10+", "label": "eks_clusters" },
       { "value": "AWS", "label": "sa_professional" }
     ]
   },
@@ -41,9 +41,10 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/senior",
       "side": "left",
       "bullets": [
-        "Operated and maintained a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
-        "Designed and deployed a unified observability stack with Prometheus, Thanos, Loki, and Grafana",
-        "Architected a high-throughput log pipeline using Fluent-bit and Fluentd for centralised log collection at scale"
+        "Took technical lead across 10+ EKS clusters supporting 30+ production workloads — owning platform stability, upgrades, and capacity planning",
+        "Led the design and deployment of a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
+        "Designed and rolled out a unified observability stack (Prometheus, Thanos, Loki, Grafana) covering all production services",
+        "Architected a high-throughput centralised log pipeline using Fluent-bit and Fluentd, serving the full workload fleet"
       ]
     },
     {
@@ -68,8 +69,8 @@ const CV_DATA = {
       "side": "left",
       "bullets": [
         "Supervised by Prof. Patrick P. C. Lee; research focused on distributed systems, Raft consensus, and fault-tolerant replication",
-        "Investigated crash fault-tolerance and rollback resistance in distributed storage systems",
-        "Developed strong foundations in consensus algorithms and distributed system design"
+        "Thesis: \"Enabling Heterogeneity-Aware Raft Consensus for Distributed Key-Value Storage\"",
+        "Investigated heterogeneous node performance in Raft clusters and designed adaptive mechanisms to improve throughput and fault tolerance"
       ]
     },
     {
@@ -85,8 +86,8 @@ const CV_DATA = {
       ]
     },
     {
-      "title": "Earlier Roles",
-      "duration": "2017 — 2018",
+      "title": "Internships",
+      "duration": "2017 — 2018 (during BSc)",
       "terminalTitle": "git log --oneline",
       "side": "left",
       "entries": [
@@ -202,7 +203,7 @@ const CV_DATA = {
         "icon": "radar",
         "iconColor": "purple",
         "terminalTitle": "canary-deploy.tf",
-        "description": "Enterprise security monitoring platform that automatically provisions canary resources across all AWS Organisation accounts with zero-touch IAM provisioning via CloudFormation StackSets.",
+        "description": "Enterprise security monitoring platform deployed across 100+ AWS accounts org-wide — automatically provisions canary resources covering all crown-jewel assets, with zero-touch IAM provisioning via CloudFormation StackSets.",
         "tags": [
           { "label": "Terraform", "color": "muted" },
           { "label": "Spacelift", "color": "muted" },
@@ -368,7 +369,7 @@ const CV_DATA = {
         { "name": "AI Agents", "lucide": "users" },
         { "name": "Prompt Engineering", "lucide": "message-square" },
         { "name": "MCP", "lucide": "wrench" },
-        { "name": "Claude Code", "lucide": "code" }
+        { "name": "Agentic Workflows", "lucide": "code" }
       ]
     },
     {
@@ -424,8 +425,8 @@ const CV_DATA = {
       "terminalTitle": "mphil.md",
       "details": [
         "Supervisor: Prof. Patrick P. C. Lee",
-        "Research on distributed systems, Raft consensus, and fault-tolerant replication",
-        "Built strong foundations in consensus algorithms that later informed production systems work at Crypto.com"
+        "Thesis: \"Enabling Heterogeneity-Aware Raft Consensus for Distributed Key-Value Storage\"",
+        "Research on distributed systems, Raft consensus, and fault-tolerant replication across heterogeneous nodes"
       ]
     },
     {
