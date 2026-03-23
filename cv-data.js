@@ -25,11 +25,11 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/manager",
       "side": "right",
       "bullets": [
-        "Manage a team of 3 engineers — conducting monthly Scrum ceremonies, setting sprint goals, and running 1-on-1s to unblock and grow the team",
+        "Lead a 4-person sub-team within a 21-person infrastructure organisation, owning project delivery, sprint planning, and team growth",
+        "Run monthly sprint reviews and planning sessions, setting goals and conducting 1-on-1s to unblock and develop engineers",
         "Hands-on across the stack: write Terraform, Go, and Python automation; review PRs; and architect infrastructure solutions alongside the team",
         "Drive AI adoption within operations — integrating LLM-powered tooling and agentic workflows to automate repetitive tasks and reduce toil",
-        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives",
-        "Architected automation initiatives that eliminated 90% of manual operational overhead across the platform"
+        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives"
       ]
     },
     {
@@ -59,12 +59,25 @@ const CV_DATA = {
       ]
     },
     {
+      "company": "The Chinese University of Hong Kong",
+      "title": "MPhil Researcher, Computer Science",
+      "duration": "Aug 2019 — Jul 2021",
+      "location": "Hong Kong",
+      "terminalTitle": "cuhk/mphil",
+      "side": "left",
+      "bullets": [
+        "Supervised by Prof. Patrick P. C. Lee; research focused on distributed systems, TEE data sealing, and Raft consensus",
+        "Designed and prototyped the uDDS framework — later published at IEEE CSP 2026",
+        "Investigated crash fault-tolerance and rollback resistance in volatile TEE memory across heterogeneous platforms"
+      ]
+    },
+    {
       "company": "Ahsay Systems",
       "title": "Software Analyst",
       "duration": "Jul 2021 — Nov 2021",
       "location": "Hong Kong",
-      "terminalTitle": "ahsay/analyst",
-      "side": "left",
+      "terminalTitle": "ahsay/analyst-2021",
+      "side": "right",
       "bullets": [
         "Designed a cloud-based disaster recovery solution for on-premises Hyper-V workloads on Microsoft Azure",
         "Developed a proof-of-concept prototype in Java featuring automated network provisioning and failover"
@@ -74,9 +87,9 @@ const CV_DATA = {
       "title": "Earlier Roles",
       "duration": "2017 — 2018",
       "terminalTitle": "git log --oneline",
-      "side": "right",
+      "side": "left",
       "entries": [
-        { "company": "Ahsay Systems", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
+        { "company": "Ahsay Systems (2017–2018)", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
         { "company": "Oyalabs", "description": "Engineered a cross-platform React Native mobile application with an AWS serverless backend" }
       ]
     }
@@ -238,7 +251,7 @@ const CV_DATA = {
         "icon": "bot",
         "iconColor": "green",
         "terminalTitle": "automate.go",
-        "description": "Developed a suite of automation tools in Go, Python, and Terraform that reduced manual operational overhead by 90%, significantly improving team efficiency and reliability.",
+        "description": "Developed a suite of automation tools in Go, Python, and Terraform covering provisioning, access management, and incident workflows — significantly reducing manual toil and improving operational reliability.",
         "tags": [
           { "label": "Go", "color": "muted" },
           { "label": "Python", "color": "muted" },
@@ -250,7 +263,7 @@ const CV_DATA = {
   "personal": {
     "name": "Foxly Invest",
     "icon": "trending-up",
-    "description": "A full-stack AI-powered investment portfolio platform delivering personalised news summaries, market insights, and portfolio analysis — designed to reduce research time and support informed investment decisions. Built from the ground up as a production-grade microservices system.",
+    "description": "A full-stack AI-powered investment portfolio platform delivering personalised news summaries, market insights, and portfolio analysis. Launched in 2025 with hundreds of MAU across iOS, Android, and Web — with paying subscribers since January 2026. Built from the ground up as a production-grade microservices system.",
     "url": "https://www.foxlyinvest.com/",
     "details": [
       {
@@ -410,8 +423,8 @@ const CV_DATA = {
       "terminalTitle": "mphil.md",
       "details": [
         "Supervisor: Prof. Patrick P. C. Lee",
-        "Research on distributed systems, Raft consensus, and data replication",
-        "Raft consensus, high availability, distributed systems"
+        "Research on distributed systems, TEE data sealing, and Raft consensus",
+        "Thesis work formed the basis of the uDDS framework, published at IEEE CSP 2026"
       ]
     },
     {
@@ -431,7 +444,7 @@ const CV_DATA = {
     {
       "name": "AWS Solutions Architect — Professional",
       "icon": "shield-check",
-      "validity": "Dec 2022 — Dec 2025",
+      "validity": "Issued Dec 2022",
       "url": "https://www.credly.com/badges/3e4c61e3-9c14-4c62-897e-f78785e10152"
     }
   ]
