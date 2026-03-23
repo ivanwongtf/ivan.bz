@@ -11,8 +11,8 @@ const CV_DATA = {
   "hero": {
     "stats": [
       { "value": "5+", "label": "years_devops" },
-      { "value": "30+", "label": "prod_workloads" },
-      { "value": "10+", "label": "eks_clusters" },
+      { "value": "100+", "label": "aws_accounts" },
+      { "value": "4", "label": "team_size" },
       { "value": "AWS", "label": "sa_professional" }
     ]
   },
@@ -28,7 +28,7 @@ const CV_DATA = {
         "Lead a 4-person sub-team within a 21-person infrastructure organisation — owning delivery, monthly sprint planning, and engineer growth via 1-on-1s",
         "Hands-on across the stack: Terraform, Go, and Python automation; PR reviews; and infrastructure architecture alongside the team",
         "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
-        "Lead cross-functional collaboration with the Network team, aligning priorities and owning shared operational initiatives",
+        "Drive cross-functional collaboration with the Network team, aligning priorities and owning shared operational initiatives",
         "Co-authored and published the uDDS framework (IEEE CSP 2026) — research conducted alongside production engineering work"
       ]
     },
@@ -54,7 +54,8 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/engineer",
       "side": "right",
       "bullets": [
-        "Deployed and maintained containerised applications on EKS using Dockerfiles, Helm Charts, and Helmfiles",
+        "Deployed and maintained 10+ containerised applications on EKS across prod and staging environments using Dockerfiles, Helm Charts, and Helmfiles",
+        "Led the consolidation of 26 Teleport clusters into a single HA/DR production and staging pair — designing and executing the full migration",
         "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and ArgoCD",
         "Developed Terraform modules for provisioning and managing AWS infrastructure at scale"
       ]
@@ -66,7 +67,7 @@ const CV_DATA = {
       "side": "left",
       "entries": [
         { "company": "Ahsay Systems (2017–2018)", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
-        { "company": "Oyalabs", "description": "Engineered a cross-platform React Native mobile application with an AWS serverless backend" }
+        { "company": "Oyalabs (2017)", "description": "Engineered a cross-platform React Native mobile application with an AWS serverless backend" }
       ]
     }
   ],
@@ -221,18 +222,6 @@ const CV_DATA = {
           { "label": "Fluent-bit", "color": "muted" },
           { "label": "Fluentd", "color": "muted" },
           { "label": "EKS", "color": "muted" }
-        ]
-      },
-      {
-        "title": "IaC Automation Suite",
-        "icon": "workflow",
-        "iconColor": "cyan",
-        "terminalTitle": "infra.tf",
-        "description": "Designed and developed infrastructure-as-code automation pipelines for application delivery and network provisioning using Terraform, Python, and GitHub Actions.",
-        "tags": [
-          { "label": "Terraform", "color": "muted" },
-          { "label": "Python", "color": "muted" },
-          { "label": "GitHub Actions", "color": "muted" }
         ]
       },
       {
@@ -433,7 +422,7 @@ const CV_DATA = {
     {
       "name": "AWS Solutions Architect — Professional",
       "icon": "shield-check",
-      "validity": "Issued Dec 2022",
+      "validity": "AWS Certified",
       "url": "https://www.credly.com/badges/3e4c61e3-9c14-4c62-897e-f78785e10152"
     }
   ]
