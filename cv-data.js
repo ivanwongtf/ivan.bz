@@ -30,6 +30,7 @@ const CV_DATA = {
         "Hands-on across the stack: write Terraform, Go, and Python automation; review PRs; and architect infrastructure solutions alongside the team",
         "Drive AI adoption within operations — integrating LLM-powered tooling and agentic workflows to automate repetitive tasks and reduce toil",
         "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives",
+        "Conduct company-wide Spacelift workshops with multiple DevOps teams — covering new features, OPA best practices, and IaC governance standards",
         "Co-authored and published the uDDS framework (IEEE CSP 2026) — research conducted alongside production engineering work"
       ]
     },
@@ -43,6 +44,7 @@ const CV_DATA = {
       "bullets": [
         "Took technical lead across 10+ EKS clusters supporting 30+ production workloads — owning platform stability, upgrades, and capacity planning",
         "Led the design and deployment of a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
+        "Owned the company-wide Spacelift IaC orchestration platform — managing OPA security policies, RBAC, and a fully GitOps stack where Spacelift itself is managed via Terraform",
         "Designed and rolled out a unified observability stack (Prometheus, Thanos, Loki, Grafana) covering all production services",
         "Architected a high-throughput centralised log pipeline using Fluent-bit and Fluentd, serving the full workload fleet"
       ]
