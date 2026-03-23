@@ -25,12 +25,10 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/manager",
       "side": "right",
       "bullets": [
-        "Lead a 4-person sub-team within a 21-person infrastructure organisation, owning project delivery, sprint planning, and team growth",
-        "Run monthly sprint reviews and planning sessions, setting goals and conducting 1-on-1s to unblock and develop engineers",
-        "Hands-on across the stack: write Terraform, Go, and Python automation; review PRs; and architect infrastructure solutions alongside the team",
-        "Drive AI adoption within operations — integrating LLM-powered tooling and agentic workflows to automate repetitive tasks and reduce toil",
-        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives",
-        "Conduct company-wide Spacelift workshops with multiple DevOps teams — covering new features, OPA best practices, and IaC governance standards",
+        "Lead a 4-person sub-team within a 21-person infrastructure organisation — owning delivery, monthly sprint planning, and engineer growth via 1-on-1s",
+        "Hands-on across the stack: Terraform, Go, and Python automation; PR reviews; and infrastructure architecture alongside the team",
+        "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
+        "Lead cross-functional collaboration with the Network team, aligning priorities and owning shared operational initiatives",
         "Co-authored and published the uDDS framework (IEEE CSP 2026) — research conducted alongside production engineering work"
       ]
     },
@@ -43,10 +41,9 @@ const CV_DATA = {
       "side": "left",
       "bullets": [
         "Took technical lead across 10+ EKS clusters supporting 30+ production workloads — owning platform stability, upgrades, and capacity planning",
-        "Led the design and deployment of a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
-        "Owned the company-wide Spacelift IaC orchestration platform — managing OPA security policies, RBAC, and a fully GitOps stack where Spacelift itself is managed via Terraform",
-        "Designed and rolled out a unified observability stack (Prometheus, Thanos, Loki, Grafana) covering all production services",
-        "Architected a high-throughput centralised log pipeline using Fluent-bit and Fluentd, serving the full workload fleet"
+        "Led design and deployment of a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
+        "Owned the company-wide Spacelift IaC platform — OPA policies, RBAC, and a self-managing GitOps stack where Spacelift is managed via Terraform",
+        "Built unified observability (Prometheus, Thanos, Loki, Grafana) and a centralised log pipeline (Fluent-bit, Fluentd) across all production services"
       ]
     },
     {
@@ -60,31 +57,6 @@ const CV_DATA = {
         "Deployed and maintained containerised applications on EKS using Dockerfiles, Helm Charts, and Helmfiles",
         "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and ArgoCD",
         "Developed Terraform modules for provisioning and managing AWS infrastructure at scale"
-      ]
-    },
-    {
-      "company": "The Chinese University of Hong Kong",
-      "title": "MPhil Researcher, Computer Science",
-      "duration": "Aug 2019 — Jul 2021",
-      "location": "Hong Kong",
-      "terminalTitle": "cuhk/mphil",
-      "side": "left",
-      "bullets": [
-        "Supervised by Prof. Patrick P. C. Lee; research focused on distributed systems, Raft consensus, and fault-tolerant replication",
-        "Thesis: \"Enabling Heterogeneity-Aware Raft Consensus for Distributed Key-Value Storage\"",
-        "Investigated heterogeneous node performance in Raft clusters and designed adaptive mechanisms to improve throughput and fault tolerance"
-      ]
-    },
-    {
-      "company": "Ahsay Systems",
-      "title": "Software Analyst",
-      "duration": "Jul 2021 — Nov 2021",
-      "location": "Hong Kong",
-      "terminalTitle": "ahsay/analyst-2021",
-      "side": "right",
-      "bullets": [
-        "Designed a cloud-based disaster recovery solution for on-premises Hyper-V workloads on Microsoft Azure",
-        "Developed a proof-of-concept prototype in Java featuring automated network provisioning and failover"
       ]
     },
     {
@@ -197,39 +169,22 @@ const CV_DATA = {
           { "label": "RAG", "color": "muted" },
           { "label": "RBAC", "color": "muted" }
         ]
-      },
-      {
-        "title": "Spacelift — Company-Wide IaC Platform",
-        "subtitle": "GitOps-Managed IaC Orchestration & Governance",
-        "icon": "layers",
-        "accentColor": "purple",
-        "terminalTitle": "spacelift ~ terraform plan",
-        "description": "Owned and operated the company-wide Spacelift IaC orchestration platform — the central control plane for all infrastructure changes across the organisation. All Spacelift resources (stacks, policies, contexts, RBAC) are managed as Terraform code in a GitOps repo — making access control auditable, change-reviewed, and automatable by AI tooling.",
-        "bullets": [
-          "Single platform for all teams' IaC execution, enforcing consistent policy and auditability across the organisation",
-          "Authored OPA policies to enforce security guardrails, cost controls, and compliance rules on every infrastructure change",
-          "Spacelift RBAC fully managed via Terraform — securing access control, enabling AI-driven automation, and making every permission change auditable via Git history",
-          "Built the GitOps self-management loop: Spacelift manages infrastructure, and Terraform manages Spacelift — fully version-controlled and peer-reviewed",
-          "Conducted company-wide workshops for DevOps teams on Spacelift features, OPA best practices, and IaC governance standards"
-        ],
-        "meta": {
-          "scope": "company-wide",
-          "policy": "OPA",
-          "access": "RBAC via Terraform",
-          "mgmt": "GitOps self-managed",
-          "status": "production"
-        },
-        "tags": [
-          { "label": "Spacelift", "color": "purple" },
-          { "label": "Terraform", "color": "purple" },
-          { "label": "OPA", "color": "cyan" },
-          { "label": "GitOps", "color": "cyan" },
-          { "label": "RBAC", "color": "muted" },
-          { "label": "AI Automation", "color": "muted" }
-        ]
       }
     ],
     "other": [
+      {
+        "title": "Spacelift — IaC Orchestration Platform",
+        "icon": "layers",
+        "iconColor": "purple",
+        "terminalTitle": "spacelift ~ terraform plan",
+        "description": "Owned the company-wide Spacelift platform — OPA security policies, RBAC, and a self-managing GitOps loop where all stacks, policies, and contexts are managed via Terraform. Conducted org-wide workshops on features and IaC governance.",
+        "tags": [
+          { "label": "Spacelift", "color": "purple" },
+          { "label": "Terraform", "color": "muted" },
+          { "label": "OPA", "color": "muted" },
+          { "label": "GitOps", "color": "muted" }
+        ]
+      },
       {
         "title": "Security Canary Platform",
         "icon": "radar",
