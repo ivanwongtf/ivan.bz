@@ -29,7 +29,7 @@ const CV_DATA = {
         "Hands-on across the stack: Terraform, Go, and Python automation; PR reviews; and infrastructure architecture alongside the team",
         "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
         "Drive cross-functional collaboration with the Network team, aligning priorities and owning shared operational initiatives",
-        "Co-authored and published the uDDS framework (IEEE CSP 2026) — research conducted alongside production engineering work"
+        "First-authored uDDS (IEEE CSP 2026) — a TEE-based distributed data sealing framework built for the hot-wallet vault, designed and implemented alongside production engineering work"
       ]
     },
     {
@@ -222,18 +222,6 @@ const CV_DATA = {
           { "label": "Fluent-bit", "color": "muted" },
           { "label": "Fluentd", "color": "muted" },
           { "label": "EKS", "color": "muted" }
-        ]
-      },
-      {
-        "title": "Operations Automation",
-        "icon": "bot",
-        "iconColor": "green",
-        "terminalTitle": "automate.go",
-        "description": "Developed a suite of automation tools in Go, Python, and Terraform covering provisioning, access management, and incident workflows — significantly reducing manual toil and improving operational reliability.",
-        "tags": [
-          { "label": "Go", "color": "muted" },
-          { "label": "Python", "color": "muted" },
-          { "label": "Terraform", "color": "muted" }
         ]
       }
     ]
