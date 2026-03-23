@@ -25,22 +25,24 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/manager",
       "side": "right",
       "bullets": [
-        "Leading the Infra DevOps team, coordinating projects and guiding junior engineers",
-        "Driving DevOps integration with the Network team for daily operations",
-        "Designed automations that reduced 90% of operational overhead"
+        "Manage a team of 3 engineers — conducting monthly Scrum ceremonies, setting sprint goals, and running 1-on-1s to unblock and grow the team",
+        "Hands-on across the stack: write Terraform, Go, and Python automation; review PRs; and architect infrastructure solutions alongside the team",
+        "Drive AI adoption within operations — integrating LLM-powered tooling and agentic workflows to automate repetitive tasks and reduce toil",
+        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives",
+        "Architected automation initiatives that eliminated 90% of manual operational overhead across the platform"
       ]
     },
     {
       "company": "Crypto.com",
       "title": "Senior Engineer, Infra DevOps",
-      "duration": "Jan 2023 — Present",
+      "duration": "Jan 2023 — Jan 2024",
       "location": "Hong Kong",
       "terminalTitle": "crypto.com/senior",
       "side": "left",
       "bullets": [
-        "Manage geo-distributed Teleport platform across 3 regions on EKS with CockroachDB",
-        "Deployed monitoring dashboards with Prometheus, Thanos, Loki & Grafana",
-        "Designed critical logs pipeline with Fluent-bit and Fluentd"
+        "Operated and maintained a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
+        "Designed and deployed a unified observability stack with Prometheus, Thanos, Loki, and Grafana",
+        "Architected a high-throughput log pipeline using Fluent-bit and Fluentd for centralised log collection at scale"
       ]
     },
     {
@@ -51,9 +53,9 @@ const CV_DATA = {
       "terminalTitle": "crypto.com/engineer",
       "side": "right",
       "bullets": [
-        "Deployed apps on EKS with Dockerfiles, Helm Charts and Helmfiles",
-        "Designed CI/CD pipelines with GitHub Action, ECR, OPA and ArgoCD",
-        "Developed Terraform stacks for provisioning AWS resources"
+        "Deployed and maintained containerised applications on EKS using Dockerfiles, Helm Charts, and Helmfiles",
+        "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and ArgoCD",
+        "Developed Terraform modules for provisioning and managing AWS infrastructure at scale"
       ]
     },
     {
@@ -64,8 +66,8 @@ const CV_DATA = {
       "terminalTitle": "ahsay/analyst",
       "side": "left",
       "bullets": [
-        "Designed a disaster recovery system for on-premise Hyper-V on Azure",
-        "Developed a prototype with automatic network setups in Java"
+        "Designed a cloud-based disaster recovery solution for on-premises Hyper-V workloads on Microsoft Azure",
+        "Developed a proof-of-concept prototype in Java featuring automated network provisioning and failover"
       ]
     },
     {
@@ -74,8 +76,8 @@ const CV_DATA = {
       "terminalTitle": "git log --oneline",
       "side": "right",
       "entries": [
-        { "company": "Ahsay Systems", "description": "Developed AhsayOBM for QNAP, now a mainstream product" },
-        { "company": "Oyalabs", "description": "Built a React Native mobile app with AWS serverless backend" }
+        { "company": "Ahsay Systems", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
+        { "company": "Oyalabs", "description": "Engineered a cross-platform React Native mobile application with an AWS serverless backend" }
       ]
     }
   ],
@@ -87,12 +89,12 @@ const CV_DATA = {
         "icon": "shield-check",
         "accentColor": "cyan",
         "terminalTitle": "hot-wallet-vault.go",
-        "description": "Production distributed vault system for cryptocurrency hot-wallet custody. Implements the uDDS (Universal Distributed Data Sealing) framework — zero-knowledge blind RSA decryption inside Trusted Execution Environments, where the server performs cryptographic operations on blinded data without ever seeing plaintext.",
+        "description": "Production-grade distributed vault system for cryptocurrency hot-wallet custody. Implements the uDDS (Universal Distributed Data Sealing) framework — zero-knowledge blind RSA decryption inside Trusted Execution Environments, ensuring the server performs cryptographic operations on blinded ciphertext without ever accessing plaintext.",
         "bullets": [
-          "Globally distributed Raft cluster across multiple AWS regions",
-          "Multi-TEE: AWS Nitro Enclaves + Intel SGX on Azure",
-          "Blind RSA decryption for zero-knowledge data sealing",
-          "AES-256-GCM encrypted Raft transport"
+          "Globally distributed Raft consensus cluster spanning multiple AWS regions",
+          "Heterogeneous TEE support: AWS Nitro Enclaves and Intel SGX on Azure",
+          "Blind RSA decryption protocol for operator-oblivious zero-knowledge data sealing",
+          "AES-256-GCM encrypted Raft transport for secure inter-node communication"
         ],
         "meta": {
           "deploy": "global",
@@ -117,13 +119,13 @@ const CV_DATA = {
         "icon": "server",
         "accentColor": "green",
         "terminalTitle": "teleport-platform.yaml",
-        "description": "Enterprise-scale Privileged Access Management platform with a unified Teleport cluster geo-distributed across 3 AWS regions backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents spanning AWS, Azure, and GCP — plus automated access request workflows, Slack notifications, and Okta identity integration.",
+        "description": "Enterprise-scale Privileged Access Management platform built on a unified Teleport cluster geo-distributed across 3 AWS regions, backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents deployed across AWS, Azure, and GCP — complemented by automated access-request workflows, Slack notifications, and Okta identity integration.",
         "bullets": [
-          "Geo-distributed across 3 AWS regions with CockroachDB backend",
-          "Teleport agents across AWS, Azure, and GCP",
-          "Fully GitOps: FluxCD + Spacelift for infrastructure",
-          "High availability with autoscaling on EKS",
-          "Go-based PAM orchestrator: Slack + Okta + auto-approval workflows"
+          "Geo-distributed cluster spanning 3 AWS regions with CockroachDB for fault-tolerant state management",
+          "Teleport agents deployed across AWS, Azure, and GCP for unified multi-cloud access",
+          "Fully GitOps-managed via FluxCD and Spacelift for repeatable, auditable infrastructure",
+          "High availability with horizontal autoscaling on EKS",
+          "Go-based PAM orchestrator integrating Slack, Okta, and automated access-approval workflows"
         ],
         "meta": {
           "cluster": "unified HA",
@@ -147,26 +149,25 @@ const CV_DATA = {
         ]
       },
       {
-        "title": "Echo Bot — AI Slack Assistant",
-        "subtitle": "Intelligent Knowledge Management & Auto-Reply",
+        "title": "Echo Bot — Agentic Operations Assistant",
+        "subtitle": "AI Front-line for Infra DevOps Operations",
         "icon": "message-circle",
         "accentColor": "purple",
         "terminalTitle": "echo-bot ~ python main.py",
-        "description": "AI-powered Slack bot that learns communication styles and responds on your behalf. Features a full RBAC knowledge management system with topic-based organization, semantic vector search, and adaptive response generation — turning institutional knowledge into instant, context-aware replies.",
+        "description": "An agentic Slack assistant that acts as the first responder for any operational request coming into the Infra DevOps team. When engineers or stakeholders ask about runbooks, access procedures, or platform status, Echo Bot handles it autonomously — giving the team back time to focus on high-value engineering work instead of repetitive Q&A.",
         "bullets": [
-          "RBAC with topic-based knowledge, user traits, and invitation system",
-          "RAG pipeline with sentence transformer embeddings & similarity search",
-          "LangChain + LLM for style-adaptive response generation",
-          "Portal UI for knowledge management, training data, and analytics",
-          "Multi-channel Slack support with auto-reply and mention detection"
+          "Acts as the team's AI front-line: intercepts inbound Slack messages and resolves operational queries without human intervention",
+          "RBAC knowledge base with topic-scoped runbooks, team-specific context, and a self-serve invitation system for onboarding new requesters",
+          "RAG pipeline with sentence-transformer embeddings — retrieves the most relevant operational knowledge before generating a response",
+          "LangChain + LLM inference layer produces accurate, style-consistent replies grounded in team knowledge, not hallucinations",
+          "Management portal for curating runbooks, reviewing training data, and tracking deflection metrics"
         ],
         "meta": {
-          "input": "Slack msg",
-          "embed": "SentenceTransformer",
-          "retrieve": "vector similarity",
-          "context": "RBAC + traits",
+          "trigger": "inbound Slack msg",
+          "retrieve": "RAG + vector search",
+          "context": "RBAC runbooks",
           "generate": "LLM API",
-          "output": "adaptive reply",
+          "output": "autonomous reply",
           "status": "production"
         },
         "tags": [
@@ -187,7 +188,7 @@ const CV_DATA = {
         "icon": "radar",
         "iconColor": "purple",
         "terminalTitle": "canary-deploy.tf",
-        "description": "Enterprise security monitoring platform that auto-deploys canary resources across AWS Organization accounts with zero-touch IAM provisioning via CloudFormation StackSets.",
+        "description": "Enterprise security monitoring platform that automatically provisions canary resources across all AWS Organisation accounts with zero-touch IAM provisioning via CloudFormation StackSets.",
         "tags": [
           { "label": "Terraform", "color": "muted" },
           { "label": "Spacelift", "color": "muted" },
@@ -200,7 +201,7 @@ const CV_DATA = {
         "icon": "activity",
         "iconColor": "cyan",
         "terminalTitle": "observability.yaml",
-        "description": "Designed and deployed monitoring dashboards and alert automations for multiple applications with Prometheus, Thanos, Loki, Grafana and Datadog.",
+        "description": "Designed and deployed a unified observability platform with monitoring dashboards and automated alerting across multiple production applications using Prometheus, Thanos, Loki, Grafana, and Datadog.",
         "tags": [
           { "label": "Prometheus", "color": "muted" },
           { "label": "Thanos", "color": "muted" },
@@ -213,7 +214,7 @@ const CV_DATA = {
         "icon": "scroll-text",
         "iconColor": "cyan",
         "terminalTitle": "logging.yaml",
-        "description": "Designed and deployed critical logs pipeline with Fluent-bit and Fluentd for reliable log collection and forwarding at scale.",
+        "description": "Designed and deployed a critical log ingestion pipeline using Fluent-bit and Fluentd, ensuring reliable, high-throughput log collection and centralised forwarding at scale.",
         "tags": [
           { "label": "Fluent-bit", "color": "muted" },
           { "label": "Fluentd", "color": "muted" },
@@ -225,7 +226,7 @@ const CV_DATA = {
         "icon": "workflow",
         "iconColor": "cyan",
         "terminalTitle": "infra.tf",
-        "description": "Designed and developed pipelines for applications and network infrastructure with Terraform, Python, and GitHub Actions.",
+        "description": "Designed and developed infrastructure-as-code automation pipelines for application delivery and network provisioning using Terraform, Python, and GitHub Actions.",
         "tags": [
           { "label": "Terraform", "color": "muted" },
           { "label": "Python", "color": "muted" },
@@ -237,7 +238,7 @@ const CV_DATA = {
         "icon": "bot",
         "iconColor": "green",
         "terminalTitle": "automate.go",
-        "description": "Developed multiple automations with Go, Python, and Terraform that reduced 90% of manual operations overhead.",
+        "description": "Developed a suite of automation tools in Go, Python, and Terraform that reduced manual operational overhead by 90%, significantly improving team efficiency and reliability.",
         "tags": [
           { "label": "Go", "color": "muted" },
           { "label": "Python", "color": "muted" },
@@ -249,7 +250,7 @@ const CV_DATA = {
   "personal": {
     "name": "Foxly Invest",
     "icon": "trending-up",
-    "description": "A full-stack AI investment portfolio platform that delivers tailored news summaries, insights, and analysis based on your portfolio — crafted to save time and help users make confident investment decisions. Built as a production-grade microservices system from the ground up.",
+    "description": "A full-stack AI-powered investment portfolio platform delivering personalised news summaries, market insights, and portfolio analysis — designed to reduce research time and support informed investment decisions. Built from the ground up as a production-grade microservices system.",
     "url": "https://www.foxlyinvest.com/",
     "details": [
       {
@@ -258,10 +259,10 @@ const CV_DATA = {
         "accentColor": "cyan",
         "terminalTitle": "architecture.yaml",
         "bullets": [
-          "Microservice backend in Go and Python",
-          "Deployed on Kubernetes (production K8s cluster)",
-          "Web client + Android + iOS apps",
-          "Real-time market data and news pipelines"
+          "Microservice architecture with Go and Python backend services",
+          "Deployed on a production-grade Kubernetes cluster",
+          "Web, Android, and iOS client applications",
+          "Real-time market data ingestion and news processing pipelines"
         ]
       },
       {
