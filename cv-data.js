@@ -29,7 +29,8 @@ const CV_DATA = {
         "Run monthly sprint reviews and planning sessions, setting goals and conducting 1-on-1s to unblock and develop engineers",
         "Hands-on across the stack: write Terraform, Go, and Python automation; review PRs; and architect infrastructure solutions alongside the team",
         "Drive AI adoption within operations — integrating LLM-powered tooling and agentic workflows to automate repetitive tasks and reduce toil",
-        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives"
+        "Lead cross-functional DevOps collaboration with the Network team, aligning priorities and owning delivery of shared operational initiatives",
+        "Co-authored and published the uDDS framework (IEEE CSP 2026) — research conducted alongside production engineering work"
       ]
     },
     {
@@ -66,9 +67,9 @@ const CV_DATA = {
       "terminalTitle": "cuhk/mphil",
       "side": "left",
       "bullets": [
-        "Supervised by Prof. Patrick P. C. Lee; research focused on distributed systems, TEE data sealing, and Raft consensus",
-        "Designed and prototyped the uDDS framework — later published at IEEE CSP 2026",
-        "Investigated crash fault-tolerance and rollback resistance in volatile TEE memory across heterogeneous platforms"
+        "Supervised by Prof. Patrick P. C. Lee; research focused on distributed systems, Raft consensus, and fault-tolerant replication",
+        "Investigated crash fault-tolerance and rollback resistance in distributed storage systems",
+        "Developed strong foundations in consensus algorithms and distributed system design"
       ]
     },
     {
@@ -423,8 +424,8 @@ const CV_DATA = {
       "terminalTitle": "mphil.md",
       "details": [
         "Supervisor: Prof. Patrick P. C. Lee",
-        "Research on distributed systems, TEE data sealing, and Raft consensus",
-        "Thesis work formed the basis of the uDDS framework, published at IEEE CSP 2026"
+        "Research on distributed systems, Raft consensus, and fault-tolerant replication",
+        "Built strong foundations in consensus algorithms that later informed production systems work at Crypto.com"
       ]
     },
     {
