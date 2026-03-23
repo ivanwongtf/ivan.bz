@@ -28,7 +28,7 @@ const CV_DATA = {
         "Lead a 4-person sub-team within a 21-person infrastructure organisation — owning delivery, monthly sprint planning, and engineer growth via 1-on-1s",
         "Hands-on across the stack: Terraform, Go, and Python automation; PR reviews; and infrastructure architecture alongside the team",
         "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
-        "Drive cross-functional collaboration with the Network team, aligning priorities and owning shared operational initiatives",
+        "Own cross-functional collaboration with the Network team, aligning priorities and driving delivery of shared operational initiatives",
         "First-authored uDDS (IEEE CSP 2026) — a TEE-based distributed data sealing framework built for the hot-wallet vault, designed and implemented alongside production engineering work"
       ]
     },
@@ -62,7 +62,7 @@ const CV_DATA = {
     },
     {
       "title": "Internships",
-      "duration": "2017 — 2018 (during BSc)",
+      "duration": "2017 — 2018",
       "terminalTitle": "git log --oneline",
       "side": "left",
       "entries": [
@@ -109,12 +109,12 @@ const CV_DATA = {
         "icon": "server",
         "accentColor": "green",
         "terminalTitle": "teleport-platform.yaml",
-        "description": "Enterprise-scale Privileged Access Management platform built on a unified Teleport cluster geo-distributed across 3 AWS regions, backed by CockroachDB for high availability. Fully GitOps-managed on Kubernetes with Teleport agents deployed across AWS, Azure, and GCP — complemented by automated access-request workflows, Slack notifications, and Okta identity integration.",
+        "description": "Enterprise-scale Privileged Access Management platform — consolidated from 26 sprawling Teleport clusters into a single, unified HA/DR architecture spanning 3 AWS regions, backed by CockroachDB. Fully GitOps-managed on Kubernetes with Teleport agents across AWS, Azure, and GCP, and integrated access-request workflows with Slack and Okta.",
         "bullets": [
-          "Geo-distributed cluster spanning 3 AWS regions with CockroachDB for fault-tolerant state management",
+          "Designed and led the full migration from 26 legacy clusters to a single geo-distributed HA/DR pair (prod + staging) — zero access downtime",
+          "Geo-distributed across 3 AWS regions with CockroachDB for fault-tolerant state and automatic failover",
           "Teleport agents deployed across AWS, Azure, and GCP for unified multi-cloud access",
-          "Fully GitOps-managed via FluxCD and Spacelift for repeatable, auditable infrastructure",
-          "High availability with horizontal autoscaling on EKS",
+          "Fully GitOps-managed via FluxCD and Spacelift — all changes version-controlled and peer-reviewed",
           "Go-based PAM orchestrator integrating Slack, Okta, and automated access-approval workflows"
         ],
         "meta": {
@@ -389,8 +389,7 @@ const CV_DATA = {
       "terminalTitle": "mphil.md",
       "details": [
         "Supervisor: Prof. Patrick P. C. Lee",
-        "Thesis: \"Enabling Heterogeneity-Aware Raft Consensus for Distributed Key-Value Storage\"",
-        "Research on distributed systems, Raft consensus, and fault-tolerant replication across heterogeneous nodes"
+        "Thesis: \"Enabling Heterogeneity-Aware Raft Consensus for Distributed Key-Value Storage\""
       ]
     },
     {
