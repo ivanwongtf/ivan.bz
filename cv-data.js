@@ -26,9 +26,9 @@ const CV_DATA = {
       "side": "right",
       "bullets": [
         "Lead a 4-person sub-team within a 21-person infrastructure organisation — owning delivery, monthly sprint planning, and engineer growth via 1-on-1s",
-        "Hands-on across the stack: Terraform, Go, and Python automation; PR reviews; and infrastructure architecture alongside the team",
+        "Hands-on across the stack: manage Kubernetes clusters, handle complex upgrades and deployments, write Terraform/Go/Python automation, and review PRs alongside the team",
         "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
-        "Own cross-functional collaboration with the Network team, aligning priorities and driving delivery of shared operational initiatives",
+        "Own cross-functional collaboration across Network, Cloud Security, and Exchange teams — covering cloud-native resource patching, canary deployments, and IaC best practices on Teleport and Spacelift",
         "First-authored uDDS (IEEE CSP 2026) — a TEE-based distributed data sealing framework built for the hot-wallet vault, designed and implemented alongside production engineering work"
       ]
     },
@@ -43,7 +43,7 @@ const CV_DATA = {
         "Took technical lead across 10+ EKS clusters supporting 30+ production workloads — owning platform stability, upgrades, and capacity planning",
         "Led design and deployment of a geo-distributed Teleport PAM platform across 3 AWS regions on EKS, backed by CockroachDB",
         "Owned the company-wide Spacelift IaC platform — OPA policies, RBAC, and a self-managing GitOps stack where Spacelift is managed via Terraform",
-        "Built unified observability (Prometheus, Thanos, Loki, Grafana) and a centralised log pipeline (Fluent-bit, Fluentd) across all production services"
+        "Built unified observability (Prometheus, Datadog) and a centralised log pipeline (Fluent-bit, Fluentd) across all production services"
       ]
     },
     {
@@ -56,7 +56,7 @@ const CV_DATA = {
       "bullets": [
         "Deployed and maintained 10+ containerised applications on EKS across prod and staging environments using Dockerfiles, Helm Charts, and Helmfiles",
         "Owned the Teleport platform end-to-end — consolidating 26 clusters into a unified HA/DR architecture (see Work Projects)",
-        "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and ArgoCD",
+        "Designed end-to-end CI/CD pipelines incorporating GitHub Actions, ECR, OPA policy gates, and FluxCD",
         "Developed Terraform modules for provisioning and managing AWS infrastructure at scale"
       ]
     },
@@ -99,7 +99,7 @@ const CV_DATA = {
           { "label": "AWS Nitro", "color": "purple" },
           { "label": "Intel SGX", "color": "purple" },
           { "label": "Terraform", "color": "muted" },
-          { "label": "K8s / ArgoCD", "color": "muted" },
+          { "label": "K8s / FluxCD", "color": "muted" },
           { "label": "Blind Cryptography", "color": "muted" }
         ]
       },
@@ -204,11 +204,9 @@ const CV_DATA = {
         "icon": "activity",
         "iconColor": "cyan",
         "terminalTitle": "observability.yaml",
-        "description": "Designed and deployed a unified observability platform with monitoring dashboards and automated alerting across multiple production applications using Prometheus, Thanos, Loki, Grafana, and Datadog.",
+        "description": "Designed and deployed a unified observability platform with monitoring dashboards and automated alerting across multiple production applications using Prometheus and Datadog.",
         "tags": [
           { "label": "Prometheus", "color": "muted" },
-          { "label": "Thanos", "color": "muted" },
-          { "label": "Grafana", "color": "muted" },
           { "label": "Datadog", "color": "muted" }
         ]
       },
@@ -298,9 +296,7 @@ const CV_DATA = {
       "iconColor": "cyan",
       "items": [
         { "name": "Prometheus", "devicon": "devicon-prometheus-plain" },
-        { "name": "Grafana", "devicon": "devicon-grafana-plain" },
-        { "name": "Thanos", "lucide": "eye" },
-        { "name": "Loki", "lucide": "file-text" },
+        { "name": "Datadog", "lucide": "activity" },
         { "name": "Fluentd", "lucide": "arrow-right-left" }
       ]
     },
