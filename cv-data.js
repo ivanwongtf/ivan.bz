@@ -310,6 +310,8 @@ const CV_DATA = {
         { "name": "Python", "devicon": "devicon-python-plain" },
         { "name": "Bash", "devicon": "devicon-bash-plain" },
         { "name": "React", "devicon": "devicon-react-original" },
+        { "name": "Next.js", "devicon": "devicon-nextjs-plain" },
+        { "name": "Flutter", "devicon": "devicon-flutter-plain" },
         { "name": "GraphQL", "devicon": "devicon-graphql-plain" },
         { "name": "gRPC", "lucide": "arrow-left-right" }
       ]
@@ -322,14 +324,12 @@ const CV_DATA = {
       "items": [
         { "name": "LangChain", "lucide": "link" },
         { "name": "LangGraph", "lucide": "workflow" },
-        { "name": "Claude API", "lucide": "bot" },
-        { "name": "OpenAI API", "lucide": "sparkles" },
         { "name": "RAG", "lucide": "database" },
         { "name": "Vector DB", "lucide": "scan-search" },
         { "name": "AI Agents", "lucide": "users" },
-        { "name": "Prompt Engineering", "lucide": "message-square" },
         { "name": "MCP", "lucide": "wrench" },
-        { "name": "Agentic Workflows", "lucide": "code" }
+        { "name": "Agentic Workflows", "lucide": "code" },
+        { "name": "Claude Code SDK", "lucide": "bot" }
       ]
     },
     {
