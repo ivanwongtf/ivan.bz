@@ -66,7 +66,7 @@ const CV_DATA = {
       "terminalTitle": "git log --oneline",
       "side": "left",
       "entries": [
-        { "company": "Ahsay Systems (2017–2018)", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
+        { "company": "Ahsay Systems (2018)", "description": "Developed AhsayOBM backup client for QNAP NAS; now a widely adopted mainstream product" },
         { "company": "Oyalabs (2017)", "description": "Engineered a cross-platform React Native mobile application with an AWS serverless backend" }
       ]
     }
