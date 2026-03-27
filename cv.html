@@ -700,8 +700,8 @@
   <div class="toolbar dark-toolbar" id="toolbar">
     <span class="toolbar-label" id="toolbar-label">CV Preview — ivan.bz</span>
     <div class="version-tabs">
-      <button class="version-tab active-dark" id="tab-dark" onclick="switchVersion('dark')">Terminal</button>
-      <button class="version-tab inactive-dark" id="tab-formal" onclick="switchVersion('formal')">Formal</button>
+      <button class="version-tab active-light" id="tab-formal" onclick="switchVersion('formal')">Formal</button>
+      <button class="version-tab inactive-light" id="tab-dark" onclick="switchVersion('dark')">Terminal</button>
     </div>
     <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
   </div>
@@ -709,7 +709,7 @@
   <!-- ══════════════════════════════════════
        DARK / TERMINAL CV
   ══════════════════════════════════════ -->
-  <div id="cv-dark">
+  <div id="cv-dark" style="display:none">
     <div class="cv-dark" id="cv-dark-inner">
       <div class="cv-header" id="cvd-header"></div>
 
@@ -736,7 +736,7 @@
   <!-- ══════════════════════════════════════
        FORMAL CV
   ══════════════════════════════════════ -->
-  <div id="cv-formal" style="display:none">
+  <div id="cv-formal">
     <div class="cv-formal" id="cv-formal-inner">
       <div id="cvf-header"></div>
 
@@ -787,7 +787,7 @@
   <script src="cv-data.js?v=9128388"></script>
   <script>
     // ── Version switching ──────────────────────────────────────────
-    let currentVersion = 'dark';
+    let currentVersion = 'formal';
 
     function switchVersion(v) {
       currentVersion = v;
@@ -1133,8 +1133,10 @@
     loadDarkCV(data);
     loadFormalCV(data);
 
-    // Set initial body bg
-    document.body.style.background = '#0F172A';
+    // Set initial body bg and toolbar for formal-first
+    document.body.style.background = '#f8f9fb';
+    document.getElementById('toolbar').className = 'toolbar light-toolbar';
+    document.getElementById('toolbar-label').textContent = 'Formal CV — Ivan Wong';
   </script>
 </body>
 </html>
