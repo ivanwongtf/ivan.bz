@@ -17,7 +17,7 @@ const CV_DATA = {
     "email": "jobs@ivan.bz",
     "website": "ivan.bz",
     "github": "github.com/ivanwongtf",
-    "linkedin": "linkedin.com/in/ivan-wong-tf",
+    "linkedin": "www.linkedin.com/in/ivan-wong-tf/",
     "location": {
       "en": "Hong Kong",
       "zh-CN": "香港",
