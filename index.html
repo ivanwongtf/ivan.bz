@@ -229,6 +229,68 @@
       html { scroll-behavior: auto; }
     }
 
+    /* Language switcher */
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #334155;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: rgba(30, 41, 59, 0.5);
+    }
+    .lang-switch button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      color: #94A3B8;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1.4;
+    }
+    .lang-switch button:hover { color: #F8FAFC; }
+    .lang-switch button.active {
+      color: #0F172A;
+      background: #00FFFF;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.35);
+    }
+    .lang-switch .lang-divider {
+      width: 1px;
+      align-self: stretch;
+      background: #334155;
+    }
+    /* Mobile language switcher */
+    .lang-switch-mobile {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #334155;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: rgba(30, 41, 59, 0.5);
+      align-self: flex-start;
+    }
+    .lang-switch-mobile button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      color: #94A3B8;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .lang-switch-mobile button.active {
+      color: #0F172A;
+      background: #00FFFF;
+    }
+    .lang-switch-mobile .lang-divider {
+      width: 1px;
+      align-self: stretch;
+      background: #334155;
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -239,16 +301,23 @@
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#hero" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
       <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
-        <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Work</a>
-        <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
-        <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
-        <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
-        <a href="#contact" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contact</a>
+      <div class="hidden md:flex items-center gap-6 lg:gap-8">
+        <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.experience">Experience</a>
+        <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.work">Work</a>
+        <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.personal">Personal</a>
+        <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.publications">Publications</a>
+        <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.skills">Skills</a>
+        <a href="#contact" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono" data-i18n="nav.contact">Contact</a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-label="English">EN</button>
+          <span class="lang-divider"></span>
+          <button type="button" data-lang="zh-CN" aria-label="简体中文" lang="zh-CN">简</button>
+          <span class="lang-divider"></span>
+          <button type="button" data-lang="zh-TW" aria-label="繁體中文" lang="zh-TW">繁</button>
+        </div>
         <a href="cv.html" target="_blank" class="px-4 py-1.5 rounded-full bg-cyan text-bg font-mono font-semibold text-xs hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-1.5 no-underline">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          CV
+          <span data-i18n="nav.cv">CV</span>
         </a>
       </div>
       <!-- Mobile hamburger -->
@@ -259,15 +328,22 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
       <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
-        <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Work</a>
-        <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
-        <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
-        <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
-        <a href="#contact" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contact</a>
+        <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.experience">Experience</a>
+        <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.work">Work</a>
+        <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.personal">Personal</a>
+        <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.publications">Publications</a>
+        <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.skills">Skills</a>
+        <a href="#contact" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono" data-i18n="nav.contact">Contact</a>
+        <div class="lang-switch-mobile mt-1" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-label="English">EN</button>
+          <span class="lang-divider"></span>
+          <button type="button" data-lang="zh-CN" aria-label="简体中文" lang="zh-CN">简</button>
+          <span class="lang-divider"></span>
+          <button type="button" data-lang="zh-TW" aria-label="繁體中文" lang="zh-TW">繁</button>
+        </div>
         <a href="cv.html" target="_blank" class="mt-2 px-4 py-2 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-2 w-full justify-center no-underline">
           <i data-lucide="download" class="w-4 h-4"></i>
-          Download CV
+          <span data-i18n="nav.downloadCv">Download CV</span>
         </a>
       </div>
     </div>
@@ -321,7 +397,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-16 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan">Experience</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan" data-i18n="sections.experience">Experience</span>
         </h2>
       </div>
 
@@ -338,9 +414,9 @@
     <div class="max-w-6xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Work <span class="text-cyan">Projects</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span data-i18n="sections.workPrefix">Work</span> <span class="text-cyan" data-i18n="sections.work">Projects</span>
         </h2>
-        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Highlights from building and scaling infrastructure at Crypto.com</p>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm" data-i18n="sections.workSubtitle">// Highlights from building and scaling infrastructure at Crypto.com</p>
       </div>
       <div id="projects-other" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
@@ -351,9 +427,9 @@
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Personal <span class="text-cyan">Projects</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span data-i18n="sections.personalPrefix">Personal</span> <span class="text-cyan" data-i18n="sections.personal">Projects</span>
         </h2>
-        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Side projects built from the ground up</p>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm" data-i18n="sections.personalSubtitle">// Side projects built from the ground up</p>
       </div>
 
       <div id="foxly-content"></div>
@@ -366,9 +442,9 @@
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan">Publications</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span class="text-cyan" data-i18n="sections.publications">Publications</span>
         </h2>
-        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Peer-reviewed research in confidential computing and distributed systems</p>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm" data-i18n="sections.publicationsSubtitle">// Peer-reviewed research in confidential computing and distributed systems</p>
       </div>
 
       <div id="publications-content"></div>
@@ -380,7 +456,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Education & <span class="text-cyan">Certifications</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span data-i18n="sections.educationPrefix">Education &</span> <span class="text-cyan" data-i18n="sections.education">Certifications</span>
         </h2>
       </div>
 
@@ -393,7 +469,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-12 text-center">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Tech <span class="text-cyan">Stack</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span data-i18n="sections.skillsPrefix">Tech</span> <span class="text-cyan" data-i18n="sections.skills">Stack</span>
         </h2>
       </div>
 
@@ -406,9 +482,9 @@
     <div class="max-w-3xl mx-auto text-center">
       <div class="fade-in-section">
         <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4">
-          <span class="font-mono text-green text-lg mr-2">&gt;_</span>Let's <span class="text-cyan">Connect</span>
+          <span class="font-mono text-green text-lg mr-2">&gt;_</span><span data-i18n="sections.contactPrefix">Let's</span> <span class="text-cyan" data-i18n="sections.contact">Connect</span>
         </h2>
-        <p class="text-text-muted mb-10 max-w-lg mx-auto font-mono text-sm">// Interested in DevOps, infrastructure, or just want to chat?</p>
+        <p class="text-text-muted mb-10 max-w-lg mx-auto font-mono text-sm" data-i18n="sections.contactSubtitle">// Interested in DevOps, infrastructure, or just want to chat?</p>
 
         <div class="flex items-center justify-center gap-6 mb-10">
           <a href="mailto:jobs@ivan.bz" class="text-text-muted hover:text-cyan transition-colors" aria-label="Email">
@@ -425,23 +501,47 @@
         <a href="cv.html" target="_blank"
            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer no-underline">
           <i data-lucide="download" class="w-4 h-4"></i>
-          Download CV
+          <span data-i18n="nav.downloadCv">Download CV</span>
         </a>
       </div>
     </div>
   </section>
 
   <footer class="py-6 px-6 border-t border-border text-center">
-    <p class="text-text-muted text-xs font-mono">&copy; 2025 Ivan Wong. Built with <span class="text-green">caffeine</span> && <span class="text-cyan">kubectl</span></p>
+    <p class="text-text-muted text-xs font-mono"><span data-i18n="footerCopyright">&copy; 2025 Ivan Wong.</span> <span data-i18n-html="footerHtml">Built with <span class="text-green">caffeine</span> && <span class="text-cyan">kubectl</span></span></p>
   </footer>
 
   <!-- ========== SCRIPTS ========== -->
   <!-- CV data as JS variable (works on file:// protocol; fetch used first when served over HTTP) -->
-  <script src="cv-data.js?v=20260908-5"></script>
+  <script src="cv-data.js?v=20260908-6"></script>
   <script>
+    // --- Active language (default English, persisted in localStorage) ---
+    let currentLang = getLang();
+
+    // Apply static UI strings tagged with data-i18n / data-i18n-html
+    function applyStaticI18n() {
+      const dict = I18N[currentLang] || I18N.en;
+      function lookup(key) {
+        return key.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : undefined, dict);
+      }
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = lookup(el.getAttribute('data-i18n'));
+        if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const v = lookup(el.getAttribute('data-i18n-html'));
+        if (v !== undefined) el.innerHTML = v;
+      });
+      document.documentElement.setAttribute('lang', currentLang === 'en' ? 'en' : currentLang);
+      // Update active state on all language buttons
+      document.querySelectorAll('[data-lang]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+      });
+    }
+
     // --- Data-Driven Content Loading ---
     function loadData() {
-      const data = CV_DATA;
+      const data = getLocalizedCvData(currentLang);
       renderHeroStats(data.hero.stats);
       renderExperience(data.experience);
       renderProjects(data.projects);
@@ -456,6 +556,17 @@
         el.classList.add('observed');
         observer.observe(el);
       });
+    }
+
+    // Switch language: persist, re-apply static strings, re-render dynamic content.
+    function switchLanguage(lang) {
+      if (!I18N[lang]) return;
+      currentLang = lang;
+      setLang(lang);
+      applyStaticI18n();
+      loadData();
+      // Replay hero terminal in the new language (if it exists on the page)
+      if (typeof playHeroTerminal === 'function') playHeroTerminal();
     }
 
     function renderHeroStats(stats) {
@@ -708,7 +819,7 @@
                   <h3 class="font-heading font-bold text-text-primary text-xl mb-1">${pub.title}</h3>
                   <p class="text-text-muted text-sm font-mono mb-3">${authorHtml}</p>
                   <p class="text-text-muted text-xs font-mono mb-1">${pub.status} — ${pub.conference}</p>
-                  <p class="text-text-muted text-xs font-mono mb-4">${pub.publisher} · Confidential Computing · 2026</p>
+                  <p class="text-text-muted text-xs font-mono mb-4">${pub.publisher} · ${(I18N[currentLang] || I18N.en).publications.venueSuffix}</p>
                 </div>
               </div>
               <div class="mb-6">
@@ -1244,29 +1355,43 @@
       draw();
     })();
 
-    // --- Hero Terminal: Claude Code Conversation ---
-    (async function() {
+    // --- Hero Terminal: Claude Code Conversation (i18n + replayable) ---
+    let heroTerminalRun = 0; // increments on every play; running playthroughs check this to abort
+
+    async function playHeroTerminal() {
+      const myRun = ++heroTerminalRun;
       const t = document.getElementById('hero-terminal');
+      if (!t) return;
+      t.innerHTML = ''; // clear any previous content
+
       let skipped = false;
       const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const aborted = () => myRun !== heroTerminalRun;
 
-      document.getElementById('hero-terminal-wrap').addEventListener('click', () => { skipped = true; });
+      const wrap = document.getElementById('hero-terminal-wrap');
+      const skipHandler = () => { skipped = true; };
+      // Single click handler that targets the *current* run
+      wrap.onclick = skipHandler;
 
       function wait(ms) {
         return new Promise(r => setTimeout(r, (skipped || noMotion) ? 0 : ms));
       }
 
       async function addLine(parts, preDelay) {
+        if (aborted()) return;
         if (preDelay) await wait(preDelay);
+        if (aborted()) return;
         const div = document.createElement('div');
         div.className = 'min-h-[1.4em] leading-relaxed';
         t.appendChild(div);
         for (const p of parts) {
+          if (aborted()) return;
           const span = document.createElement('span');
           span.className = p.c || '';
           div.appendChild(span);
           if (p.s > 0 && !skipped && !noMotion) {
             for (const ch of p.t) {
+              if (aborted()) return;
               span.textContent += ch;
               await wait(p.s);
             }
@@ -1277,156 +1402,56 @@
         t.scrollTop = t.scrollHeight;
       }
 
-      // Shorthand aliases
-      const m = 'text-text-muted', c = 'text-cyan', g = 'text-green', p = 'text-purple';
-      const sp = 8; // response char speed
+      // Color shorthand → CSS class mapping
+      const COLORS = { m: 'text-text-muted', c: 'text-cyan', g: 'text-green', p: 'text-purple' };
+      const sp = 8;   // response char speed
       const qsp = 35; // question typing speed
 
-      // Helper for a user question
+      function partsFromLine(line) {
+        // Each entry is [text, colorKey, optionalSpeed]. Default speed = sp.
+        return line.map(part => {
+          const [text, colorKey, customSpeed] = part;
+          const c = COLORS[colorKey] || colorKey || '';
+          const s = (customSpeed !== undefined) ? customSpeed : sp;
+          return { t: text, c, s };
+        });
+      }
+
       async function ask(question, delay) {
+        if (aborted()) return;
         await addLine([], delay || 300);
-        await addLine([{ t: '> ', c: p, s: 0 }, { t: question, c: 'text-text-primary', s: qsp }]);
+        await addLine([{ t: '> ', c: COLORS.p, s: 0 }, { t: question, c: 'text-text-primary', s: qsp }]);
         await wait(700);
         await addLine([]);
       }
 
+      const ht = (I18N[currentLang] || I18N.en).heroTerminal;
+
       // === Launch ===
-      await addLine([{ t: '$ claude', c: g, s: 70 }]);
+      await addLine([{ t: '$ claude', c: COLORS.g, s: 70 }]);
       await wait(500);
       await addLine([]);
-      await addLine([{ t: '\u25C6 Claude Code', c: p + ' font-bold', s: 0 }]);
+      await addLine([{ t: '\u25C6 ' + ht.claudeBanner, c: COLORS.p + ' font-bold', s: 0 }]);
       await wait(300);
 
-      // === Q1: Who is Ivan? ===
-      await ask('Tell me about Ivan Wong');
-      await addLine([
-        { t: 'Ivan Wong is a ', c: m, s: sp },
-        { t: 'DevOps Manager', c: c, s: sp },
-        { t: ' at ', c: m, s: sp },
-        { t: 'Crypto.com', c: c, s: sp },
-        { t: ', based in Hong Kong.', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'He leads the Infra DevOps team \u2014 managing ', c: m, s: sp },
-        { t: 'geo-distributed Teleport platform', c: c, s: sp },
-        { t: ' on EKS', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'and building automations that cut ', c: m, s: sp },
-        { t: '90% of ops overhead', c: c, s: sp },
-        { t: '.', c: m, s: sp }
-      ]);
-
-      // === Q2: Hot-wallet vault ===
-      await ask('What is the hot-wallet vault?');
-      await addLine([
-        { t: 'A production ', c: m, s: sp },
-        { t: 'distributed hot-wallet vault', c: c, s: sp },
-        { t: ' for crypto custody.', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'It implements ', c: m, s: sp },
-        { t: 'uDDS', c: c, s: sp },
-        { t: ' \u2014 zero-knowledge ', c: m, s: sp },
-        { t: 'blind RSA decryption', c: c, s: sp },
-        { t: ' inside TEEs,', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'so the server never sees plaintext. ', c: m, s: sp },
-        { t: '9-node Raft cluster', c: c, s: sp },
-        { t: ' across 5 AWS', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'regions using ', c: m, s: sp },
-        { t: 'Nitro Enclaves', c: p, s: sp },
-        { t: ' + ', c: m, s: sp },
-        { t: 'Intel SGX', c: p, s: sp },
-        { t: '. Built in ', c: m, s: sp },
-        { t: 'Go', c: g, s: sp },
-        { t: ' and ', c: m, s: sp },
-        { t: 'Rust', c: g, s: sp },
-        { t: '.', c: m, s: sp }
-      ]);
-
-      // === Q3: Tech stack ===
-      await ask("What's his tech stack?");
-      await addLine([
-        { t: '  Infra:   ', c: m, s: 0 },
-        { t: 'Kubernetes \u00b7 Terraform \u00b7 Helm \u00b7 FluxCD \u00b7 Spacelift', c: c, s: sp }
-      ]);
-      await addLine([
-        { t: '  Monitor: ', c: m, s: 0 },
-        { t: 'Prometheus \u00b7 Grafana \u00b7 Thanos \u00b7 Loki \u00b7 Fluentd', c: c, s: sp }
-      ]);
-      await addLine([
-        { t: '  Dev:     ', c: m, s: 0 },
-        { t: 'Go \u00b7 Rust \u00b7 Python \u00b7 Bash \u00b7 React \u00b7 gRPC', c: g, s: sp }
-      ]);
-      await addLine([
-        { t: '  AI/ML:   ', c: m, s: 0 },
-        { t: 'LangChain \u00b7 LangGraph \u00b7 Claude API \u00b7 RAG \u00b7 MCP', c: p, s: sp }
-      ]);
-      await addLine([
-        { t: '  Cloud:   ', c: m, s: 0 },
-        { t: 'AWS (SA Pro) \u00b7 EKS \u00b7 Nitro Enclaves \u00b7 Azure SGX', c: p, s: sp }
-      ]);
-
-      // === Q4: Other notable projects ===
-      await ask('Any other notable projects?');
-      await addLine([
-        { t: 'Echo Bot', c: g, s: sp },
-        { t: ' \u2014 AI Slack assistant that learns your style and', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'replies on your behalf. RBAC knowledge system + ', c: m, s: sp },
-        { t: 'RAG', c: g, s: sp },
-        { t: ' + ', c: m, s: sp },
-        { t: 'Claude API', c: g, s: sp },
-        { t: '.', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'Foxly Invest', c: g, s: sp },
-        { t: ' \u2014 personal AI investment platform.', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'Microservice backend in Go & Python on K8s, with ', c: m, s: sp },
-        { t: 'LangChain', c: g, s: sp },
-        { t: ' + ', c: m, s: sp },
-        { t: 'MCP', c: g, s: sp },
-      ]);
-      await addLine([
-        { t: 'for AI-powered portfolio insights. Web, Android & iOS.', c: m, s: sp }
-      ]);
-
-      // === Q5: Research ===
-      await ask('What about research?');
-      await addLine([
-        { t: '"', c: p, s: sp },
-        { t: 'uDDS: Universal Distributed Data Sealing for TEE', c: p, s: sp },
-        { t: '"', c: p, s: sp }
-      ]);
-      await addLine([
-        { t: 'Accepted at ', c: m, s: sp },
-        { t: 'IEEE CSP 2026', c: p, s: sp },
-        { t: '. The academic foundation behind the', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'hot-wallet vault \u2014 ', c: m, s: sp },
-        { t: 'blind decryption', c: c, s: sp },
-        { t: ' + ', c: m, s: sp },
-        { t: 'Raft consensus', c: c, s: sp },
-        { t: ' in TEEs, validated', c: m, s: sp }
-      ]);
-      await addLine([
-        { t: 'on 9 AWS Nitro nodes across 5 regions with ', c: m, s: sp },
-        { t: '315ms latency', c: c, s: sp },
-        { t: '.', c: m, s: sp }
-      ]);
+      // === Q&A loop ===
+      for (const item of ht.qa) {
+        if (aborted()) return;
+        await ask(item.q);
+        for (const line of item.lines) {
+          if (aborted()) return;
+          await addLine(partsFromLine(line));
+        }
+      }
 
       // === Final prompt with blinking cursor ===
+      if (aborted()) return;
       await addLine([], 300);
-      await addLine([{ t: '> ', c: p, s: 0 }, { t: '', c: 'typing-cursor', s: 0 }]);
-    })();
+      await addLine([{ t: '> ', c: COLORS.p, s: 0 }, { t: '', c: 'typing-cursor', s: 0 }]);
+    }
+
+    // Initial run
+    playHeroTerminal();
 
     // --- Scroll Fade-in ---
     const observer = new IntersectionObserver((entries) => {
@@ -1442,8 +1467,16 @@
       observer.observe(el);
     });
 
-    // Load data from JSON and render all sections
+    // Apply static UI translations and load data
+    applyStaticI18n();
     loadData();
+
+    // --- Language switcher buttons ---
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchLanguage(btn.getAttribute('data-lang'));
+      });
+    });
 
     // --- Navbar solid on scroll ---
     const navbar = document.getElementById('navbar');

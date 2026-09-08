@@ -116,6 +116,40 @@
       .toolbar { display: none !important; }
     }
 
+    /* Language switcher (cv toolbar) */
+    .lang-switch-cv {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 9999px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .dark-toolbar .lang-switch-cv { background: rgba(0,0,0,0.15); }
+    .light-toolbar .lang-switch-cv { background: #f1f5f9; }
+    .lang-switch-cv button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: none;
+      border-radius: 9999px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dark-toolbar .lang-switch-cv button { color: #94A3B8; }
+    .dark-toolbar .lang-switch-cv button:hover { color: #F8FAFC; }
+    .dark-toolbar .lang-switch-cv button.active {
+      background: #00FFFF;
+      color: #0F172A;
+    }
+    .light-toolbar .lang-switch-cv button { color: #64748b; }
+    .light-toolbar .lang-switch-cv button:hover { color: #1e293b; }
+    .light-toolbar .lang-switch-cv button.active {
+      background: #1e293b;
+      color: #ffffff;
+    }
+
     /* ══════════════════════════════════════════
        ██████  DARK / TERMINAL VERSION
     ══════════════════════════════════════════ */
@@ -699,11 +733,18 @@
   ══════════════════════════════════════ -->
   <div class="toolbar dark-toolbar" id="toolbar">
     <span class="toolbar-label" id="toolbar-label">CV Preview — ivan.bz</span>
-    <div class="version-tabs">
-      <button class="version-tab active-light" id="tab-formal" onclick="switchVersion('formal')">Formal</button>
-      <button class="version-tab inactive-light" id="tab-dark" onclick="switchVersion('dark')">Terminal</button>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="version-tabs">
+        <button class="version-tab active-light" id="tab-formal" onclick="switchVersion('formal')">Formal</button>
+        <button class="version-tab inactive-light" id="tab-dark" onclick="switchVersion('dark')">Terminal</button>
+      </div>
+      <div class="lang-switch-cv" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-label="English">EN</button>
+        <button type="button" data-lang="zh-CN" aria-label="简体中文" lang="zh-CN">简</button>
+        <button type="button" data-lang="zh-TW" aria-label="繁體中文" lang="zh-TW">繁</button>
+      </div>
     </div>
-    <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+    <button class="print-btn" id="print-btn" onclick="window.print()">Print / Save PDF</button>
   </div>
 
   <!-- ══════════════════════════════════════
@@ -713,22 +754,22 @@
     <div class="cv-dark" id="cv-dark-inner">
       <div class="cv-header" id="cvd-header"></div>
 
-      <div class="section-heading" id="cvd-sec-exp"><span class="prompt">&gt;_</span> <span class="accent">Experience</span></div>
+      <div class="section-heading" id="cvd-sec-exp"><span class="prompt">&gt;_</span> <span class="accent" data-i18n="cvPage.secExperience">Experience</span></div>
       <div id="cvd-experience"></div>
 
-      <div class="section-heading" id="cvd-sec-proj"><span class="prompt">&gt;_</span> Work <span class="accent">Projects</span></div>
+      <div class="section-heading" id="cvd-sec-proj"><span class="prompt">&gt;_</span> <span data-i18n="cvPage.secWorkPrefix">Work</span> <span class="accent" data-i18n="cvPage.secWork">Projects</span></div>
       <div id="cvd-projects"></div>
 
-      <div class="section-heading"><span class="prompt">&gt;_</span> Personal <span class="accent">Projects</span></div>
+      <div class="section-heading"><span class="prompt">&gt;_</span> <span data-i18n="cvPage.secPersonalPrefix">Personal</span> <span class="accent" data-i18n="cvPage.secPersonal">Projects</span></div>
       <div id="cvd-personal"></div>
 
-      <div class="section-heading"><span class="prompt">&gt;_</span> <span class="accent">Publications</span></div>
+      <div class="section-heading"><span class="prompt">&gt;_</span> <span class="accent" data-i18n="cvPage.secPublications">Publications</span></div>
       <div id="cvd-publications"></div>
 
-      <div class="section-heading"><span class="prompt">&gt;_</span> Education & <span class="accent">Certifications</span></div>
+      <div class="section-heading"><span class="prompt">&gt;_</span> <span data-i18n="cvPage.secEducationPrefix">Education &amp;</span> <span class="accent" data-i18n="cvPage.secEducationSuffix">Certifications</span></div>
       <div id="cvd-education"></div>
 
-      <div class="section-heading"><span class="prompt">&gt;_</span> Tech <span class="accent">Stack</span></div>
+      <div class="section-heading"><span class="prompt">&gt;_</span> <span data-i18n="cvPage.secSkillsPrefix">Tech</span> <span class="accent" data-i18n="cvPage.secSkills">Stack</span></div>
       <div id="cvd-skills"></div>
     </div>
   </div>
@@ -742,50 +783,97 @@
 
       <div class="fml-section-heading">
         <div class="fml-bar"></div>
-        <h2>Experience</h2>
+        <h2 data-i18n="cvPage.secFormalExperience">Experience</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-experience"></div>
 
       <div class="fml-section-heading">
         <div class="fml-bar"></div>
-        <h2>Work Projects</h2>
+        <h2 data-i18n="cvPage.secFormalWork">Work Projects</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-projects"></div>
 
       <div class="fml-section-heading">
         <div class="fml-bar fml-bar-gold"></div>
-        <h2>Personal Projects</h2>
+        <h2 data-i18n="cvPage.secFormalPersonal">Personal Projects</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-personal"></div>
 
       <div class="fml-section-heading">
         <div class="fml-bar"></div>
-        <h2>Publications</h2>
+        <h2 data-i18n="cvPage.secFormalPublications">Publications</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-publications"></div>
 
       <div class="fml-section-heading">
         <div class="fml-bar fml-bar-gold"></div>
-        <h2>Education &amp; Certifications</h2>
+        <h2 data-i18n="cvPage.secFormalEducation">Education &amp; Certifications</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-education"></div>
 
       <div class="fml-section-heading">
         <div class="fml-bar"></div>
-        <h2>Technical Skills</h2>
+        <h2 data-i18n="cvPage.secFormalSkills">Technical Skills</h2>
         <div class="fml-rule"></div>
       </div>
       <div id="cvf-skills"></div>
     </div>
   </div>
 
-  <script src="cv-data.js?v=20260908-5"></script>
+  <script src="cv-data.js?v=20260908-6"></script>
   <script>
+    // ── i18n state ─────────────────────────────────────────────────
+    let currentLang = getLang();
+
+    function applyStaticI18n() {
+      const dict = I18N[currentLang] || I18N.en;
+      function lookup(key) {
+        return key.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : undefined, dict);
+      }
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = lookup(el.getAttribute('data-i18n'));
+        if (v !== undefined) el.textContent = v;
+      });
+      // Buttons
+      const printBtn = document.getElementById('print-btn');
+      if (printBtn) printBtn.textContent = dict.cvPage.print;
+      const tabFormal = document.getElementById('tab-formal');
+      const tabDark = document.getElementById('tab-dark');
+      if (tabFormal) tabFormal.textContent = dict.cvPage.tabFormal;
+      if (tabDark) tabDark.textContent = dict.cvPage.tabDark;
+      // Toolbar label
+      updateToolbarLabel();
+      // Active state on language buttons
+      document.querySelectorAll('[data-lang]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+      });
+      document.documentElement.setAttribute('lang', currentLang === 'en' ? 'en' : currentLang);
+    }
+
+    function updateToolbarLabel() {
+      const dict = I18N[currentLang] || I18N.en;
+      const isDark = currentVersion === 'dark';
+      document.getElementById('toolbar-label').textContent = isDark
+        ? dict.cvPage.toolbarLabelDark
+        : dict.cvPage.toolbarLabelFormal;
+    }
+
+    function switchLanguage(lang) {
+      if (!I18N[lang]) return;
+      currentLang = lang;
+      setLang(lang);
+      applyStaticI18n();
+      // Re-render both CV versions with new language
+      const data = getLocalizedCvData(currentLang);
+      loadDarkCV(data);
+      loadFormalCV(data);
+    }
+
     // ── Version switching ──────────────────────────────────────────
     let currentVersion = 'formal';
 
@@ -810,9 +898,7 @@
         tabFormal.className = 'version-tab active-light';
       }
 
-      document.getElementById('toolbar-label').textContent = isDark
-        ? 'CV Preview — ivan.bz'
-        : 'Formal CV — Ivan Wong';
+      updateToolbarLabel();
 
       document.body.style.background = isDark ? '#0F172A' : '#f8f9fb';
     }
@@ -936,6 +1022,7 @@
 
     function renderDarkPublications(publications) {
       const container = document.getElementById('cvd-publications');
+      const venueSuffix = (I18N[currentLang] || I18N.en).publications.venueSuffix;
       container.innerHTML = publications.map(pub => {
         const authorHtml = pub.authors.replace(
           /(Ivan Tsz Fung Wong)/,
@@ -944,7 +1031,7 @@
         return `<div class="card full-border" style="border-top: 3px solid var(--cyan);">
           <div class="pub-title">${pub.title}</div>
           <div class="pub-authors">${authorHtml}</div>
-          <div class="pub-venue">${pub.status} — ${pub.conference}<br>${pub.publisher} &middot; Confidential Computing &middot; 2026</div>
+          <div class="pub-venue">${pub.status} — ${pub.conference}<br>${pub.publisher} &middot; ${venueSuffix}</div>
           <div class="pub-abstract">${pub.abstract}</div>
         </div>`;
       }).join('');
@@ -1094,6 +1181,8 @@
         </div>`;
       }).join('');
     }
+    // Note: formal skill category uses `cat.category` (translated); dark version
+    // uses `cat.categoryKey` (terminal-style key, kept in English).
 
     function renderFormalEducation(education, certifications) {
       const container = document.getElementById('cvf-education');
@@ -1129,14 +1218,23 @@
     }
 
     // ── Bootstrap ──────────────────────────────────────────────────
-    const data = CV_DATA;
+    const data = getLocalizedCvData(currentLang);
     loadDarkCV(data);
     loadFormalCV(data);
 
     // Set initial body bg and toolbar for formal-first
     document.body.style.background = '#f8f9fb';
     document.getElementById('toolbar').className = 'toolbar light-toolbar';
-    document.getElementById('toolbar-label').textContent = 'Formal CV — Ivan Wong';
+
+    // Apply static i18n strings (toolbar label, tab labels, print btn, section headings)
+    applyStaticI18n();
+
+    // Wire up language switcher buttons
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchLanguage(btn.getAttribute('data-lang'));
+      });
+    });
   </script>
 </body>
 </html>
