@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Echo Bot — Agentic Operations Assistant | Ivan Wong</title>
+  <meta name="description" content="Case study: an agentic Slack assistant that acts as the AI front-line for infrastructure operations — RBAC runbooks, RAG retrieval, and LLM-generated answers.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F172A',
+            surface: '#1E293B',
+            border: '#334155',
+            cyan: '#00FFFF',
+            green: '#22C55E',
+            purple: '#8B5CF6',
+            'text-primary': '#F8FAFC',
+            'text-muted': '#94A3B8',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0F172A; color: #F8FAFC; font-family: 'DM Sans', sans-serif; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0F172A; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .glow-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.15); }
+    .glow-green { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 40px rgba(34, 197, 94, 0.15); }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.008) 2px, rgba(0, 255, 255, 0.008) 4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .typing-cursor::after {
+      content: '\2588';
+      animation: blink 0.8s step-end infinite;
+      color: #22C55E;
+      font-weight: 400;
+      margin-left: 1px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.visible { opacity: 1; transform: translateY(0); }
+    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      border-color: #00FFFF;
+    }
+    .terminal-window {
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid #334155;
+    }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      margin-left: 8px;
+    }
+    .terminal-body { padding: 20px; font-family: 'JetBrains Mono', monospace; }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00FFFF;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in-section { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- ========== NAV ========== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-b border-border">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <!-- Desktop -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#overview" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Overview</a>
+        <a href="#how-it-works" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">How It Works</a>
+        <a href="#evolution" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Evolution</a>
+
+        <div class="relative group">
+          <a href="index.html#projects" class="nav-link active text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></a>
+          <div class="absolute right-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
+              <a href="hot-wallet-vault.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
+              <a href="teleport.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform</a>
+              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span></a>
+              <a href="echo-bot.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot <span class="ml-auto text-[10px] font-mono text-green">● here</span></a>
+              <div class="border-t border-border my-1"></div>
+              <a href="index.html#projects" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-cyan transition-colors no-underline"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> all projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#overview" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Overview</a>
+        <a href="#how-it-works" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">How It Works</a>
+        <a href="#evolution" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Evolution</a>
+
+        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
+          <span class="text-text-primary text-xs font-mono">Work</span>
+          <a href="hot-wallet-vault.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
+          <a href="teleport.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform</a>
+          <a href="devops-agent.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗</a>
+          <a href="echo-bot.html" class="text-cyan hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot <span class="text-green">●</span></a>
+
+        </div>
+        <a href="index.html#projects" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1"><i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="relative min-h-[60vh] flex items-center justify-center grid-bg scanlines overflow-hidden pt-24 pb-16 px-6">
+    <div class="relative z-10 max-w-4xl mx-auto text-center w-full">
+      <div class="terminal-window w-full mb-8 text-left">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">echo-bot ~ tail -f incoming.log</span>
+        </div>
+        <div class="terminal-body text-xs sm:text-sm space-y-2">
+          <div><span class="text-purple">#engineering</span> <span class="text-text-muted">— new message</span></div>
+          <div><span class="text-cyan">new-hire</span> <span class="text-text-muted">how do I get access to the staging cluster?</span></div>
+          <div><span class="text-green">echo-bot</span> <span class="text-text-muted">→ topic matched: access-procedures · retrieving runbook…</span></div>
+          <div><span class="text-green">echo-bot</span> <span class="text-text-primary">Here is the staging access runbook: 1) request via the portal, 2) manager approval in Slack, 3) creds issued automatically.</span></div>
+          <div><span class="text-text-muted">resolved without interrupting anyone</span> <span class="text-green">✓</span><span class="typing-cursor"></span></div>
+        </div>
+      </div>
+
+      <h1 class="font-heading font-bold text-4xl sm:text-5xl text-text-primary mb-3">Echo <span class="text-purple">Bot</span></h1>
+      <p class="font-heading text-lg sm:text-xl text-purple  mb-4">AI Front-line for Infrastructure Operations</p>
+      <p class="text-text-muted max-w-2xl mx-auto mb-6 text-sm sm:text-base">An agentic Slack assistant that resolves operational questions autonomously — grounded in the team’s runbooks, not hallucinations.</p>
+      <div class="flex flex-wrap justify-center gap-3 font-mono text-xs">
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">trigger: <span class="text-text-primary">inbound Slack msg</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">retrieve: <span class="text-text-primary">RAG + vector search</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">context: <span class="text-text-primary">RBAC runbooks</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">generate: <span class="text-text-primary">LLM API</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">status: <span class="text-green">● production</span></span>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section id="overview" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Overview</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// what it is</p>
+      </div>
+      <div class="fade-in-section terminal-window">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">README.md</span>
+        </div>
+        <div class="p-8">
+          <p class="text-text-muted text-sm leading-relaxed mb-4">An agentic Slack assistant that acts as the <span class="text-purple">first responder</span> for any operational request coming into the infrastructure team. When engineers or stakeholders ask about runbooks, access procedures, or platform status, Echo Bot handles it autonomously.</p>
+          <p class="text-text-muted text-sm leading-relaxed">The point is not the chatbot — it is giving the team back time for high-value engineering work instead of repetitive Q&amp;A.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section id="how-it-works" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">How It Works</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// intercept → retrieve → generate</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">intercept.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="message-circle" class="w-5 h-5 text-purple"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Intercept</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Listens for inbound questions in team channels</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Acts as the AI front-line for the team</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Resolves operational queries without human intervention</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">retrieve.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center">
+                <i data-lucide="scan-search" class="w-5 h-5 text-cyan"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Retrieve</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>RAG pipeline with sentence-transformer embeddings</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>RBAC knowledge base with topic-scoped runbooks</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Team-specific context per requester</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">generate.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
+                <i data-lucide="brain" class="w-5 h-5 text-green"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Generate</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>LangChain + LLM inference layer</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Replies grounded in team knowledge, not hallucinations</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Accurate, style-consistent answers</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">manage.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 text-purple"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Manage</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Portal for curating runbooks and training data</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Deflection metrics — what the bot absorbed vs. the team</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Self-serve invitation system for new requesters</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EVOLUTION ========== -->
+  <section id="evolution" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">What It Became</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// the evolution</p>
+      </div>
+      <div class="fade-in-section terminal-window border-cyan/30">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">git log --oneline</span>
+        </div>
+        <div class="p-8">
+          <div class="font-mono text-sm space-y-3 mb-6">
+            <div><span class="text-purple">a1b2c3d</span> <span class="text-text-muted">RAG assistant answering from a curated knowledge base</span></div>
+            <div><span class="text-purple">e4f5g6h</span> <span class="text-text-muted">RBAC topics, deflection metrics, management portal</span></div>
+            <div><span class="text-cyan">i7j8k9l</span> <span class="text-text-primary">evolved into <span class="text-cyan">Echobot</span> — the Slack relay front-end of the DevOps Agent platform</span></div>
+          </div>
+          <p class="text-text-muted text-sm leading-relaxed mb-6">Instead of answering from a static knowledge base, Echobot dispatches requests to an always-on multi-agent platform that can look at live infrastructure — and answers stream back into the same Slack thread.</p>
+          <a href="devops-agent.html" class="inline-flex items-center gap-2 text-sm font-mono text-cyan px-4 py-2 rounded-full border border-cyan/30 bg-cyan/5 hover:bg-cyan/15 transition-colors no-underline">read the DevOps Agent case study <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="py-8 px-6 border-t border-border text-center space-y-3">
+    <a href="index.html#projects" class="inline-flex items-center gap-2 text-sm font-mono text-cyan hover:glow-cyan transition-all">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz
+    </a>
+    <p class="text-text-muted text-xs font-mono">&copy; 2026 Ivan Wong · ivan.bz</p>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    lucide.createIcons();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+  </script>
+</body>
+</html>

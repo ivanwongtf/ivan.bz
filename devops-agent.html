@@ -167,22 +167,55 @@
 <body class="antialiased">
 
   <!-- ========== NAV ========== -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-b border-border">
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-b border-border">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="index.html" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <!-- Desktop -->
       <div class="hidden md:flex items-center gap-6">
         <a href="#problem" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Problem</a>
         <a href="#contributions" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contributions</a>
         <a href="#architecture" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Architecture</a>
         <a href="#topology" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Topology</a>
         <a href="#relay" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Relay</a>
-        <a href="index.html#projects" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> back
-        </a>
+
+        <div class="relative group">
+          <a href="index.html#projects" class="nav-link active text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></a>
+          <div class="absolute right-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
+              <a href="hot-wallet-vault.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
+              <a href="teleport.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform</a>
+              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span> <span class="text-[10px] font-mono text-green">●</span></a>
+              <a href="echo-bot.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot</a>
+              <div class="border-t border-border my-1"></div>
+              <a href="index.html#projects" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-cyan transition-colors no-underline"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> all projects</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <a href="index.html#projects" class="md:hidden text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i> back
-      </a>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#problem" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Problem</a>
+        <a href="#contributions" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contributions</a>
+        <a href="#architecture" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Architecture</a>
+        <a href="#topology" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Topology</a>
+        <a href="#relay" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Relay</a>
+
+        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
+          <span class="text-text-primary text-xs font-mono">Work</span>
+          <a href="hot-wallet-vault.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
+          <a href="teleport.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform</a>
+          <a href="devops-agent.html" class="text-cyan hover:text-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗ <span class="text-green">●</span></a>
+          <a href="echo-bot.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot</a>
+
+        </div>
+        <a href="index.html#projects" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1"><i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz</a>
+      </div>
     </div>
   </nav>
 

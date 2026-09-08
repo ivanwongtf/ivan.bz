@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teleport — Geo-Distributed Access Platform | Ivan Wong</title>
+  <meta name="description" content="Case study: consolidating 26 Teleport clusters into one geo-distributed HA/DR PAM platform across 3 AWS regions, backed by CockroachDB and fully GitOps-managed.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F172A',
+            surface: '#1E293B',
+            border: '#334155',
+            cyan: '#00FFFF',
+            green: '#22C55E',
+            purple: '#8B5CF6',
+            'text-primary': '#F8FAFC',
+            'text-muted': '#94A3B8',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0F172A; color: #F8FAFC; font-family: 'DM Sans', sans-serif; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0F172A; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .glow-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.15); }
+    .glow-green { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 40px rgba(34, 197, 94, 0.15); }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.008) 2px, rgba(0, 255, 255, 0.008) 4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .typing-cursor::after {
+      content: '\2588';
+      animation: blink 0.8s step-end infinite;
+      color: #22C55E;
+      font-weight: 400;
+      margin-left: 1px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.visible { opacity: 1; transform: translateY(0); }
+    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      border-color: #00FFFF;
+    }
+    .terminal-window {
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid #334155;
+    }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      margin-left: 8px;
+    }
+    .terminal-body { padding: 20px; font-family: 'JetBrains Mono', monospace; }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00FFFF;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in-section { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- ========== NAV ========== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-b border-border">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <!-- Desktop -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#overview" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Overview</a>
+        <a href="#migration" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Migration</a>
+        <a href="#architecture" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Architecture</a>
+        <a href="#numbers" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Numbers</a>
+
+        <div class="relative group">
+          <a href="index.html#projects" class="nav-link active text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></a>
+          <div class="absolute right-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
+              <a href="hot-wallet-vault.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
+              <a href="teleport.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform <span class="ml-auto text-[10px] font-mono text-green">● here</span></a>
+              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span></a>
+              <a href="echo-bot.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot</a>
+              <div class="border-t border-border my-1"></div>
+              <a href="index.html#projects" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-cyan transition-colors no-underline"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> all projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="#overview" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Overview</a>
+        <a href="#migration" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Migration</a>
+        <a href="#architecture" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Architecture</a>
+        <a href="#numbers" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Numbers</a>
+
+        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
+          <span class="text-text-primary text-xs font-mono">Work</span>
+          <a href="hot-wallet-vault.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
+          <a href="teleport.html" class="text-cyan hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform <span class="text-green">●</span></a>
+          <a href="devops-agent.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗</a>
+          <a href="echo-bot.html" class="text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot</a>
+
+        </div>
+        <a href="index.html#projects" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1"><i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="relative min-h-[60vh] flex items-center justify-center grid-bg scanlines overflow-hidden pt-24 pb-16 px-6">
+    <div class="relative z-10 max-w-4xl mx-auto text-center w-full">
+      <div class="terminal-window w-full mb-8 text-left">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">teleport-ha ~ tctl status</span>
+        </div>
+        <div class="terminal-body text-xs sm:text-sm space-y-2">
+          <div><span class="text-green">$</span> <span class="text-text-muted">tctl status</span></div>
+          <div><span class="text-green">cluster</span> <span class="text-text-muted">··· unified HA pair (prod + staging)</span> <span class="text-green">✓</span></div>
+          <div><span class="text-green">regions</span> <span class="text-text-muted">··· 3 (AWS) · backend: CockroachDB · all healthy</span></div>
+          <div><span class="text-green">agents</span>  <span class="text-text-muted">··· AWS + Azure + GCP connected</span></div>
+          <div><span class="text-green">$</span> <span class="text-text-muted">tctl requests ls --pending</span></div>
+          <div><span class="text-text-muted">1 access request · routed to Slack for approval · Okta-verified</span><span class="typing-cursor"></span></div>
+        </div>
+      </div>
+
+      <h1 class="font-heading font-bold text-4xl sm:text-5xl text-text-primary mb-3">Teleport <span class="text-green glow-green">Platform</span></h1>
+      <p class="font-heading text-lg sm:text-xl text-green glow-green mb-4">High-Availability PAM Infrastructure at Scale</p>
+      <p class="text-text-muted max-w-2xl mx-auto mb-6 text-sm sm:text-base">One unified Privileged Access Management platform for a multi-cloud estate — consolidated from 26 legacy clusters with zero access downtime.</p>
+      <div class="flex flex-wrap justify-center gap-3 font-mono text-xs">
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">cluster: <span class="text-text-primary">unified HA</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">regions: <span class="text-text-primary">3 (AWS)</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">backend: <span class="text-text-primary">CockroachDB</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">agents: <span class="text-text-primary">AWS + Azure + GCP</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">deploy: <span class="text-text-primary">GitOps (Flux)</span></span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">status: <span class="text-green">● production</span></span>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section id="overview" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Overview</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// what it is</p>
+      </div>
+      <div class="fade-in-section terminal-window">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">README.md</span>
+        </div>
+        <div class="p-8">
+          <p class="text-text-muted text-sm leading-relaxed mb-4">Enterprise-scale Privileged Access Management platform — consolidated from <span class="text-green">26 sprawling Teleport clusters</span> into a single, unified HA/DR architecture spanning <span class="text-green">3 AWS regions</span>, backed by CockroachDB.</p>
+          <p class="text-text-muted text-sm leading-relaxed">Fully GitOps-managed on Kubernetes with Teleport agents across AWS, Azure, and GCP, and integrated access-request workflows with Slack and Okta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MIGRATION ========== -->
+  <section id="migration" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">The Consolidation</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// 26 clusters → 1 platform</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">before.md</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-red-400 mb-4">Before: 26 Legacy Clusters</h3>
+            <ul class="text-text-muted text-sm space-y-3 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span>26 sprawling, independently-managed Teleport clusters</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span>Fragmented access policies and audit trails</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span>No unified HA/DR story — each cluster a single point of failure</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">after.md</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-green mb-4">After: One Unified Platform</h3>
+            <ul class="text-text-muted text-sm space-y-3 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span>A single geo-distributed HA/DR pair — prod + staging</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span><span>Migration designed and led end-to-end with <span class="text-green">zero access downtime</span></span></li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span>One policy plane, one audit trail, one place to reason about access</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ARCHITECTURE ========== -->
+  <section id="architecture" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Architecture</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// how it is built</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">ha.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
+                <i data-lucide="globe" class="w-5 h-5 text-green"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Geo-Distributed HA</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Spanning 3 AWS regions with automatic failover</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>CockroachDB for fault-tolerant, consistent state</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Survives a full region loss without access interruption</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">agents.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center">
+                <i data-lucide="server" class="w-5 h-5 text-cyan"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Multi-Cloud Agents</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Teleport agents across AWS, Azure, and GCP</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>One access plane for every cloud footprint</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Kubernetes, SSH, and database access unified</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">gitops.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="git-branch" class="w-5 h-5 text-purple"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Fully GitOps-Managed</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>FluxCD + Spacelift — every change version-controlled</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Peer-reviewed pull requests, no console clicks</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Terraform-managed infrastructure underneath</li>
+            </ul>
+          </div>
+        </div>        <div class="fade-in-section card-hover terminal-window ">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">workflows.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
+                <i data-lucide="message-circle" class="w-5 h-5 text-green"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Access-Request Workflows</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Go-based PAM orchestrator service</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Slack-native approval flows — approve from the thread</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Okta-integrated identity verification</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NUMBERS ========== -->
+  <section id="numbers" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">By the Numbers</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// scale of the platform</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-green glow-green mb-2">26 → 1</div>
+            <div class="text-text-muted text-xs font-mono">legacy clusters consolidated into one platform</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-cyan glow-cyan mb-2">3</div>
+            <div class="text-text-muted text-xs font-mono">AWS regions in the geo-distributed HA pair</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-purple  mb-2">3</div>
+            <div class="text-text-muted text-xs font-mono">clouds connected via Teleport agents</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-green glow-green mb-2">0</div>
+            <div class="text-text-muted text-xs font-mono">access downtime during the migration</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="py-8 px-6 border-t border-border text-center space-y-3">
+    <a href="index.html#projects" class="inline-flex items-center gap-2 text-sm font-mono text-cyan hover:glow-cyan transition-all">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz
+    </a>
+    <p class="text-text-muted text-xs font-mono">&copy; 2026 Ivan Wong · ivan.bz</p>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    lucide.createIcons();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+  </script>
+</body>
+</html>

@@ -76,6 +76,7 @@ const CV_DATA = {
     "featured": [
       {
         "slug": "hot-wallet-vault",
+        "link": { "url": "hot-wallet-vault.html", "label": "view details" },
         "title": "Hot-Wallet Vault",
         "subtitle": "Distributed Zero-Knowledge Data Sealing",
         "icon": "shield-check",
@@ -107,6 +108,7 @@ const CV_DATA = {
       },
       {
         "slug": "teleport",
+        "link": { "url": "teleport.html", "label": "view details" },
         "title": "Teleport — Geo-Distributed Access Platform",
         "subtitle": "High-Availability PAM Infrastructure at Scale",
         "icon": "server",
@@ -179,6 +181,7 @@ const CV_DATA = {
       },
       {
         "slug": "echo-bot",
+        "link": { "url": "echo-bot.html", "label": "view details" },
         "title": "Echo Bot — Agentic Operations Assistant",
         "subtitle": "AI Front-line for Infra DevOps Operations",
         "icon": "message-circle",
