@@ -153,7 +153,7 @@ const CV_DATA = {
         "icon": "bot",
         "accentColor": "cyan",
         "terminalTitle": "devops-agent ~ opencode serve",
-        "link": { "url": "devops-agent.html", "label": "view case study" },
+        "link": { "url": "devops-agent.html", "label": "view details" },
         "description": "An always-on, multi-agent DevOps platform that resolves operational requests in seconds instead of waiting for someone to be at their desk. A central orchestrator routes work to specialist agents grouped by data correlation — each owning exactly one MCP tool boundary — all reasoning over a pre-scanned typed topology of the entire infrastructure. Echobot, a Slack relay worker, makes the platform accessible from any channel.",
         "bullets": [
           "Orchestrator + specialist agents routed by data correlation across 50+ MCP tools — 58% less tool duplication and 90%+ context retained across handoffs vs role-based multi-agent designs",

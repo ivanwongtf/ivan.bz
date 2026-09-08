@@ -622,33 +622,59 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">pipeline-1.md</span>
-          </div>
-          <div class="p-6">
-            <h3 class="font-heading font-semibold text-text-primary mb-3">Pipeline 1 — Connection-Driven</h3>
-            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
-              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Cloud / IaC / VCS connections scan broadly — every resource discovered</li>
-              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Inventory attributes afterward — never limits what gets scanned</li>
-              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Feeds the infra layer</li>
-            </ul>
-          </div>
+      <div class="fade-in-section terminal-window mb-6">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">topology-sync.flow</span>
         </div>
-        <div class="fade-in-section card-hover terminal-window">
-          <div class="terminal-titlebar">
-            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
-            <span class="terminal-title">pipeline-2.md</span>
+        <div class="p-6 sm:p-8">
+          <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-border"></div>
+
+            <div>
+              <h3 class="font-heading font-semibold text-lg text-cyan mb-5 text-center">Pipeline 1 — Connection-Driven</h3>
+              <div class="grid grid-cols-3 gap-2 max-w-md mx-auto">
+                <div class="rounded-lg border border-cyan/30 bg-cyan/5 p-3 text-center font-mono text-xs text-text-primary">AWS accounts</div>
+                <div class="rounded-lg border border-cyan/30 bg-cyan/5 p-3 text-center font-mono text-xs text-text-primary">Spacelift API</div>
+                <div class="rounded-lg border border-cyan/30 bg-cyan/5 p-3 text-center font-mono text-xs text-text-primary">GitHub App</div>
+              </div>
+              <div class="grid grid-cols-3 gap-2 max-w-md mx-auto">
+                <div class="flex justify-center py-1"><i data-lucide="arrow-down" class="w-4 h-4 text-text-muted"></i></div>
+                <div class="flex justify-center py-1"><i data-lucide="arrow-down" class="w-4 h-4 text-text-muted"></i></div>
+                <div class="flex justify-center py-1"><i data-lucide="arrow-down" class="w-4 h-4 text-text-muted"></i></div>
+              </div>
+              <div class="rounded-lg border border-cyan/40 bg-cyan/10 p-4 text-center max-w-md mx-auto">
+                <div class="font-mono font-semibold text-sm text-text-primary">Scan broadly</div>
+                <div class="font-mono text-xs text-text-muted mt-1">every VPC / EKS / RDS / LB / EC2 / NAT</div>
+              </div>
+              <div class="rounded-lg border border-border bg-bg/60 p-3 text-center font-mono text-xs text-text-muted max-w-md mx-auto mt-3">Inventory attributes afterward — never limits scanning</div>
+            </div>
+
+            <div>
+              <h3 class="font-heading font-semibold text-lg text-purple mb-5 text-center">Pipeline 2 — Inventory-Driven</h3>
+              <div class="rounded-lg border border-purple/40 bg-purple/10 p-4 text-center max-w-md mx-auto">
+                <div class="font-mono font-semibold text-sm text-text-primary">INVENTORY (SQLite)</div>
+                <div class="font-mono text-xs text-text-muted mt-1">CLUSTERS · PROJECTS</div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 max-w-md mx-auto">
+                <div class="flex justify-center py-1"><i data-lucide="arrow-down-left" class="w-4 h-4 text-text-muted"></i></div>
+                <div class="flex justify-center py-1"><i data-lucide="arrow-down-right" class="w-4 h-4 text-text-muted"></i></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 max-w-md mx-auto">
+                <div class="rounded-lg border border-purple/30 bg-purple/5 p-3 text-center font-mono text-xs text-text-primary">K8s Lens<br><span class="text-text-muted">via CLUSTERS</span></div>
+                <div class="rounded-lg border border-purple/30 bg-purple/5 p-3 text-center font-mono text-xs text-text-primary">GitOps<br><span class="text-text-muted">via PROJECTS</span></div>
+              </div>
+              <div class="rounded-lg border border-red-500/30 bg-red-500/5 p-3 text-center font-mono text-xs text-red-300 max-w-md mx-auto mt-3">No inventory row = never scanned (hard gate)</div>
+            </div>
           </div>
-          <div class="p-6">
-            <h3 class="font-heading font-semibold text-text-primary mb-3">Pipeline 2 — Inventory-Driven</h3>
-            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Inventory is the scan input — no row, no scan</li>
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>In-cluster lens via clusters; GitOps via projects</li>
-              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Feeds the project layer, joined by cluster identity</li>
-            </ul>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-2">
+            <div class="flex justify-center py-1"><i data-lucide="arrow-down" class="w-4 h-4 text-text-muted"></i></div>
+            <div class="flex justify-center py-1"><i data-lucide="arrow-down" class="w-4 h-4 text-text-muted"></i></div>
+          </div>
+          <div class="rounded-lg border border-green/40 bg-green/5 p-5 text-center">
+            <div class="font-mono font-semibold text-text-primary">_build_sync()</div>
+            <div class="font-mono text-xs text-text-muted mt-1">INFRA layer (Pipeline 1) + PROJECT layer (Pipeline 2) <span class="text-green">→ Topology Graph</span></div>
           </div>
         </div>
       </div>
