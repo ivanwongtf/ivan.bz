@@ -241,7 +241,17 @@
       <!-- Desktop links -->
       <div class="hidden md:flex items-center gap-8">
         <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
-        <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Work</a>
+        <div class="relative group">
+          <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></a>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
+              <a href="#project-hot-wallet-vault" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
+              <a href="#project-teleport" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform</a>
+              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span></a>
+              <a href="#project-echo-bot" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot</a>
+            </div>
+          </div>
+        </div>
         <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
         <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
         <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
@@ -261,6 +271,12 @@
       <div class="px-6 py-4 flex flex-col gap-4">
         <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
         <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Work</a>
+        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
+          <a href="#project-hot-wallet-vault" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
+          <a href="#project-teleport" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform</a>
+          <a href="devops-agent.html" class="mobile-nav-link text-cyan hover:glow-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗</a>
+          <a href="#project-echo-bot" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot</a>
+        </div>
         <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
         <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
         <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
@@ -438,7 +454,7 @@
 
   <!-- ========== SCRIPTS ========== -->
   <!-- CV data as JS variable (works on file:// protocol; fetch used first when served over HTTP) -->
-  <script src="cv-data.js?v=20260908"></script>
+  <script src="cv-data.js?v=20260908-2"></script>
   <script>
     // --- Data-Driven Content Loading ---
     function loadData() {
@@ -544,8 +560,8 @@
           : '';
 
         return `
-          <div class="fade-in-section mb-8">
-            <div class="card-hover terminal-window border-${p.accentColor}/30 relative overflow-hidden">
+          <div class="fade-in-section mb-8 scroll-mt-24" id="project-${p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}">
+            <div class="card-hover terminal-window border-${p.accentColor}/30 relative overflow-hidden h-full">
               <div class="absolute inset-0 bg-gradient-to-br from-${p.accentColor}/5 via-transparent to-${p.accentColor === 'cyan' ? 'purple' : 'cyan'}/5 pointer-events-none"></div>
               <div class="terminal-titlebar">
                 <div class="terminal-dot bg-red-500"></div>

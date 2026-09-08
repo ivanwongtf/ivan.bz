@@ -75,6 +75,7 @@ const CV_DATA = {
   "projects": {
     "featured": [
       {
+        "slug": "hot-wallet-vault",
         "title": "Hot-Wallet Vault",
         "subtitle": "Distributed Zero-Knowledge Data Sealing",
         "icon": "shield-check",
@@ -105,6 +106,7 @@ const CV_DATA = {
         ]
       },
       {
+        "slug": "teleport",
         "title": "Teleport — Geo-Distributed Access Platform",
         "subtitle": "High-Availability PAM Infrastructure at Scale",
         "icon": "server",
@@ -140,6 +142,7 @@ const CV_DATA = {
         ]
       },
       {
+        "slug": "devops-agent",
         "title": "DevOps Agent — Always-On Agentic Operations",
         "subtitle": "Correlation-Based Multi-Agent Infrastructure Platform",
         "icon": "bot",
@@ -175,6 +178,7 @@ const CV_DATA = {
         ]
       },
       {
+        "slug": "echo-bot",
         "title": "Echo Bot — Agentic Operations Assistant",
         "subtitle": "AI Front-line for Infra DevOps Operations",
         "icon": "message-circle",
