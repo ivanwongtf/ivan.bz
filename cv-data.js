@@ -977,7 +977,8 @@ const I18N = {
           "lines": [
             [["Ivan Wong is a ","m"],["Infra DevOps Manager","c"],[" at ","m"],["Crypto.com","c"],[", based in Hong Kong.","m"]],
             [["He leads the Infra DevOps team — managing ","m"],["geo-distributed Teleport platform","c"],[" on EKS","m"]],
-            [["and an always-on ","m"],["multi-agent DevOps platform","c"],[" — routing over ","m"],["50+ MCP tools","c"],[" with a ","m"],["Slack relay","c"],[".","m"]]
+            [["and an always-on ","m"],["multi-agent DevOps platform","c"],[" — routing over ","m"],["50+ MCP tools","c"],[" with a ","m"],["Slack relay","c"],[".","m"]],
+            [["His automations cut ","m"],["90% of ops overhead","c"],[".","m"]]
           ]
         },
         {
@@ -1090,7 +1091,8 @@ const I18N = {
           "lines": [
             [["Ivan Wong 是一位 ","m"],["基础架构 DevOps 经理","c"],[",任职于 ","m"],["Crypto.com","c"],[",常驻香港。","m"]],
             [["他带领基础架构 DevOps 团队 —— 管理 ","m"],["地理分布式 Teleport 平台","c"],[",运行于 EKS","m"]],
-            [["并构建了常驻的 ","m"],["多智能体 DevOps 平台","c"],[" —— 路由 ","m"],["50+ MCP 工具","c"],["，配备 ","m"],["Slack 中继","c"],["。","m"]]
+            [["并构建了常驻的 ","m"],["多智能体 DevOps 平台","c"],[" —— 路由 ","m"],["50+ MCP 工具","c"],["，配备 ","m"],["Slack 中继","c"],["。","m"]],
+            [["他的自动化削减了 ","m"],["90% 运维开销","c"],["。","m"]]
           ]
         },
         {
@@ -1203,7 +1205,8 @@ const I18N = {
           "lines": [
             [["Ivan Wong 是一位 ","m"],["基礎架構 DevOps 經理","c"],[",任職於 ","m"],["Crypto.com","c"],[",常駐香港。","m"]],
             [["他帶領基礎架構 DevOps 團隊 —— 管理 ","m"],["地理分散式 Teleport 平台","c"],[",運行於 EKS","m"]],
-            [["並建構了常駐的 ","m"],["多智能體 DevOps 平台","c"],[" —— 路由 ","m"],["50+ MCP 工具","c"],["，配備 ","m"],["Slack 中繼","c"],["。","m"]]
+            [["並建構了常駐的 ","m"],["多智能體 DevOps 平台","c"],[" —— 路由 ","m"],["50+ MCP 工具","c"],["，配備 ","m"],["Slack 中繼","c"],["。","m"]],
+            [["他的自動化削減了 ","m"],["90% 維運開銷","c"],["。","m"]]
           ]
         },
         {
