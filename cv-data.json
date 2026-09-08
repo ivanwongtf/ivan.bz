@@ -93,6 +93,7 @@
   "projects": {
     "featured": [
       {
+        "summary": "Zero-knowledge distributed vault — blind RSA decryption inside TEEs over a multi-region Raft cluster.",
         "slug": "hot-wallet-vault",
         "link": {
           "url": "hot-wallet-vault.html",
@@ -149,6 +150,7 @@
         ]
       },
       {
+        "summary": "26 legacy clusters consolidated into one geo-distributed HA/DR PAM platform across 3 AWS regions.",
         "slug": "teleport",
         "link": {
           "url": "teleport.html",
@@ -216,6 +218,7 @@
         ]
       },
       {
+        "summary": "Always-on multi-agent ops platform — correlation-based routing over 50+ MCP tools on a pre-scanned topology, Slack-native.",
         "slug": "devops-agent",
         "title": "DevOps Agent — Always-On Agentic Operations",
         "subtitle": "Correlation-Based Multi-Agent Infrastructure Platform",
@@ -282,6 +285,7 @@
         ]
       },
       {
+        "summary": "Agentic Slack front-line that resolves operational questions from an RBAC runbook knowledge base via RAG.",
         "slug": "echo-bot",
         "link": {
           "url": "echo-bot.html",

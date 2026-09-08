@@ -241,19 +241,7 @@
       <!-- Desktop links -->
       <div class="hidden md:flex items-center gap-8">
         <a href="#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
-        <div class="relative group">
-          <button type="button" data-href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
-          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 hidden group-hover:block group-focus-within:block">
-            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
-              <a href="#projects" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan"></i>All projects</a>
-              <div class="border-t border-border my-1"></div>
-              <a href="hot-wallet-vault.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
-              <a href="teleport.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform</a>
-              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span></a>
-              <a href="echo-bot.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot</a>
-            </div>
-          </div>
-        </div>
+        <a href="#projects" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Work</a>
         <a href="#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
         <a href="#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
         <a href="#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
@@ -273,12 +261,6 @@
       <div class="px-6 py-4 flex flex-col gap-4">
         <a href="#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
         <a href="#projects" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Work</a>
-        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
-          <a href="hot-wallet-vault.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
-          <a href="teleport.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform</a>
-          <a href="devops-agent.html" class="mobile-nav-link text-cyan hover:glow-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗</a>
-          <a href="echo-bot.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot</a>
-        </div>
         <a href="#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
         <a href="#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
         <a href="#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
@@ -360,7 +342,6 @@
         </h2>
         <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// Highlights from building and scaling infrastructure at Crypto.com</p>
       </div>
-      <div id="projects-featured"></div>
       <div id="projects-other" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
   </section>
@@ -456,7 +437,7 @@
 
   <!-- ========== SCRIPTS ========== -->
   <!-- CV data as JS variable (works on file:// protocol; fetch used first when served over HTTP) -->
-  <script src="cv-data.js?v=20260908-3"></script>
+  <script src="cv-data.js?v=20260908-4"></script>
   <script>
     // --- Data-Driven Content Loading ---
     function loadData() {
@@ -540,74 +521,44 @@
     }
 
     function renderProjects(projects) {
-      const featuredContainer = document.getElementById('projects-featured');
-      const otherContainer = document.getElementById('projects-other');
+      const container = document.getElementById('projects-other');
 
-      featuredContainer.innerHTML = projects.featured.map(p => {
-        const bullets = p.bullets.map(b =>
-          `<li class="flex items-start gap-2"><span class="text-${p.accentColor} shrink-0">$</span>${b}</li>`
-        ).join('');
-        const tags = p.tags.map(t => {
-          const borderCls = t.color === 'muted' ? 'border-border' : `border-${t.color}/30`;
-          const textCls = t.color === 'muted' ? 'text-text-muted' : `text-${t.color}`;
-          return `<span class="text-xs font-mono px-2 py-1 rounded-full border ${borderCls} ${textCls}">${t.label}</span>`;
-        }).join('');
-        const metaLines = Object.entries(p.meta).map(([k, v]) => {
-          const valCls = k === 'status' ? `text-${p.accentColor}` : 'text-text-primary';
-          const prefix = k === 'status' ? '● ' : '';
-          return `<div class="text-green">${k}:${' '.repeat(Math.max(1, 10 - k.length))}<span class="${valCls}">${prefix}${v}</span></div>`;
-        }).join('');
-        const linkHtml = p.link
-          ? `<a href="${p.link.url}" class="inline-flex items-center gap-1.5 mt-4 text-xs font-mono text-${p.accentColor} px-3 py-1.5 rounded-full border border-${p.accentColor}/30 bg-${p.accentColor}/5 hover:bg-${p.accentColor}/15 transition-colors">${p.link.label} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>`
-          : '';
-
-        return `
-          <div class="fade-in-section mb-8 scroll-mt-24" id="project-${p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}">
-            <div class="card-hover terminal-window border-${p.accentColor}/30 relative overflow-hidden h-full">
-              <div class="absolute inset-0 bg-gradient-to-br from-${p.accentColor}/5 via-transparent to-${p.accentColor === 'cyan' ? 'purple' : 'cyan'}/5 pointer-events-none"></div>
-              <div class="terminal-titlebar">
-                <div class="terminal-dot bg-red-500"></div>
-                <div class="terminal-dot bg-yellow-500"></div>
-                <div class="terminal-dot bg-green-500"></div>
-                <span class="terminal-title">${p.terminalTitle}</span>
-                <span class="ml-auto text-xs font-mono text-${p.accentColor} px-2 py-0.5 rounded-full border border-${p.accentColor}/30 bg-${p.accentColor}/10">featured</span>
-              </div>
-              <div class="p-8 relative">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div class="lg:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                      <div class="w-12 h-12 rounded-lg bg-${p.accentColor}/10 flex items-center justify-center">
-                        <i data-lucide="${p.icon}" class="w-6 h-6 text-${p.accentColor}"></i>
-                      </div>
-                      <div>
-                        <h3 class="font-heading font-bold text-xl text-text-primary">${p.title}</h3>
-                        <p class="text-${p.accentColor} text-xs font-mono">${p.subtitle}</p>
-                      </div>
-                    </div>
-                    <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.description}</p>
-                    <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">${bullets}</ul>
-                    ${linkHtml}
-                  </div>
-                  <div class="flex flex-col justify-center">
-                    <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">
-                      <div class="text-${p.accentColor} mb-2">// ${p.terminalTitle.replace(/\.\w+$/, '')}</div>
-                      ${metaLines}
-                    </div>
-                  </div>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-4">${tags}</div>
-              </div>
-            </div>
-          </div>
-        `;
+      const tagHtml = (tags) => tags.map(t => {
+        const borderCls = t.color === 'muted' ? 'border-border' : `border-${t.color}/30`;
+        const textCls = t.color === 'muted' ? 'text-text-muted' : `text-${t.color}`;
+        return `<span class="text-xs font-mono px-2 py-1 rounded-full border ${borderCls} ${textCls}">${t.label}</span>`;
       }).join('');
 
-      otherContainer.innerHTML = projects.other.map(p => {
-        const tags = p.tags.map(t => {
-          const borderCls = t.color === 'muted' ? 'border-border' : `border-${t.color}/30`;
-          const textCls = t.color === 'muted' ? 'text-text-muted' : `text-${t.color}`;
-          return `<span class="text-xs font-mono px-2 py-1 rounded-full border ${borderCls} ${textCls}">${t.label}</span>`;
-        }).join('');
+      const featuredCard = (p) => {
+        const slug = p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const inner = `
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">${p.terminalTitle}</span>
+            <span class="ml-auto text-xs font-mono text-${p.accentColor} px-2 py-0.5 rounded-full border border-${p.accentColor}/30 bg-${p.accentColor}/10">featured</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-${p.accentColor}/10 flex items-center justify-center shrink-0">
+                <i data-lucide="${p.icon}" class="w-5 h-5 text-${p.accentColor}"></i>
+              </div>
+              <div>
+                <h3 class="font-heading font-semibold text-lg text-text-primary">${p.title}</h3>
+                <p class="text-${p.accentColor} text-xs font-mono">${p.subtitle}</p>
+              </div>
+            </div>
+            <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.summary || p.description}</p>
+            <div class="flex flex-wrap gap-2">${tagHtml(p.tags)}</div>
+            ${p.link ? `<span class="inline-flex items-center gap-1.5 mt-4 text-xs font-mono text-${p.accentColor}">${p.link.label} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>` : ''}
+          </div>`;
+        return p.link
+          ? `<a href="${p.link.url}" id="project-${slug}" class="fade-in-section card-hover terminal-window border-${p.accentColor}/30 block no-underline scroll-mt-24">${inner}</a>`
+          : `<div id="project-${slug}" class="fade-in-section card-hover terminal-window border-${p.accentColor}/30 scroll-mt-24">${inner}</div>`;
+      };
+
+      const otherCard = (p) => {
         const iconColor = p.iconColor || 'cyan';
         return `
           <div class="fade-in-section card-hover terminal-window">
@@ -623,11 +574,16 @@
               </div>
               <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">${p.title}</h3>
               <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.description}</p>
-              <div class="flex flex-wrap gap-2">${tags}</div>
+              <div class="flex flex-wrap gap-2">${tagHtml(p.tags)}</div>
             </div>
           </div>
         `;
-      }).join('');
+      };
+
+      container.innerHTML = [
+        ...projects.featured.map(featuredCard),
+        ...projects.other.map(otherCard)
+      ].join('');
     }
 
     function renderFoxly(personal) {
@@ -1513,8 +1469,7 @@
       });
       navLinks.forEach(link => {
         link.classList.remove('active');
-        const href = link.getAttribute('href') || link.dataset.href;
-        if (href === '#' + current) {
+        if (link.getAttribute('href') === '#' + current) {
           link.classList.add('active');
         }
       });

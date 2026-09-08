@@ -75,6 +75,7 @@ const CV_DATA = {
   "projects": {
     "featured": [
       {
+        "summary": "Zero-knowledge distributed vault — blind RSA decryption inside TEEs over a multi-region Raft cluster.",
         "slug": "hot-wallet-vault",
         "link": { "url": "hot-wallet-vault.html", "label": "view details" },
         "title": "Hot-Wallet Vault",
@@ -107,6 +108,7 @@ const CV_DATA = {
         ]
       },
       {
+        "summary": "26 legacy clusters consolidated into one geo-distributed HA/DR PAM platform across 3 AWS regions.",
         "slug": "teleport",
         "link": { "url": "teleport.html", "label": "view details" },
         "title": "Teleport — Geo-Distributed Access Platform",
@@ -144,6 +146,7 @@ const CV_DATA = {
         ]
       },
       {
+        "summary": "Always-on multi-agent ops platform — correlation-based routing over 50+ MCP tools on a pre-scanned topology, Slack-native.",
         "slug": "devops-agent",
         "title": "DevOps Agent — Always-On Agentic Operations",
         "subtitle": "Correlation-Based Multi-Agent Infrastructure Platform",
@@ -180,6 +183,7 @@ const CV_DATA = {
         ]
       },
       {
+        "summary": "Agentic Slack front-line that resolves operational questions from an RBAC runbook knowledge base via RAG.",
         "slug": "echo-bot",
         "link": { "url": "echo-bot.html", "label": "view details" },
         "title": "Echo Bot — Agentic Operations Assistant",

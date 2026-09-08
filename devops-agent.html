@@ -169,31 +169,17 @@
   <!-- ========== NAV ========== -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <a href="index.html#projects" class="flex items-center gap-2 font-mono text-sm text-text-muted hover:text-cyan transition-colors no-underline">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> back to main
+      </a>
       <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="index.html#experience" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Experience</a>
-        <div class="relative group">
-          <button type="button" class="nav-link active text-text-muted hover:text-text-primary transition-colors text-sm font-mono flex items-center gap-1">Work <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
-          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 hidden group-hover:block group-focus-within:block">
-            <div class="w-72 rounded-lg border border-border bg-surface/95 backdrop-blur-md shadow-xl py-2">
-              <a href="index.html#projects" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan"></i>All projects</a>
-              <div class="border-t border-border my-1"></div>
-              <a href="hot-wallet-vault.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>Hot-Wallet Vault</a>
-              <a href="teleport.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-green">$</span>Teleport Platform</a>
-              <a href="devops-agent.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-cyan">$</span>DevOps Agent <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full border border-cyan/30 text-cyan bg-cyan/10">case study</span></a>
-              <a href="echo-bot.html" class="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-muted hover:text-text-primary hover:bg-bg/60 transition-colors no-underline"><span class="text-purple">$</span>Echo Bot</a>
-            </div>
-          </div>
-        </div>
-        <a href="index.html#foxly" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Personal</a>
-        <a href="index.html#publications" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Publications</a>
-        <a href="index.html#skills" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Skills</a>
-        <a href="index.html#contact" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contact</a>
-        <a href="cv.html" target="_blank" class="px-4 py-1.5 rounded-full bg-cyan text-bg font-mono font-semibold text-xs hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-1.5 no-underline">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          CV
-        </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#problem" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Problem</a>
+        <a href="#contributions" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contributions</a>
+        <a href="#architecture" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Architecture</a>
+        <a href="#topology" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Topology</a>
+        <a href="#relay" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Relay</a>
+        <a href="#roadmap" class="nav-link text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Roadmap</a>
       </div>
       <!-- Mobile hamburger -->
       <button id="mobile-menu-btn" class="md:hidden text-text-muted hover:text-cyan transition-colors" aria-label="Toggle menu">
@@ -203,22 +189,13 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-surface/95 backdrop-blur-md border-t border-border">
       <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="index.html#experience" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Experience</a>
-        <a href="index.html#projects" class="mobile-nav-link text-cyan transition-colors text-sm font-mono">Work</a>
-        <div class="flex flex-col gap-3 pl-4 ml-2 border-l border-border">
-          <a href="hot-wallet-vault.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Hot-Wallet Vault</a>
-          <a href="teleport.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Teleport Platform</a>
-          <a href="devops-agent.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ DevOps Agent — case study ↗</a>
-          <a href="echo-bot.html" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-xs font-mono">$ Echo Bot</a>
-        </div>
-        <a href="index.html#foxly" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Personal</a>
-        <a href="index.html#publications" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Publications</a>
-        <a href="index.html#skills" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Skills</a>
-        <a href="index.html#contact" class="mobile-nav-link text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contact</a>
-        <a href="cv.html" target="_blank" class="mt-2 px-4 py-2 rounded-full bg-cyan text-bg font-mono font-semibold text-sm hover:shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-shadow cursor-pointer flex items-center gap-2 w-full justify-center no-underline">
-          <i data-lucide="download" class="w-4 h-4"></i>
-          Download CV
-        </a>
+        <a href="#problem" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Problem</a>
+        <a href="#contributions" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Contributions</a>
+        <a href="#architecture" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Architecture</a>
+        <a href="#topology" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Topology</a>
+        <a href="#relay" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Relay</a>
+        <a href="#roadmap" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono">Roadmap</a>
+        <a href="index.html#projects" class="text-cyan transition-colors text-sm font-mono flex items-center gap-1 no-underline"><i data-lucide="arrow-left" class="w-4 h-4"></i> back to main</a>
       </div>
     </div>
   </nav>
@@ -897,14 +874,26 @@
       link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
     });
     const navbar = document.getElementById('navbar');
+    const navSections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
         navbar.classList.add('bg-bg/90', 'backdrop-blur-md', 'border-b', 'border-border');
       } else {
         navbar.classList.remove('bg-bg/90', 'backdrop-blur-md', 'border-b', 'border-border');
       }
+      let current = '';
+      navSections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
     });
   </script>
+</body>
+</html>
 </body>
 </html>
 </body>
