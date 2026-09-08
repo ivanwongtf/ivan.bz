@@ -1,0 +1,22 @@
+{
+  "name": "apex-to-www",
+  "description": "Redirect apex ivan.bz to www.ivan.bz (301, preserve path + query string)",
+  "kind": "zone",
+  "phase": "http_request_dynamic_redirect",
+  "rules": [
+    {
+      "action": "redirect",
+      "expression": "(http.host eq \"ivan.bz\")",
+      "description": "apex ivan.bz -> www.ivan.bz 301, preserve path + query",
+      "action_parameters": {
+        "from_value": {
+          "target_url": {
+            "expression": "concat(\"https://www.ivan.bz\", http.request.uri.path)"
+          },
+          "status_code": 301,
+          "preserve_query_string": true
+        }
+      }
+    }
+  ]
+}
