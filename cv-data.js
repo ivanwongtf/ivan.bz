@@ -28,6 +28,7 @@ const CV_DATA = {
         "Lead a 4-person sub-team within a 21-person infrastructure organisation — owning delivery, monthly sprint planning, and engineer growth via 1-on-1s",
         "Hands-on across the stack: manage Kubernetes clusters, handle complex upgrades and deployments, write Terraform/Go/Python automation, and review PRs alongside the team",
         "Drive AI adoption in operations — integrating LLM-powered tooling and agentic workflows to reduce toil and automate repetitive tasks",
+        "Designed and built an always-on multi-agent DevOps platform — correlation-based agent routing over 50+ MCP tools on a pre-scanned infrastructure topology, with a Slack relay answering operational requests in seconds (see Work Projects)",
         "Own cross-functional collaboration across Network, Cloud Security, and Exchange teams — covering cloud-native resource patching, canary deployments, and IaC best practices on Teleport and Spacelift",
         "First-authored uDDS (IEEE CSP 2026) — a TEE-based distributed data sealing framework built for the hot-wallet vault, designed and implemented alongside production engineering work"
       ]
@@ -139,12 +140,47 @@ const CV_DATA = {
         ]
       },
       {
+        "title": "DevOps Agent — Always-On Agentic Operations",
+        "subtitle": "Correlation-Based Multi-Agent Infrastructure Platform",
+        "icon": "bot",
+        "accentColor": "cyan",
+        "terminalTitle": "devops-agent ~ opencode serve",
+        "link": { "url": "devops-agent.html", "label": "view case study" },
+        "description": "An always-on, multi-agent DevOps platform that resolves operational requests in seconds instead of waiting for someone to be at their desk. A central orchestrator routes work to specialist agents grouped by data correlation — each owning exactly one MCP tool boundary — all reasoning over a pre-scanned typed topology of the entire infrastructure. Echobot, a Slack relay worker, makes the platform accessible from any channel.",
+        "bullets": [
+          "Orchestrator + specialist agents routed by data correlation across 50+ MCP tools — 58% less tool duplication and 90%+ context retained across handoffs vs role-based multi-agent designs",
+          "Pre-scanned typed topology (Account → VPC → Cluster → Workloads) as the agents' shared world model — zero cold-start, consistent snapshots, no live-API rate limiting",
+          "Two-tier execution model: read-only plan mode, then an approved operator mode — agents propose, humans stay the approval gate",
+          "Echobot Slack relay: mention the bot in any channel and answers stream back into the same thread — ~5s for simple tasks",
+          "Team portal (FastAPI + React) with live health dashboards, shared sessions, and a full audit trail of every agent action"
+        ],
+        "meta": {
+          "agents": "orchestrator + specialists",
+          "tools": "50+ MCP",
+          "topology": "pre-scanned graph",
+          "access": "Slack + portal",
+          "exec": "plan → operator",
+          "status": "production"
+        },
+        "tags": [
+          { "label": "Python", "color": "cyan" },
+          { "label": "FastAPI", "color": "cyan" },
+          { "label": "React", "color": "cyan" },
+          { "label": "MCP", "color": "purple" },
+          { "label": "LLM Agents", "color": "purple" },
+          { "label": "Slack SDK", "color": "purple" },
+          { "label": "Ansible", "color": "muted" },
+          { "label": "SQLite", "color": "muted" },
+          { "label": "GitOps", "color": "muted" }
+        ]
+      },
+      {
         "title": "Echo Bot — Agentic Operations Assistant",
         "subtitle": "AI Front-line for Infra DevOps Operations",
         "icon": "message-circle",
         "accentColor": "purple",
         "terminalTitle": "echo-bot ~ python main.py",
-        "description": "An agentic Slack assistant that acts as the first responder for any operational request coming into the Infra DevOps team. When engineers or stakeholders ask about runbooks, access procedures, or platform status, Echo Bot handles it autonomously — giving the team back time to focus on high-value engineering work instead of repetitive Q&A.",
+        "description": "An agentic Slack assistant that acts as the first responder for any operational request coming into the Infra DevOps team. When engineers or stakeholders ask about runbooks, access procedures, or platform status, Echo Bot handles it autonomously — giving the team back time to focus on high-value engineering work instead of repetitive Q&A. It later evolved into Echobot, the Slack relay front-end of the DevOps Agent platform featured above.",
         "bullets": [
           "Acts as the team's AI front-line: intercepts inbound Slack messages and resolves operational queries without human intervention",
           "RBAC knowledge base with topic-scoped runbooks, team-specific context, and a self-serve invitation system for onboarding new requesters",

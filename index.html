@@ -438,7 +438,7 @@
 
   <!-- ========== SCRIPTS ========== -->
   <!-- CV data as JS variable (works on file:// protocol; fetch used first when served over HTTP) -->
-  <script src="cv-data.js?v=9128388"></script>
+  <script src="cv-data.js?v=20260908"></script>
   <script>
     // --- Data-Driven Content Loading ---
     function loadData() {
@@ -539,6 +539,9 @@
           const prefix = k === 'status' ? '● ' : '';
           return `<div class="text-green">${k}:${' '.repeat(Math.max(1, 10 - k.length))}<span class="${valCls}">${prefix}${v}</span></div>`;
         }).join('');
+        const linkHtml = p.link
+          ? `<a href="${p.link.url}" class="inline-flex items-center gap-1.5 mt-4 text-xs font-mono text-${p.accentColor} px-3 py-1.5 rounded-full border border-${p.accentColor}/30 bg-${p.accentColor}/5 hover:bg-${p.accentColor}/15 transition-colors">${p.link.label} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>`
+          : '';
 
         return `
           <div class="fade-in-section mb-8">
@@ -565,6 +568,7 @@
                     </div>
                     <p class="text-text-muted text-sm mb-4 leading-relaxed">${p.description}</p>
                     <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono mb-4">${bullets}</ul>
+                    ${linkHtml}
                   </div>
                   <div class="flex flex-col justify-center">
                     <div class="font-mono text-xs text-text-muted bg-bg/60 rounded-lg p-4 border border-border">

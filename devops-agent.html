@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Agent — Always-On Agentic Infrastructure Operations | Ivan Wong</title>
+  <meta name="description" content="Case study: an always-on, correlation-based multi-agent DevOps platform with a pre-scanned typed topology and a Slack-native relay.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F172A',
+            surface: '#1E293B',
+            border: '#334155',
+            cyan: '#00FFFF',
+            green: '#22C55E',
+            purple: '#8B5CF6',
+            'text-primary': '#F8FAFC',
+            'text-muted': '#94A3B8',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* Base */
+    html { scroll-behavior: smooth; }
+    body { background: #0F172A; color: #F8FAFC; font-family: 'DM Sans', sans-serif; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0F172A; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Neon glow */
+    .glow-cyan { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.15); }
+    .glow-green { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 40px rgba(34, 197, 94, 0.15); }
+
+    /* Grid background */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Scanline overlay */
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.008) 2px,
+        rgba(0, 255, 255, 0.008) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Typing cursor */
+    .typing-cursor::after {
+      content: '\2588';
+      animation: blink 0.8s step-end infinite;
+      color: #22C55E;
+      font-weight: 400;
+      margin-left: 1px;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Scroll fade-in */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Card hover */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      border-color: #00FFFF;
+    }
+
+    /* Terminal window chrome */
+    .terminal-window {
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid #334155;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      margin-left: 8px;
+    }
+    .terminal-body {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Architecture diagram connectors */
+    .arch-arrow {
+      color: #334155;
+      display: flex;
+      justify-content: center;
+      padding: 2px 0;
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in-section { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ========== NAV ========== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md border-b border-border">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-mono font-bold text-sm text-cyan glow-cyan">Ivan Wong</a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#problem" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Problem</a>
+        <a href="#contributions" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Contributions</a>
+        <a href="#architecture" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Architecture</a>
+        <a href="#topology" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Topology</a>
+        <a href="#relay" class="text-text-muted hover:text-text-primary transition-colors text-sm font-mono">Relay</a>
+        <a href="index.html#projects" class="text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> back
+        </a>
+      </div>
+      <a href="index.html#projects" class="md:hidden text-text-muted hover:text-cyan transition-colors text-sm font-mono flex items-center gap-1">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> back
+      </a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="relative min-h-[70vh] flex items-center justify-center grid-bg scanlines overflow-hidden pt-24 pb-16 px-6">
+    <div class="relative z-10 max-w-4xl mx-auto text-center w-full">
+      <div class="terminal-window w-full mb-8 text-left">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div>
+          <div class="terminal-dot bg-yellow-500"></div>
+          <div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">agent ~ slack relay session</span>
+        </div>
+        <div class="terminal-body text-xs sm:text-sm space-y-2">
+          <div><span class="text-purple">@channel</span> <span class="text-text-muted">anyone know which cluster the payments service runs in, and is it healthy?</span></div>
+          <div><span class="text-cyan">echobot</span> <span class="text-text-muted">→ task created · relay worker acquired · operator session started</span></div>
+          <div><span class="text-green">agent</span> <span class="text-text-muted">→ topology lookup (pre-scanned) · k8s lens inspect · datadog monitors check</span></div>
+          <div><span class="text-green">agent</span> <span class="text-text-primary">payments runs on eks-prod-2 — 3/3 pods ready, no firing alerts. Last deploy 2h ago via Spacelift.</span></div>
+          <div><span class="text-text-muted">answered in</span> <span class="text-cyan">~5s</span> <span class="text-text-muted">— no human paged</span><span class="typing-cursor"></span></div>
+        </div>
+      </div>
+
+      <h1 class="font-heading font-bold text-4xl sm:text-5xl text-text-primary mb-3">
+        DevOps <span class="text-cyan glow-cyan">Agent</span>
+      </h1>
+      <p class="font-heading text-lg sm:text-xl text-green glow-green mb-4">Always-On Agentic Infrastructure Operations</p>
+      <p class="text-text-muted max-w-2xl mx-auto mb-6 text-sm sm:text-base">
+        A multi-agent platform that resolves operational requests in seconds — correlation-based agent routing
+        over a pre-scanned typed topology, with a Slack-native relay as the front door.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 font-mono text-xs">
+        <span class="px-3 py-1.5 rounded-full border border-cyan/30 text-cyan bg-cyan/5">internal security engineering talk · 2026</span>
+        <span class="px-3 py-1.5 rounded-full border border-border text-text-muted">status: <span class="text-green">● production</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROBLEM ========== -->
+  <section id="problem" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">The Reality of Traditional DevOps</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// why we built this</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">toil.log</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
+              <i data-lucide="repeat" class="w-5 h-5 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Manual Toil</h3>
+            <p class="text-text-muted text-sm leading-relaxed">Repetitive operational work consumes engineering hours that should go to building.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">oncall.log</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center mb-4">
+              <i data-lucide="bell-ring" class="w-5 h-5 text-purple"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">On-Call Burnout</h3>
+            <p class="text-text-muted text-sm leading-relaxed">Pages at 3am. Reactive firefighting instead of proactive prevention.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">knowledge.log</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center mb-4">
+              <i data-lucide="brain" class="w-5 h-5 text-green"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Tribal Knowledge</h3>
+            <p class="text-text-muted text-sm leading-relaxed">Context lost between shifts and people — every incident re-learns the same lessons.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">latency.log</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center mb-4">
+              <i data-lucide="hourglass" class="w-5 h-5 text-cyan"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Slow Response</h3>
+            <p class="text-text-muted text-sm leading-relaxed">Incidents wait for someone to be at their desk, awake, and free.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window md:col-span-2 lg:col-span-2">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">silos.log</span>
+          </div>
+          <div class="p-6">
+            <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center mb-4">
+              <i data-lucide="columns-3" class="w-5 h-5 text-purple"></i>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text-primary mb-2">Fragmented Tooling</h3>
+            <p class="text-text-muted text-sm leading-relaxed">AWS, GitHub, Spacelift, Datadog, Kubernetes — each a separate console, a separate login, a separate mental model. Answering one operational question means alt-tabbing across five tools and stitching the answer together by hand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTRIBUTIONS ========== -->
+  <section id="contributions" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Key Contributions</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// what we built</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="fade-in-section card-hover terminal-window border-cyan/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">correlation-routing.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center">
+                <i data-lucide="workflow" class="w-5 h-5 text-cyan"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Correlation-Based Multi-Agent</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Agents grouped by shared data dependency, not job title</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Each MCP tool lives in exactly one agent — zero duplication</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span><span><span class="text-cyan">58%</span> less tool duplication vs role-based design</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window border-green/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">topology.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-green/10 flex items-center justify-center">
+                <i data-lucide="network" class="w-5 h-5 text-green"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Pre-Scanned Topology</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>25 projects mapped across all accounts</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Project → Env → Cluster → Resources, typed at every hop</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Faster, accurate answers without live API calls</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window border-purple/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">cloud-local.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-purple/10 flex items-center justify-center">
+                <i data-lucide="cloud" class="w-5 h-5 text-purple"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Cloud + Local Cooperation</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Cloud agent runs 24/7; local agent for deep work</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Shared portal, shared topology, shared context</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Persistent git workspaces — nothing lost when a terminal closes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window border-cyan/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">echobot.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center">
+                <i data-lucide="message-circle" class="w-5 h-5 text-cyan"></i>
+              </div>
+              <h3 class="font-heading font-semibold text-lg text-text-primary">Echobot Slack Relay</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Mention the bot in any channel — no context switching</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Relay worker dispatches to the operator agent</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span><span><span class="text-cyan">~5s</span> response for simple tasks, streamed back to the thread</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ARCHITECTURE ========== -->
+  <section id="architecture" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Architecture Overview</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// one entry surface, one world model, tiered execution</p>
+      </div>
+
+      <div class="fade-in-section terminal-window mb-8">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">architecture.yaml</span>
+        </div>
+        <div class="p-6 sm:p-10">
+          <!-- Entry layer -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <div class="rounded-lg border border-cyan/30 bg-cyan/5 p-4 text-center">
+              <i data-lucide="message-circle" class="w-5 h-5 text-cyan mx-auto mb-2"></i>
+              <div class="font-mono text-sm text-text-primary">Slack</div>
+              <div class="font-mono text-xs text-text-muted">via Echobot relay</div>
+            </div>
+            <div class="rounded-lg border border-purple/30 bg-purple/5 p-4 text-center">
+              <i data-lucide="layout-dashboard" class="w-5 h-5 text-purple mx-auto mb-2"></i>
+              <div class="font-mono text-sm text-text-primary">Portal · FastAPI + React</div>
+              <div class="font-mono text-xs text-text-muted">dashboards · audit · SQLite cache</div>
+            </div>
+          </div>
+          <div class="arch-arrow"><i data-lucide="arrow-down" class="w-5 h-5"></i></div>
+
+          <!-- Orchestrator -->
+          <div class="rounded-lg border border-green/40 bg-green/5 p-5 max-w-2xl mx-auto text-center">
+            <i data-lucide="bot" class="w-6 h-6 text-green mx-auto mb-2"></i>
+            <div class="font-mono font-semibold text-text-primary mb-1">Orchestrator Agent</div>
+            <div class="font-mono text-xs text-text-muted mb-3">routes work to specialists by data correlation</div>
+            <div class="flex flex-wrap justify-center gap-2 font-mono text-xs">
+              <span class="px-3 py-1 rounded-full border border-cyan/30 text-cyan">plan mode · read-only</span>
+              <span class="px-1 text-text-muted self-center">→</span>
+              <span class="px-3 py-1 rounded-full border border-green/30 text-green">operator mode · approved</span>
+            </div>
+          </div>
+          <div class="arch-arrow"><i data-lucide="arrow-down" class="w-5 h-5"></i></div>
+
+          <!-- Specialists -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-3xl mx-auto">
+            <div class="rounded-lg border border-border bg-surface/60 p-3 text-center font-mono text-xs text-text-primary"><i data-lucide="activity" class="w-4 h-4 text-cyan mx-auto mb-1"></i>metrics</div>
+            <div class="rounded-lg border border-border bg-surface/60 p-3 text-center font-mono text-xs text-text-primary"><i data-lucide="scroll-text" class="w-4 h-4 text-cyan mx-auto mb-1"></i>logs</div>
+            <div class="rounded-lg border border-border bg-surface/60 p-3 text-center font-mono text-xs text-text-primary"><i data-lucide="git-branch" class="w-4 h-4 text-cyan mx-auto mb-1"></i>ci/cd</div>
+            <div class="rounded-lg border border-border bg-surface/60 p-3 text-center font-mono text-xs text-text-primary"><i data-lucide="server" class="w-4 h-4 text-cyan mx-auto mb-1"></i>infra</div>
+            <div class="rounded-lg border border-border bg-surface/60 p-3 text-center font-mono text-xs text-text-primary col-span-2 sm:col-span-1"><i data-lucide="container" class="w-4 h-4 text-cyan mx-auto mb-1"></i>k8s</div>
+          </div>
+          <div class="arch-arrow"><i data-lucide="arrow-down" class="w-5 h-5"></i></div>
+
+          <!-- MCP layer -->
+          <div class="rounded-lg border border-border bg-bg/60 p-4 max-w-3xl mx-auto">
+            <div class="font-mono text-xs text-text-muted text-center mb-3">// 50+ tools across MCP servers — each tool in exactly one agent</div>
+            <div class="flex flex-wrap justify-center gap-2 font-mono text-xs text-text-muted">
+              <span class="px-2 py-1 rounded border border-border">Datadog</span>
+              <span class="px-2 py-1 rounded border border-border">CloudWatch</span>
+              <span class="px-2 py-1 rounded border border-border">Sumo Logic</span>
+              <span class="px-2 py-1 rounded border border-border">Kubernetes</span>
+              <span class="px-2 py-1 rounded border border-border">GitHub</span>
+              <span class="px-2 py-1 rounded border border-border">Spacelift</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">safety.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="shield-check" class="w-5 h-5 text-green"></i>
+              <h3 class="font-heading font-semibold text-text-primary">Safe & Tiered</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Read-only plan mode by default</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Operator mode acts via PRs, not direct writes</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Unprivileged sandbox — no sudo, no cloud creds in env</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">portal.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="layout-dashboard" class="w-5 h-5 text-purple"></i>
+              <h3 class="font-heading font-semibold text-text-primary">Team Portal</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Visual topology instead of cloud-console tab-hopping</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Multi-agent chat with SSE streaming of every tool call</li>
+              <li class="flex items-start gap-2"><span class="text-purple shrink-0">$</span>Shared sessions visible to the whole team</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">gitops.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="git-branch" class="w-5 h-5 text-cyan"></i>
+              <h3 class="font-heading font-semibold text-text-primary">GitOps-Managed</h3>
+            </div>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Ansible as the single source of truth</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Deployed and updated via IaC pipelines</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Every change version-controlled and peer-reviewed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CORRELATION DESIGN ========== -->
+  <section id="correlation" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Why Correlation-Based Design</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// agents grouped by shared data dependency, not org chart</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="fade-in-section terminal-window border-red-500/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">naive-approaches.log</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-red-400 mb-4">Why the Naive Approaches Fail</h3>
+            <ul class="text-text-muted text-sm space-y-3 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span><span><span class="text-text-primary">Single agent</span> — loads every tool description, overflows its context window</span></li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span><span><span class="text-text-primary">Monolith</span> — hits the MCP 40-tool ceiling fast</span></li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span><span><span class="text-text-primary">Role-based multi-agent</span> — mimics the org chart; tools span roles, so boundaries duplicate and fragment</span></li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">✗</span><span><span class="text-red-400">79% context lost per handoff</span> when boundaries overlap</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section terminal-window border-green/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">correlation-design.log</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-green mb-4">What Correlation Gets You</h3>
+            <ul class="text-text-muted text-sm space-y-3 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span><span><span class="text-green">90%+ context retained</span> across every handoff</span></li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span><span><span class="text-text-primary">Zero tool duplication</span> — each MCP tool belongs to exactly one agent</span></li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span><span><span class="text-text-primary">Clean context boundaries</span> — no overlapping toolsets</span></li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">✓</span><span><span class="text-text-primary">Shared topology backbone</span> — every specialist reads the same world model</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in-section mt-6 terminal-window">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">method.md</span>
+        </div>
+        <div class="p-6">
+          <p class="text-text-muted text-sm leading-relaxed font-mono">
+            <span class="text-cyan">$</span> correlation = shared data dependency — tools that read/write the same data domain belong together, regardless of job title<br>
+            <span class="text-cyan">$</span> method — identify correlated tool clusters, draw a boundary around each, assign one agent per boundary<br>
+            <span class="text-cyan">$</span> result — no agent ever loads a tool outside its boundary, and no tool appears twice
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOPOLOGY ========== -->
+  <section id="topology" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Typed Topology: The Agent's World Model</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// an ontology, not a random graph</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="fade-in-section terminal-window border-cyan/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">infra-layer.tree</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-cyan mb-4">Infra Layer</h3>
+            <div class="font-mono text-sm text-text-muted space-y-2">
+              <div><span class="text-cyan">Account</span></div>
+              <div class="pl-4">└─ <span class="text-cyan">VPC</span></div>
+              <div class="pl-8">└─ <span class="text-cyan">Cluster</span></div>
+              <div class="pl-12">├─ RDS · LB · EC2 · NAT</div>
+              <div class="pl-12">└─ live status via CloudWatch</div>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in-section terminal-window border-green/30">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">project-layer.tree</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-lg text-green mb-4">Project Layer</h3>
+            <div class="font-mono text-sm text-text-muted space-y-2">
+              <div><span class="text-green">Project</span> <span class="text-text-muted">— ownership & team</span></div>
+              <div class="pl-4">└─ <span class="text-green">Environment</span> <span class="text-text-muted">— prod / staging / dev</span></div>
+              <div class="pl-8">└─ <span class="text-green">Cluster</span> <span class="text-text-muted">— mapped via inventory</span></div>
+              <div class="pl-12">├─ Workloads — Deployments, Pods, Services</div>
+              <div class="pl-12">└─ CI/CD — GitHub → Spacelift → ECR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">pipeline-1.md</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-text-primary mb-3">Pipeline 1 — Connection-Driven</h3>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Cloud / IaC / VCS connections scan broadly — every resource discovered</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Inventory attributes afterward — never limits what gets scanned</li>
+              <li class="flex items-start gap-2"><span class="text-cyan shrink-0">$</span>Feeds the infra layer</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">pipeline-2.md</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-heading font-semibold text-text-primary mb-3">Pipeline 2 — Inventory-Driven</h3>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Inventory is the scan input — no row, no scan</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>In-cluster lens via clusters; GitOps via projects</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">$</span>Feeds the project layer, joined by cluster identity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in-section terminal-window border-purple/30">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">live-vs-prescanned.diff</span>
+        </div>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-mono text-sm text-red-400 mb-3">— live queries (traditional)</h4>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">−</span>API queries on every request — slow, rate-limited</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">−</span>Each tool call re-discovers the world from scratch</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 shrink-0">−</span>Results vary between calls — no consistent snapshot</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-mono text-sm text-green mb-3">+ pre-scanned (ours)</h4>
+            <ul class="text-text-muted text-sm space-y-1.5 list-none font-mono">
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">+</span>Zero cold-start — complete picture from the first answer</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">+</span>Full cross-account, cross-cluster context in one graph</li>
+              <li class="flex items-start gap-2"><span class="text-green shrink-0">+</span>Consistent cached snapshot, auditable at a point in time</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RESULTS ========== -->
+  <section id="results" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Results</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// measured, not vibes</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-cyan glow-cyan mb-2">~5s</div>
+            <div class="text-text-muted text-xs font-mono">simple-task response via Slack relay</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-green glow-green mb-2">90%+</div>
+            <div class="text-text-muted text-xs font-mono">context retained across agent handoffs</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-purple mb-2">58%</div>
+            <div class="text-text-muted text-xs font-mono">less tool duplication vs role-based design</div>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window text-center">
+          <div class="p-6">
+            <div class="font-heading font-bold text-3xl sm:text-4xl text-cyan glow-cyan mb-2">3×</div>
+            <div class="text-text-muted text-xs font-mono">fewer tokens than a manual local agent workflow on the same task (9.1k vs 29k)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RELAY ========== -->
+  <section id="relay" class="py-16 px-6 bg-surface/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">Echobot: The Slack Relay</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// from a Slack message to an answer in one thread</p>
+      </div>
+
+      <div class="fade-in-section terminal-window">
+        <div class="terminal-titlebar">
+          <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+          <span class="terminal-title">relay-flow.log</span>
+        </div>
+        <div class="p-6 sm:p-8">
+          <div class="space-y-0">
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full border border-cyan/40 bg-cyan/10 flex items-center justify-center font-mono text-xs text-cyan shrink-0">1</div>
+                <div class="w-px flex-1 bg-border"></div>
+              </div>
+              <div class="pb-8">
+                <div class="font-mono text-sm text-text-primary">User posts in a Slack channel</div>
+                <div class="font-mono text-xs text-text-muted mt-1">mention the bot — no new channel, no context switching</div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full border border-cyan/40 bg-cyan/10 flex items-center justify-center font-mono text-xs text-cyan shrink-0">2</div>
+                <div class="w-px flex-1 bg-border"></div>
+              </div>
+              <div class="pb-8">
+                <div class="font-mono text-sm text-text-primary">Echobot creates a team task <span class="text-text-muted text-xs">· ~5s poll</span></div>
+                <div class="font-mono text-xs text-text-muted mt-1">persistent poller, not cron — cron's minimum granularity is a minute</div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full border border-purple/40 bg-purple/10 flex items-center justify-center font-mono text-xs text-purple shrink-0">3</div>
+                <div class="w-px flex-1 bg-border"></div>
+              </div>
+              <div class="pb-8">
+                <div class="font-mono text-sm text-text-primary">Relay worker acquires the task</div>
+                <div class="font-mono text-xs text-text-muted mt-1">shared queue for the team; graceful shutdown with a grace period</div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full border border-green/40 bg-green/10 flex items-center justify-center font-mono text-xs text-green shrink-0">4</div>
+                <div class="w-px flex-1 bg-border"></div>
+              </div>
+              <div class="pb-8">
+                <div class="font-mono text-sm text-text-primary">Agent session runs in operator mode</div>
+                <div class="font-mono text-xs text-text-muted mt-1">~5s for simple questions; longer for investigative work with subagent delegation</div>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full border border-green/40 bg-green/10 flex items-center justify-center font-mono text-xs text-green shrink-0">5</div>
+              </div>
+              <div>
+                <div class="font-mono text-sm text-text-primary">Response streams back into the same thread</div>
+                <div class="font-mono text-xs text-text-muted mt-1">review-first, approve-later — the agent does the first pass, humans stay the approval gate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ROADMAP ========== -->
+  <section id="roadmap" class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-section">
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-4 text-center">What's Next</h2>
+        <p class="text-text-muted text-center mb-12 max-w-2xl mx-auto font-mono text-sm">// roadmap</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">a2a.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="arrow-left-right" class="w-5 h-5 text-cyan"></i>
+              <h3 class="font-heading font-semibold text-text-primary">A2A Protocol</h3>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">Local agent ↔ cloud agent cooperation — the agent hands off pre-scanned topology and context instead of re-discovering the world on every task.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">inbox.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="inbox" class="w-5 h-5 text-purple"></i>
+              <h3 class="font-heading font-semibold text-text-primary">Operation Inbox</h3>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">Auto-intake of requests from other teams — the agent picks up, triages, and executes according to standard operating procedures.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">memory.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="database" class="w-5 h-5 text-green"></i>
+              <h3 class="font-heading font-semibold text-text-primary">Memory & Topology RAG</h3>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">Auto-recorded project and infra memory, synced to the cloud agent — searched via topology traversal, not a vector DB, for exact-match accuracy.</p>
+          </div>
+        </div>
+        <div class="fade-in-section card-hover terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dot bg-red-500"></div><div class="terminal-dot bg-yellow-500"></div><div class="terminal-dot bg-green-500"></div>
+            <span class="terminal-title">modular.md</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="blocks" class="w-5 h-5 text-cyan"></i>
+              <h3 class="font-heading font-semibold text-text-primary">Modularization</h3>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">Decouple the integrations into configurable, pluggable adapters — third-party services slot in without touching the core.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="py-8 px-6 border-t border-border text-center space-y-3">
+    <a href="index.html#projects" class="inline-flex items-center gap-2 text-sm font-mono text-cyan hover:glow-cyan transition-all">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> back to ivan.bz
+    </a>
+    <p class="text-text-muted text-xs font-mono">&copy; 2026 Ivan Wong · ivan.bz</p>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in-section').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
